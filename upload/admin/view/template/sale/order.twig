@@ -83,7 +83,7 @@
       <div class="col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="order" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
@@ -91,8 +91,6 @@
 </div>
 <script type="text/javascript">
   ocFilter({
-    formId: '#form-filter',
-    listId: '#order',
     route: 'sale/order',
     userToken: '{{ user_token }}'
   });
@@ -108,9 +106,9 @@
     }
   });
 
-  $('#order').on('click', 'thead a, .pagination a', function (e) {
+  $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
-    $('#order').load(this.href);
+    $('#list').load(this.href);
   });
 
   $('input[name^=\'selected\']').on('change', function () {

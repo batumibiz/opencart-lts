@@ -26,7 +26,7 @@
         </ul>
         <div class="tab-content">
           <div id="tab-general" class="tab-pane active">
-            <div id="modification">{{ list }}</div>
+            <div id="list">{{ list }}</div>
           </div>
           <div id="tab-log" class="tab-pane">
             <p>
@@ -42,141 +42,140 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#modification').on('click', 'thead a, .pagination a', function(e) {
+<script type="text/javascript">
+  $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
+    $('#list').load(this.href);
+  });
 
-    $('#modification').load(this.href);
-});
-
-$('#button-refresh').on('click', function(e) {
-    e.preventDefault();
-
-    var element = this;
-
-    $.ajax({
-        url: 'index.php?route=marketplace/modification.refresh&user_token={{ user_token }}',
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
-
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            $('#input-log').load('index.php?route=marketplace/modification.log&user_token={{ user_token }}');
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-    });
-});
-
-$('#button-clear').on('click', function(e) {
+  $('#button-refresh').on('click', function (e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=marketplace/modification.clear&user_token={{ user_token }}',
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
+      url: 'index.php?route=marketplace/modification.refresh&user_token={{ user_token }}',
+      dataType: 'json',
+      beforeSend: function () {
+        $(element).button('loading');
+      },
+      complete: function () {
+        $(element).button('reset');
+      },
+      success: function (json) {
+        $('.alert-dismissible').remove();
 
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (json['error']) {
+          $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
-    });
-});
 
-$('#modification').on('click', '.btn-success, .btn-danger', function(e) {
+        if (json['success']) {
+          $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
+
+        $('#input-log').load('index.php?route=marketplace/modification.log&user_token={{ user_token }}');
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+  $('#button-clear').on('click', function (e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: $(element).val(),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
+      url: 'index.php?route=marketplace/modification.clear&user_token={{ user_token }}',
+      dataType: 'json',
+      beforeSend: function () {
+        $(element).button('loading');
+      },
+      complete: function () {
+        $(element).button('reset');
+      },
+      success: function (json) {
+        $('.alert-dismissible').remove();
 
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#modification').load($('#form-modification').attr('data-oc-load'));
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (json['error']) {
+          $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
-    });
-});
 
-$('#button-log').on('click', function(e) {
+        if (json['success']) {
+          $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+
+  $('#list').on('click', '.btn-success, .btn-danger', function (e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: 'index.php?route=tool/log.clear&user_token={{ user_token }}&filename=ocmod.log',
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
+      url: $(element).val(),
+      dataType: 'json',
+      beforeSend: function () {
+        $(element).button('loading');
+      },
+      complete: function () {
+        $(element).button('reset');
+      },
+      success: function (json) {
+        $('.alert-dismissible').remove();
 
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#input-log').load('index.php?route=marketplace/modification.log&user_token={{ user_token }}');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (json['error']) {
+          $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
+
+        if (json['success']) {
+          $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+          $('#list').load($('#form-modification').attr('data-oc-load'));
+        }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
     });
-});
-//--></script>
+  });
+
+  $('#button-log').on('click', function (e) {
+    e.preventDefault();
+
+    var element = this;
+
+    $.ajax({
+      url: 'index.php?route=tool/log.clear&user_token={{ user_token }}&filename=ocmod.log',
+      dataType: 'json',
+      beforeSend: function () {
+        $(element).button('loading');
+      },
+      complete: function () {
+        $(element).button('reset');
+      },
+      success: function (json) {
+        $('.alert-dismissible').remove();
+
+        if (json['error']) {
+          $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
+
+        if (json['success']) {
+          $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+          $('#input-log').load('index.php?route=marketplace/modification.log&user_token={{ user_token }}');
+        }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
+  });
+</script>
 {{ footer }}

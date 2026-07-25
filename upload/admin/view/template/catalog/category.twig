@@ -47,7 +47,7 @@
       <div class="col col-lg-9 col-md-12">
         <div class="card">
           <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-          <div id="category" class="card-body">{{ list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
         </div>
       </div>
     </div>
@@ -55,8 +55,6 @@
 </div>
 <script type="text/javascript">
   ocFilter({
-    formId: '#form-filter',
-    listId: '#category',
     route: 'catalog/category',
     userToken: '{{ user_token }}'
   });
@@ -72,9 +70,9 @@
     }
   });
 
-  $('#category').on('click', 'thead a, .pagination a', function (e) {
+  $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
-    $('#category').load(this.href);
+    $('#list').load(this.href);
   });
 
   $('#button-repair').on('click', function (e) {

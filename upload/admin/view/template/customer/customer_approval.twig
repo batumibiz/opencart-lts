@@ -74,8 +74,6 @@
 </div>
 <script type="text/javascript">
   ocFilter({
-    formId: '#form-filter',
-    listId: '#list',
     route: 'customer/customer_approval',
     userToken: '{{ user_token }}'
   });
@@ -104,7 +102,6 @@
 
   $('#list').on('click', '.pagination a', function (e) {
     e.preventDefault();
-
     $('#list').load(this.href);
   });
 

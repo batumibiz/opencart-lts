@@ -523,10 +523,11 @@ $(document).ready(function() {
  * ocFilter(options)
  *
  * Required options:
- *   formId    {string}  jQuery filter form selector      (e.g. '#form-filter')
- *   listId    {string}  jQuery list container selector   (e.g. '#list')
  *   route     {string}  Controller route                 (e.g. 'catalog/category')
  *   userToken {string}  user_token for current session   (e.g. '{{ user_token }}')
+ * Optional
+ *   formId    {string}  jQuery filter form selector      (e.g. '#form-filter', default '#form-filter')
+ *   listId    {string}  jQuery list container selector   (e.g. '#list', default '#list')
  *
  * Example:
  *
@@ -539,8 +540,8 @@ $(document).ready(function() {
  */
 
 function ocFilter(options) {
-	const $form = $(options.formId);
-	const $list = $(options.listId);
+	const $form = $(options.formId ?? '#form-filter');
+	const $list = $(options.listId ?? '#list');
 	const routePart = 'index.php?route=' + options.route;
 	const tokenPart = '&user_token=' + options.userToken;
 

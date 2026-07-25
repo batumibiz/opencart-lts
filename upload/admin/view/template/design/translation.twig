@@ -75,8 +75,6 @@
 </div>
 <script type="text/javascript">
   ocFilter({
-    formId: '#form-filter',
-    listId: '#list',
     route: 'design/translation',
     userToken: '{{ user_token }}'
   });
@@ -114,9 +112,9 @@
     }
   });
 
-  $('#translation').on('click', 'thead a, .pagination a', function (e) {
+  $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
-    $('#translation').load(this.href);
+    $('#list').load(this.href);
   });
 </script>
 {{ footer }}

@@ -17,15 +17,14 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="attribute" class="card-body">{{ list }}</div>
+      <div id="list" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#attribute').on('click', 'thead a, .pagination a', function(e) {
+<script type="text/javascript">
+  $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
-
-    $('#attribute').load(this.href);
-});
-//--></script>
+    $('#list').load(this.href);
+  });
+</script>
 {{ footer }}

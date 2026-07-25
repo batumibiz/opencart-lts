@@ -30,18 +30,17 @@
     </div>
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="cron" class="card-body">{{ list }}</div>
+      <div id="list" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#cron').on('click', 'thead a, .pagination a', function(e) {
+<script type="text/javascript">
+  $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
+    $('#list').load(this.href);
+  });
 
-    $('#cron').load(this.href);
-});
-
-$('#button-copy').on('click', function() {
+  $('#button-copy').on('click', function () {
     var copyText = document.getElementById('input-cron');
 
     // Select the text field
@@ -50,37 +49,37 @@ $('#button-copy').on('click', function() {
 
     // Copy the text inside the text field
     navigator.clipboard.writeText(copyText.value);
-});
+  });
 
-$('#cron').on('click', '.btn-success, .btn-warning, .btn-danger', function() {
+  $('#list').on('click', '.btn-success, .btn-warning, .btn-danger', function () {
     var element = this;
 
     $.ajax({
-        url: $(element).val(),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            $('.alert-dismissible').remove();
+      url: $(element).val(),
+      dataType: 'json',
+      beforeSend: function () {
+        $(element).button('loading');
+      },
+      complete: function () {
+        $(element).button('reset');
+      },
+      success: function (json) {
+        $('.alert-dismissible').remove();
 
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-
-                $('#cron').load($('#form-cron').attr('data-oc-load'));
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (json['error']) {
+          $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
+
+        if (json['success']) {
+          $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+
+          $('#list').load($('#form-cron').attr('data-oc-load'));
+        }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
     });
-});
-//--></script>
+  });
+</script>
 {{ footer }}

@@ -18,68 +18,67 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="article" class="card-body">{{ list }}</div>
+      <div id="list" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#article').on('click', 'thead a, .pagination a', function(e) {
+<script type="text/javascript">
+  $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
+    $('#list').load(this.href);
+  });
 
-    $('#article').load(this.href);
-});
-
-$('#button-rating').on('click', function() {
+  $('#button-rating').on('click', function () {
     var element = this;
 
     $(element).button('loading');
 
     var next = 'index.php?route=cms/article.rating&user_token={{ user_token }}';
 
-    var rate = function() {
-        return $.ajax({
-            url: next,
-            dataType: 'json',
-            success: function(json) {
-                console.log(json);
+    var rate = function () {
+      return $.ajax({
+        url: next,
+        dataType: 'json',
+        success: function (json) {
+          console.log(json);
 
-                $('.alert-dismissible').remove();
+          $('.alert-dismissible').remove();
 
-                $('.invalid-feedback').removeClass('d-block');
+          $('.invalid-feedback').removeClass('d-block');
 
-                if (json['error']) {
-                    $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+          if (json['error']) {
+            $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $(element).button('reset');
-                }
+            $(element).button('reset');
+          }
 
-                if (json['text']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-                }
+          if (json['text']) {
+            $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['text'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+          }
 
-                if (json['success']) {
-                    $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+          if (json['success']) {
+            $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-check-circle-circle"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
 
-                    $(element).button('reset');
+            $(element).button('reset');
 
-                    $('#article').load($('#form-article').attr('data-oc-load'));
-                }
+            $('#article').load($('#form-article').attr('data-oc-load'));
+          }
 
-                if (json['next']) {
-                    next = json['next'];
+          if (json['next']) {
+            next = json['next'];
 
-                    chain.attach(rate);
-                }
-            },
-            error: function(xhr, ajaxOptions, thrownError) {
-                console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            chain.attach(rate);
+          }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 
-                $(element).button('reset');
-            }
-        });
+          $(element).button('reset');
+        }
+      });
     };
 
     chain.attach(rate);
-});
-//--></script>
+  });
+</script>
 {{ footer }}

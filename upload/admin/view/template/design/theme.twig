@@ -16,50 +16,50 @@
   <div class="container-fluid">
     <div class="card">
       <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_edit }}</div>
-      <div id="theme" class="card-body">{{ list }}</div>
+      <div id="list" class="card-body">{{ list }}</div>
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-$('#theme').on('click', 'thead a, .pagination a', function(e) {
+<script type="text/javascript">
+  $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
 
-    $('#theme').load(this.href);
-});
+    $('#list').load(this.href);
+  });
 
-$('#theme').on('click', 'button', function(e) {
+  $('#list').on('click', 'button', function (e) {
     e.preventDefault();
 
     var element = this;
 
     $.ajax({
-        url: $(element).val(),
-        dataType: 'json',
-        beforeSend: function() {
-            $(element).button('loading');
-        },
-        complete: function() {
-            $(element).button('reset');
-        },
-        success: function(json) {
-            console.log(json);
+      url: $(element).val(),
+      dataType: 'json',
+      beforeSend: function () {
+        $(element).button('loading');
+      },
+      complete: function () {
+        $(element).button('reset');
+      },
+      success: function (json) {
+        console.log(json);
 
-            $('.alert-dismissible').remove();
+        $('.alert-dismissible').remove();
 
-            if (json['error']) {
-                $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-
-            if (json['success']) {
-                $('#theme').load($('#form-theme').attr('data-oc-load'));
-
-                $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
-            }
-        },
-        error: function(xhr, ajaxOptions, thrownError) {
-            console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (json['error']) {
+          $('#alert').prepend('<div class="alert alert-danger alert-dismissible"><i class="fa-solid fa-circle-exclamation"></i> ' + json['error'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
         }
+
+        if (json['success']) {
+          $('#list').load($('#form-theme').attr('data-oc-load'));
+
+          $('#alert').prepend('<div class="alert alert-success alert-dismissible"><i class="fa-solid fa-circle-check"></i> ' + json['success'] + ' <button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>');
+        }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        console.log(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
     });
-});
-//--></script>
+  });
+</script>
 {{ footer }}
