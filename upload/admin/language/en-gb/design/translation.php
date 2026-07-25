@@ -31,4 +31,4 @@ $_['entry_value']      = 'Value';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify language editor!';
 $_['error_key']        = 'Key must be between 3 and 64 characters!';
-$_['error_exists']     = 'Warning: Combination of store, language, route, key already exists!';
+$_['error_key_exists'] = 'Key is already in use!';

@@ -175,11 +175,11 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_url` WHERE `key` = '" . $this->db->escape($key) . "' AND `value` LIKE '" . $this->db->escape($value) . "'";
 
 		if ($store_id) {
-			$sql .= " AND `store_id` = '" . (int)$store_id . "'";
+			$sql .= " AND `store_id` = '" . $store_id . "'";
 		}
 
 		if ($language_id) {
-			$sql .= " AND `language_id` = '" . (int)$language_id . "'";
+			$sql .= " AND `language_id` = '" . $language_id . "'";
 		}
 
 		$query = $this->db->query($sql);

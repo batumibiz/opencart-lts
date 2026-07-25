@@ -263,6 +263,22 @@ class Translation extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	public function getTranslationByRouteKey(string $route, string $key, int $store_id = 0, int $language_id = 0): array {
+		$sql = "SELECT * FROM `" . DB_PREFIX . "translation` WHERE `route` = '" . $this->db->escape($route) . "' AND `key` = '" . $this->db->escape($key) . "'";
+
+		if ($store_id) {
+			$sql .= " AND `store_id` = '" . $store_id . "'";
+		}
+
+		if ($language_id) {
+			$sql .= " AND `language_id` = '" . $language_id . "'";
+		}
+
+		$query = $this->db->query($sql);
+
+		return $query->row;
+	}
+
 	public function autocomplete(array $data = []): array {
 		$sql = "SELECT *, LEFT(`value`, 30) AS `value` FROM `" . DB_PREFIX . "translation`";
 

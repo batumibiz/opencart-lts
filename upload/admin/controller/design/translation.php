@@ -387,6 +387,15 @@ class Translation extends \Opencart\System\Engine\Controller {
 			$json['error']['key'] = $this->language->get('error_key');
 		}
 
+		$this->load->model('design/translation');
+
+		// Check if there is already a route - key pair on the same store using the same language
+		$translation_info = $this->model_design_translation->getTranslationByRouteKey($post_info['route'], $post_info['key'], $post_info['store_id'], $post_info['language_id']);
+
+		if ($translation_info && (!$post_info['translation_id'] || ($translation_info['translation_id'] != (int)$post_info['translation_id']))) {
+			$json['error']['key'] = $this->language->get('error_key_exists');
+		}
+
 		if (!$json) {
 			$this->load->model('design/translation');
 

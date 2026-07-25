@@ -62,6 +62,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - `admin` SEO tab merged with General tab.
 - `admin` Improved table header style.
 - `admin` Improved mobile viewing.
+- `admin` Language Editor - added check for duplicated key.
 - `catalog` [#14790](https://github.com/opencart/opencart/pull/14790) - Updated `catalog/language/en-gb/default.php`, added `text_all`.
 
 ### Removed
