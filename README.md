@@ -174,7 +174,7 @@ The project environment will be available at the following addresses:
   - Login: `admin`
   - Password: `admin`
   - Email: `admin@example.com`
-- **Mailpit** (Email Testing): http://localhost:8025
+- **Mailpit** (Email Testing): http://localhost:18025
 - **Database** (MariaDB):
    - Host: `mysql`
    - Username: `root`
