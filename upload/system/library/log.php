@@ -25,14 +25,6 @@ class Log {
 	 */
 	public function __construct(string $filename) {
 		$this->file = DIR_LOGS . $filename;
-
-		if (!is_file($this->file)) {
-			$handle = fopen($this->file, 'w');
-
-			if ($handle) {
-				fclose($handle);
-			}
-		}
 	}
 
 	/**
