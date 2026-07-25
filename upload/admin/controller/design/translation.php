@@ -18,6 +18,41 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$url = '';
 
+		if (isset($this->request->get['filter_route'])) {
+			$url .= '&filter_route=' . urlencode(html_entity_decode((string)$this->request->get['filter_route'], ENT_QUOTES, 'UTF-8'));
+			$filter_route = (string)$this->request->get['filter_route'];
+		} else {
+			$filter_route = '';
+		}
+
+		if (isset($this->request->get['filter_key'])) {
+			$url .= '&filter_key=' . urlencode(html_entity_decode((string)$this->request->get['filter_key'], ENT_QUOTES, 'UTF-8'));
+			$filter_key = (string)$this->request->get['filter_key'];
+		} else {
+			$filter_key = '';
+		}
+
+		if (isset($this->request->get['filter_value'])) {
+			$url .= '&filter_value=' . urlencode(html_entity_decode((string)$this->request->get['filter_value'], ENT_QUOTES, 'UTF-8'));
+			$filter_value = (string)$this->request->get['filter_value'];
+		} else {
+			$filter_value = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
+			$filter_language_id = (int)$this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = 0;
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -47,6 +82,22 @@ class Translation extends \Opencart\System\Engine\Controller {
 
 		$data['list'] = $this->getList();
 
+		// Store
+		$this->load->model('setting/store');
+
+		$data['stores'] = $this->model_setting_store->getStores();
+
+		// Language
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
+		$data['filter_keyword'] = $filter_route;
+		$data['filter_key'] = $filter_key;
+		$data['filter_value'] = $filter_value;
+		$data['filter_store_id'] = $filter_store_id;
+		$data['filter_language_id'] = $filter_language_id;
+
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -73,36 +124,62 @@ class Translation extends \Opencart\System\Engine\Controller {
 	 * @return string
 	 */
 	public function getList(): string {
+		$url = '';
+
+		if (isset($this->request->get['filter_route'])) {
+			$url .= '&filter_route=' . urlencode(html_entity_decode((string)$this->request->get['filter_route'], ENT_QUOTES, 'UTF-8'));
+			$filter_route = (string)$this->request->get['filter_route'];
+		} else {
+			$filter_route = '';
+		}
+
+		if (isset($this->request->get['filter_key'])) {
+			$url .= '&filter_key=' . urlencode(html_entity_decode((string)$this->request->get['filter_key'], ENT_QUOTES, 'UTF-8'));
+			$filter_key = (string)$this->request->get['filter_key'];
+		} else {
+			$filter_key = '';
+		}
+
+		if (isset($this->request->get['filter_value'])) {
+			$url .= '&filter_value=' . urlencode(html_entity_decode((string)$this->request->get['filter_value'], ENT_QUOTES, 'UTF-8'));
+			$filter_value = (string)$this->request->get['filter_value'];
+		} else {
+			$filter_value = '';
+		}
+
+		if (isset($this->request->get['filter_store_id'])) {
+			$url .= '&filter_store_id=' . (int)$this->request->get['filter_store_id'];
+			$filter_store_id = (int)$this->request->get['filter_store_id'];
+		} else {
+			$filter_store_id = '';
+		}
+
+		if (isset($this->request->get['filter_language_id'])) {
+			$url .= '&filter_language_id=' . (int)$this->request->get['filter_language_id'];
+			$filter_language_id = (int)$this->request->get['filter_language_id'];
+		} else {
+			$filter_language_id = 0;
+		}
+
 		if (isset($this->request->get['sort'])) {
+			$url .= '&sort=' . $this->request->get['sort'];
 			$sort = (string)$this->request->get['sort'];
 		} else {
 			$sort = 'store';
 		}
 
 		if (isset($this->request->get['order'])) {
+			$url .= '&order=' . $this->request->get['order'];
 			$order = (string)$this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
 
 		if (isset($this->request->get['page'])) {
+			$url .= '&page=' . $this->request->get['page'];
 			$page = (int)$this->request->get['page'];
 		} else {
 			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
 		}
 
 		$data['action'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . $url);
@@ -114,10 +191,15 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$data['translations'] = [];
 
 		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
+			'filter_route'       => $filter_route,
+			'filter_key'         => $filter_key,
+			'filter_value'       => $filter_value,
+			'filter_store_id'    => $filter_store_id,
+			'filter_language_id' => $filter_language_id,
+			'sort'               => $sort,
+			'order'              => $order,
+			'start'              => ($page - 1) * $this->config->get('config_pagination_admin'),
+			'limit'              => $this->config->get('config_pagination_admin')
 		];
 
 		$this->load->model('design/translation');
@@ -157,7 +239,7 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$data['sort_key'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=key' . $url);
 		$data['sort_value'] = $this->url->link('design/translation.list', 'user_token=' . $this->session->data['user_token'] . '&sort=value' . $url);
 
-		$translation_total = $this->model_design_translation->getTotalTranslations();
+		$translation_total = $this->model_design_translation->getTotalTranslations($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $translation_total,
@@ -480,6 +562,28 @@ class Translation extends \Opencart\System\Engine\Controller {
 					'value' => $value
 				];
 			}
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function autocomplete(): void {
+		$json = [];
+		$filter_data = [];
+
+		if (isset($this->request->get['filter_route'])) {
+			$filter_data['filter_route'] = $this->request->get['filter_route'];
+		} elseif (isset($this->request->get['filter_key'])) {
+			$filter_data['filter_key'] = $this->request->get['filter_key'];
+		} elseif (isset($this->request->get['filter_value'])) {
+			$filter_data['filter_value'] = $this->request->get['filter_value'];
+		}
+
+		if (!empty($filter_data)) {
+			$filter_data['limit'] = $this->config->get('config_autocomplete_limit');
+			$this->load->model('design/translation');
+			$json = $this->model_design_translation->autocomplete($filter_data);
 		}
 
 		$this->response->addHeader('Content-Type: application/json');

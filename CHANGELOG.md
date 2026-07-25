@@ -14,7 +14,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 ### Added
 - `system` Emulation of `GLOB_BRACE`: introduced a custom `oc_glob()` helper function.
 - `system` CSS minification, minified versions of CSS are used.
-- `admin` [#14857](https://github.com/opencart/opencart/pull/14857) - Add manufacturer filter.
+- `admin` [#14857](https://github.com/opencart/opencart/pull/14857) - Manufacturer filter.
+- `admin` Translation filter.
 - `admin` Remember the last directory in the file manager.
 - `admin` The `date_added` field has been added to the product form.
 - `admin` Modern `Chart.js` library for Dashboard sales and analytics visualization.

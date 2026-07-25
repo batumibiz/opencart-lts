@@ -166,6 +166,32 @@ class Translation extends \Opencart\System\Engine\Model {
 	public function getTranslations(array $data = []): array {
 		$sql = "SELECT *, (SELECT `s`.`name` FROM `" . DB_PREFIX . "store` `s` WHERE `s`.`store_id` = `t`.`store_id`) AS `store`, (SELECT `l`.`name` FROM `" . DB_PREFIX . "language` `l` WHERE `l`.`language_id` = `t`.`language_id`) AS `language` FROM `" . DB_PREFIX . "translation` `t`";
 
+		$implode = [];
+
+		if (!empty($data['filter_route'])) {
+			$implode[] = "LCASE(`route`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_route'])) . "%'";
+		}
+
+		if (!empty($data['filter_key'])) {
+			$implode[] = "LCASE(`key`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_key'])) . "%'";
+		}
+
+		if (!empty($data['filter_value'])) {
+			$implode[] = "LCASE(`value`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_value'])) . "%'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
 		$sort_data = [
 			'store',
 			'language',
@@ -203,22 +229,66 @@ class Translation extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
-	/**
-	 * Get Total Translations
-	 *
-	 * Get the total number of translation records in the database.
-	 *
-	 * @return int total number of translation records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('design/translation');
-	 *
-	 * $translation_total = $this->model_design_translation->getTotalTranslations();
-	 */
-	public function getTotalTranslations(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "translation`");
+	public function getTotalTranslations(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "translation`";
+
+		$implode = [];
+
+		if (!empty($data['filter_route'])) {
+			$implode[] = "LCASE(`route`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_route'])) . "%'";
+		}
+
+		if (!empty($data['filter_key'])) {
+			$implode[] = "LCASE(`key`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_key'])) . "%'";
+		}
+
+		if (!empty($data['filter_value'])) {
+			$implode[] = "LCASE(`value`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_value'])) . "%'";
+		}
+
+		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
+		}
+
+		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
+		}
+
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
+	}
+
+	public function autocomplete(array $data = []): array {
+		$sql = "SELECT *, LEFT(`value`, 30) AS `value` FROM `" . DB_PREFIX . "translation`";
+
+		if (isset($data['filter_route'])) {
+			if (!empty($data['filter_route'])) {
+				$sql .= " WHERE LCASE(`route`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_route'])) . "%'";
+			}
+
+			$sql .= " GROUP BY `route` ORDER BY `route`";
+		} elseif (isset($data['filter_key'])) {
+			if (!empty($data['filter_key'])) {
+				$sql .= " WHERE LCASE(`key`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_key'])) . "%'";
+			}
+
+			$sql .= " GROUP BY `key` ORDER BY `key`";
+		} elseif (isset($data['filter_value'])) {
+			if (!empty($data['filter_value'])) {
+				$sql .= " WHERE LCASE(`value`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_value'])) . "%'";
+			}
+
+			$sql .= " GROUP BY `value` ORDER BY `value`";
+		}
+
+		$sql .= " LIMIT " . (int)$data['limit'];
+		$query = $this->db->query($sql);
+
+		return $query->rows;
 	}
 }

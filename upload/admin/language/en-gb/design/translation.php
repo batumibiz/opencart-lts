@@ -10,6 +10,7 @@ $_['text_edit']        = 'Edit Translation';
 $_['text_default']     = 'Default';
 $_['text_store']       = 'Store';
 $_['text_language']    = 'Language';
+$_['text_filter']      = 'Filter';
 
 // Column
 $_['column_store']     = 'Store';
@@ -30,3 +31,4 @@ $_['entry_value']      = 'Value';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify language editor!';
 $_['error_key']        = 'Key must be between 3 and 64 characters!';
+$_['error_exists']     = 'Warning: Combination of store, language, route, key already exists!';
