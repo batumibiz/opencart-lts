@@ -9,7 +9,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - Entries accompanied by a reference link indicate code borrowed or adapted from external sources.  
 - Entries without a reference link were developed exclusively within this repositor.
 
-## Unreleased
+## [1.0.0] 2026-07-27
 
 ### Added
 - `system` Emulation of `GLOB_BRACE`: introduced a custom `oc_glob()` helper function.
@@ -163,3 +163,5 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 
 ## Soure Code
 Based on [OpenCart 4.1.0.3](https://github.com/opencart/opencart/releases/tag/4.1.0.3) as the foundation for all subsequent development within this branch.
+
+[1.0.0]: https://github.com/oc-plus/oc-plus/releases/tag/1.0.0
