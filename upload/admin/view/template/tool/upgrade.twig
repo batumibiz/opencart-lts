@@ -17,36 +17,28 @@
         <fieldset>
           <legend>{{ text_information }}</legend>
           <div class="row mb-3">
-            <div class="col">
-              <div class="form-control border rounded-start">
-                <div class="lead"><strong>{{ text_current_version }}</strong>
-                  <br/>
-                  <span{% if upgrade %} class="text-danger"{% endif %}>{{ current_version }}</span>
-                </div>
+            <div class="col-sm">
+              <div class="card mb-3">
+                <div class="card-header">{{ text_current_version }}</div>
+                <div class="p-3 h3"><span{% if upgrade %} class="text-danger"{% endif %}>{{ current_version }}</span></div>
               </div>
             </div>
-            <div class="col">
-              <div class="form-control border rounded-start">
-                <div class="lead"><strong>{{ text_latest_version }}</strong>
-                  <br/>
-                  {{ latest_version }}
-                </div>
+            <div class="col-sm">
+              <div class="card mb-3">
+                <div class="card-header">{{ text_latest_version }}</div>
+                <div class="p-3 h3">{{ latest_version }}</div>
               </div>
             </div>
-            <div class="col">
-              <div class="form-control border rounded-start">
-                <div class="lead"><strong>{{ text_date_added }}</strong>
-                  <br/>
-                  {{ date_added }}
-                </div>
+            <div class="col-sm">
+              <div class="card mb-3">
+                <div class="card-header">{{ text_date_added }}</div>
+                <div class="p-3 h3">{{ date_added }}</div>
               </div>
             </div>
           </div>
-          <div class="form-control border rounded-start">
-            <div class="lead"><strong>{{ text_change }}</strong>
-              <br/>
-              {{ log }}
-            </div>
+          <div class="card mb-3">
+            <div class="card-header">{{ text_change }}</div>
+            <div class="p-3">{{ log }}</div>
           </div>
         </fieldset>
         <fieldset>

@@ -5,11 +5,11 @@ $_['heading_title']        = 'Upgrade';
 // Text
 $_['text_success']         = 'Success: You are using the latest version %s!';
 $_['text_upgrade']         = 'Check Latest Version';
-$_['text_information']     = 'Version Information';
+$_['text_information']     = 'OC+ Version Information';
 $_['text_current_version'] = 'Current Version';
 $_['text_latest_version']  = 'Latest Version';
 $_['text_date_added']      = 'Release Date';
-$_['text_change']          = 'Change Log';
+$_['text_change']          = 'Release information';
 $_['text_status']          = 'Upgrade Status';
 $_['text_ready']           = 'Click the upgrade button to upgrade to the latest version...';
 $_['text_download']        = 'Downloading latest...';
