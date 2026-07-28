@@ -67,7 +67,7 @@ class Manufacturer extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/manufacturer.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/manufacturer.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->load->controller('catalog/manufacturer.getList');
+		$data['list'] = $this->getList();
 
 		$stores = [];
 

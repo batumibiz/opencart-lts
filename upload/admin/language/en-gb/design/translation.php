@@ -10,7 +10,6 @@ $_['text_edit']        = 'Edit Translation';
 $_['text_default']     = 'Default';
 $_['text_store']       = 'Store';
 $_['text_language']    = 'Language';
-$_['text_filter']      = 'Filter';
 
 // Column
 $_['column_store']     = 'Store';

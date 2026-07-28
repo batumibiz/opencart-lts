@@ -68,7 +68,7 @@ class Category extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('catalog/category.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('catalog/category.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->load->controller('catalog/category.getList');
+		$data['list'] = $this->getList();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_status'] = $filter_status;

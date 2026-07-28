@@ -138,7 +138,7 @@ class Product extends \Opencart\System\Engine\Controller {
 		$data['copy'] = $this->url->link('catalog/product.copy', 'user_token=' . $this->session->data['user_token']);
 		$data['delete'] = $this->url->link('catalog/product.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->load->controller('catalog/product.getList');
+		$data['list'] = $this->getList();
 
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;

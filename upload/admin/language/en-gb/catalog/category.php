@@ -7,7 +7,6 @@ $_['text_success']            = 'Success: You have modified categories!';
 $_['text_list']               = 'Category List';
 $_['text_add']                = 'Add Category';
 $_['text_edit']               = 'Edit Category';
-$_['text_filter']             = 'Filter';
 $_['text_default']            = 'Default';
 $_['text_general']            = 'Description';
 $_['text_meta']               = 'Meta Tags';

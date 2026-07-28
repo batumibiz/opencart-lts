@@ -49,7 +49,7 @@ class FilterGroup extends \Opencart\System\Engine\Controller {
 
 		$data['user_token'] = $this->session->data['user_token'];
 
-		$data['list'] = $this->load->controller('catalog/filter_group.getList');
+		$data['list'] = $this->getList();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['column_left'] = $this->load->controller('common/column_left');

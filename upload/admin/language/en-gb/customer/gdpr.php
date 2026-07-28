@@ -16,7 +16,6 @@ $_['text_complete']     = 'Complete';
 $_['text_denied']       = 'Denied';
 $_['text_export']       = 'Export';
 $_['text_remove']       = 'Remove';
-$_['text_filter']       = 'Filter';
 
 // Column
 $_['column_email']      = 'E-Mail';

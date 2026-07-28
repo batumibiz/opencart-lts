@@ -10,7 +10,6 @@ $_['text_edit']               = 'Edit Manufacturer';
 $_['text_general']            = 'General';
 $_['text_meta']               = 'Meta Tags';
 $_['text_keyword']            = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
-$_['text_filter']             = 'Filter';
 $_['text_general']            = 'General';
 $_['text_seo']                = 'SEO URL';
 

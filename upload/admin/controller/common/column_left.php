@@ -60,7 +60,7 @@ class ColumnLeft extends \Opencart\System\Engine\Controller {
 
 			if ($this->user->hasPermission('access', 'catalog/filter')) {
 				$filter[] = [
-					'name'     => $this->language->get('text_filter'),
+					'name'     => $this->language->get('text_filters'),
 					'href'     => $this->url->link('catalog/filter', 'user_token=' . $this->session->data['user_token']),
 					'children' => []
 				];

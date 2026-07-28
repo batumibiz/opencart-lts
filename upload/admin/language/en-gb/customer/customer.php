@@ -28,7 +28,6 @@ $_['text_authorize']           = 'Authorize History';
 $_['text_option']              = 'Options';
 $_['text_login']               = 'Login into Store';
 $_['text_unlock']              = 'Unlock Account';
-$_['text_filter']              = 'Filter';
 
 // Column
 $_['column_name']              = 'Customer Name';

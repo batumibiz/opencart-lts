@@ -8,7 +8,6 @@ $_['text_list']           = 'Return List';
 $_['text_add']            = 'Add Return';
 $_['text_edit']           = 'Return (#%s)';
 $_['text_order_id']       = 'Order ID';
-$_['text_filter']         = 'Filter';
 $_['text_customer']       = 'Customer';
 $_['text_date_added']     = 'Date Added';
 $_['text_return']         = 'Return Item';

@@ -12,7 +12,6 @@ $_['text_password']            = 'Password';
 $_['text_other']               = 'Other';
 $_['text_login']               = 'Login History';
 $_['text_authorize']           = 'Authorize History';
-$_['text_filter']              = 'Filter';
 
 // Column
 $_['column_username']          = 'Username';

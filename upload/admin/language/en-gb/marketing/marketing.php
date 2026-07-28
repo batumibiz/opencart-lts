@@ -7,7 +7,6 @@ $_['text_success']      = 'Success: You have modified marketing tracking!';
 $_['text_list']         = 'Marketing Tracking List';
 $_['text_add']          = 'Add Marketing Tracking';
 $_['text_edit']         = 'Edit Marketing Tracking';
-$_['text_filter']       = 'Filter';
 $_['text_history']      = 'History';
 $_['text_history_add']  = 'Add History';
 $_['text_report']       = 'Reports';

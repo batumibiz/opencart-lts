@@ -8,7 +8,6 @@ $_['text_next']         = 'Success: You have modified %s to %s of %s product rat
 $_['text_list']         = 'Review List';
 $_['text_add']          = 'Add Review';
 $_['text_edit']         = 'Edit Review';
-$_['text_filter']       = 'Filter';
 
 // Column
 $_['column_product']    = 'Product';

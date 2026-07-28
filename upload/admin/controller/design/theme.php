@@ -39,7 +39,7 @@ class Theme extends \Opencart\System\Engine\Controller {
 		$data['add'] = $this->url->link('design/theme.form', 'user_token=' . $this->session->data['user_token'] . $url);
 		$data['delete'] = $this->url->link('design/theme.delete', 'user_token=' . $this->session->data['user_token']);
 
-		$data['list'] = $this->load->controller('design/theme.getList');
+		$data['list'] = $this->getList();
 
 		$data['user_token'] = $this->session->data['user_token'];
 

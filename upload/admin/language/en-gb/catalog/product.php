@@ -15,7 +15,6 @@ $_['text_model']                 = 'Model';
 $_['text_price']                 = 'Price';
 $_['text_stock']                 = 'Stock';
 $_['text_specification']         = 'Specification';
-$_['text_filter']                = 'Filter';
 $_['text_default']               = 'Default';
 $_['text_keyword']               = 'Do not use spaces, instead replace spaces with - and make sure the SEO URL is globally unique.';
 $_['text_option_add']            = 'Add Option';

@@ -7,7 +7,6 @@ $_['text_success']               = 'Success: You have modified subscriptions!';
 $_['text_list']                  = 'Subscription List';
 $_['text_add']                   = 'Add Subscription';
 $_['text_edit']                  = 'Subscription (#%s)';
-$_['text_filter']                = 'Filter';
 $_['text_date_added']            = 'Date Added';
 $_['text_order_id']              = 'Order ID';
 $_['text_order']                 = 'Orders';

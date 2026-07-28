@@ -6,7 +6,6 @@ $_['heading_title']    = 'Article Comments';
 $_['text_success']     = 'Success: You have modified article comments!';
 $_['text_next']        = 'Success: You have modified %s to %s of %s comment ratings!';
 $_['text_list']        = 'Article Comments List';
-$_['text_filter']      = 'Filter';
 $_['text_by']          = 'by';
 $_['text_info']        = 'Comment Information';
 $_['text_rating']      = 'Rating:';
