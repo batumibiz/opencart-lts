@@ -1,5 +1,7 @@
+# Common folders and files
 /.idea
 /.cache
+/upload/.htaccess
 
 # Image files
 /upload/image/cache/*
