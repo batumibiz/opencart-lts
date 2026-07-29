@@ -60,7 +60,6 @@ class Antispam extends Controller {
 
 	public function list(): void {
 		$this->load->language('cms/antispam');
-
 		$this->response->setOutput($this->getList());
 	}
 

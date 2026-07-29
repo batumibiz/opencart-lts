@@ -52,7 +52,6 @@ class OrderStatus extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/order_status');
-
 		$this->response->setOutput($this->getList());
 	}
 

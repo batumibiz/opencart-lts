@@ -51,8 +51,7 @@ class AttributeGroup extends Controller {
 
 	public function list(): void {
 		$this->load->language('catalog/attribute_group');
-
-		$this->response->setOutput($this->load->controller('catalog/attribute_group.getList'));
+		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {

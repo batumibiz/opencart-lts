@@ -52,8 +52,7 @@ class Filter extends Controller {
 
 	public function list(): void {
 		$this->load->language('catalog/filter');
-
-		$this->response->setOutput($this->load->controller('catalog/filter.getList'));
+		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {

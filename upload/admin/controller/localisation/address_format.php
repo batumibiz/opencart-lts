@@ -44,7 +44,6 @@ class AddressFormat extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/address_format');
-
 		$this->response->setOutput($this->getList());
 	}
 

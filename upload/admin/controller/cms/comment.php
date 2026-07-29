@@ -39,7 +39,6 @@ class Comment extends Controller {
 
 	public function list(): void {
 		$this->load->language('cms/comment');
-
 		$this->response->setOutput($this->getList());
 	}
 

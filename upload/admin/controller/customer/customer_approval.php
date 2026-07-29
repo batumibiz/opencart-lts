@@ -43,7 +43,6 @@ class CustomerApproval extends Controller {
 
 	public function list(): void {
 		$this->load->language('customer/customer_approval');
-
 		$this->response->setOutput($this->getList());
 	}
 

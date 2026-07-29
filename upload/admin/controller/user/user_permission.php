@@ -52,7 +52,6 @@ class UserPermission extends Controller {
 
 	public function list(): void {
 		$this->load->language('user/user_group');
-
 		$this->response->setOutput($this->getList());
 	}
 

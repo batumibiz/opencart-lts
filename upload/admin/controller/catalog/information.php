@@ -52,8 +52,7 @@ class Information extends Controller {
 
 	public function list(): void {
 		$this->load->language('catalog/information');
-
-		$this->response->setOutput($this->load->controller('catalog/information.getList'));
+		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {

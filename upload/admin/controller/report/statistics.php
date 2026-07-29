@@ -40,7 +40,6 @@ class Statistics extends Controller {
 
 	public function list(): void {
 		$this->load->language('report/statistics');
-
 		$this->response->setOutput($this->getList());
 	}
 

@@ -1,18 +1,27 @@
 <?php
-/**
- * @package      OpenCart
- *
- * @author       Daniel Kerr
- * @copyright    Copyright (c) 2005 - 2022, OpenCart, Ltd. (https://www.opencart.com/)
- * @license      https://opensource.org/licenses/GPL-3.0
- *
- * @see         https://www.opencart.com
- */
+
 namespace Opencart\System\Engine;
+
+use Opencart\System\Library\Document;
+use Opencart\System\Library\Language;
+use Opencart\System\Library\Request;
+use Opencart\System\Library\Response;
+use Opencart\System\Library\Session;
+use Opencart\System\Library\Url;
+
 /**
  * Class Controller
  *
  * @mixin \Opencart\System\Engine\Registry
+ *
+ * @property Config   $config
+ * @property Document $document
+ * @property Language $language
+ * @property Loader   $load
+ * @property Request  $request
+ * @property Response $response
+ * @property Session  $session
+ * @property Url      $url
  */
 class Controller {
 	/**

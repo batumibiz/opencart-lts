@@ -124,7 +124,6 @@ class User extends Controller {
 
 	public function list(): void {
 		$this->load->language('user/user');
-
 		$this->response->setOutput($this->getList());
 	}
 

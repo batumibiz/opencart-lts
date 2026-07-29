@@ -52,8 +52,7 @@ class Option extends Controller {
 
 	public function list(): void {
 		$this->load->language('catalog/option');
-
-		$this->response->setOutput($this->load->controller('catalog/option.getList'));
+		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {

@@ -52,7 +52,6 @@ class ReturnAction extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/return_action');
-
 		$this->response->setOutput($this->getList());
 	}
 

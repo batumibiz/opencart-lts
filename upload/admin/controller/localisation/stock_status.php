@@ -52,7 +52,6 @@ class StockStatus extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/stock_status');
-
 		$this->response->setOutput($this->getList());
 	}
 

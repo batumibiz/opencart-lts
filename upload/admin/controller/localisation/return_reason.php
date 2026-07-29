@@ -52,7 +52,6 @@ class ReturnReason extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/return_reason');
-
 		$this->response->setOutput($this->getList());
 	}
 

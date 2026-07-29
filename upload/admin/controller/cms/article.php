@@ -52,7 +52,6 @@ class Article extends Controller {
 
 	public function list(): void {
 		$this->load->language('cms/article');
-
 		$this->response->setOutput($this->getList());
 	}
 

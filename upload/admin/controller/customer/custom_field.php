@@ -52,7 +52,6 @@ class CustomField extends Controller {
 
 	public function list(): void {
 		$this->load->language('customer/custom_field');
-
 		$this->response->setOutput($this->getList());
 	}
 

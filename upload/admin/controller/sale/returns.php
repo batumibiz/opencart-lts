@@ -146,7 +146,6 @@ class Returns extends Controller {
 
 	public function list(): void {
 		$this->load->language('sale/returns');
-
 		$this->response->setOutput($this->getList());
 	}
 

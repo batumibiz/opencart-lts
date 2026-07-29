@@ -49,7 +49,6 @@ class Online extends Controller {
 
 	public function list(): void {
 		$this->load->language('report/online');
-
 		$this->response->setOutput($this->getList());
 	}
 

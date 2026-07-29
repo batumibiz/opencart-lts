@@ -188,7 +188,6 @@ class Affiliate extends Controller {
 
 	public function list(): void {
 		$this->load->language('marketing/affiliate');
-
 		$this->response->setOutput($this->getList());
 	}
 

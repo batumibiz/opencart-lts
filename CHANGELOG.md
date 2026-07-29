@@ -16,14 +16,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - Nothing
 
 #### Changed
-- Improved filter JS
-- Deep refactoring of filter functionality
+- `admin` Improved filter JS
+- `admin` Deep refactoring of filter functionality
 
 #### Deprecated
 - Nothing
 
 #### Removed
-- Nothing
+- `admin` Removed a large amount of legacy and duplicate code.
 
 #### Fixed
 - Nothing

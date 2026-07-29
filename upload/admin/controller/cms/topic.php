@@ -52,7 +52,6 @@ class Topic extends Controller {
 
 	public function list(): void {
 		$this->load->language('cms/topic');
-
 		$this->response->setOutput($this->getList());
 	}
 

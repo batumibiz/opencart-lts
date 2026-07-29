@@ -44,8 +44,7 @@ class Theme extends Controller {
 
 	public function list(): void {
 		$this->load->language('design/theme');
-
-		$this->response->setOutput($this->load->controller('design/theme.getList'));
+		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {

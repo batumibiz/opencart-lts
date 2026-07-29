@@ -52,7 +52,6 @@ class TaxRate extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/tax_rate');
-
 		$this->response->setOutput($this->getList());
 	}
 

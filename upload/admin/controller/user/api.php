@@ -52,7 +52,6 @@ class Api extends Controller {
 
 	public function list(): void {
 		$this->load->language('user/api');
-
 		$this->response->setOutput($this->getList());
 	}
 

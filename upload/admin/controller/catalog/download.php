@@ -52,8 +52,7 @@ class Download extends Controller {
 
 	public function list(): void {
 		$this->load->language('catalog/download');
-
-		$this->response->setOutput($this->load->controller('catalog/download.getList'));
+		$this->response->setOutput($this->getList());
 	}
 
 	public function getList(): string {

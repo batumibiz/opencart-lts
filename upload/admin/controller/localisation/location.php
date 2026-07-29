@@ -52,7 +52,6 @@ class Location extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/location');
-
 		$this->response->setOutput($this->getList());
 	}
 

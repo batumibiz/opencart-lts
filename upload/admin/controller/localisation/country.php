@@ -74,7 +74,6 @@ class Country extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/country');
-
 		$this->response->setOutput($this->getList());
 	}
 

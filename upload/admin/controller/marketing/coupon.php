@@ -57,7 +57,6 @@ class Coupon extends Controller {
 
 	public function list(): void {
 		$this->load->language('marketing/coupon');
-
 		$this->response->setOutput($this->getList());
 	}
 

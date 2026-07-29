@@ -52,7 +52,6 @@ class SubscriptionStatus extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/subscription_status');
-
 		$this->response->setOutput($this->getList());
 	}
 

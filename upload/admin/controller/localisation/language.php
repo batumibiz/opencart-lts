@@ -52,7 +52,6 @@ class Language extends Controller {
 
 	public function list(): void {
 		$this->load->language('localisation/language');
-
 		$this->response->setOutput($this->getList());
 	}
 
