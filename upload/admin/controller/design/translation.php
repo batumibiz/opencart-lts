@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Design;
-/**
- * Class Translation
- *
- * @package Opencart\Admin\Controller\Design
- */
-class Translation extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Translation extends Controller {
 	public function index(): void {
 		$this->load->language('design/translation');
 
@@ -107,22 +101,12 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/translation', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('design/translation');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		$url = '';
 
@@ -256,11 +240,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 		return $this->load->view('design/translation_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('design/translation');
 
@@ -358,11 +337,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/translation_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('design/translation');
 
@@ -412,11 +386,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('design/translation');
 
@@ -446,11 +415,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Path
-	 *
-	 * @return void
-	 */
 	public function path(): void {
 		$this->load->language('design/translation');
 
@@ -513,11 +477,6 @@ class Translation extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Translation
-	 *
-	 * @return void
-	 */
 	public function translation(): void {
 		$this->load->language('design/translation');
 

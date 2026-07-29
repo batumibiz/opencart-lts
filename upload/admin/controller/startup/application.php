@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Startup;
-/**
- * Class Application
- *
- * @package Opencart\Admin\Controller\Startup
- */
-class Application extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Application extends Controller {
 	public function index(): void {
 		// Url
 		$this->registry->set('url', new \Opencart\System\Library\Url($this->config->get('site_url')));

@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
-/**
- * Class Logout
- *
- * Can be loaded using $this->load->controller('common/logout');
- *
- * @package Opencart\Admin\Controller\Common
- */
-class Logout extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Logout extends Controller {
 	public function index(): void {
 		$this->user->logout();
 

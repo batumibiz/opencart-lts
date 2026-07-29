@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
-/**
- * Class Login
- *
- * Can be loaded using $this->load->controller('common/login');
- *
- * @package Opencart\Admin\Controller\Common
- */
-class Login extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Login extends Controller {
 	public function index(): void {
 		$this->load->language('common/login');
 
@@ -59,11 +51,6 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/login', $data));
 	}
 
-	/**
-	 * Login
-	 *
-	 * @return void
-	 */
 	public function login(): void {
 		$this->load->language('common/login');
 

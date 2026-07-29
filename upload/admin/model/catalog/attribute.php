@@ -1,5 +1,9 @@
 <?php
+
 namespace Opencart\Admin\Model\Catalog;
+
+use Opencart\System\Engine\Model;
+
 /**
  * Class Attribute
  *
@@ -7,7 +11,7 @@ namespace Opencart\Admin\Model\Catalog;
  *
  * @package Opencart\Admin\Model\Catalog
  */
-class Attribute extends \Opencart\System\Engine\Model {
+class Attribute extends Model {
 	/**
 	 * Add Attribute
 	 *

@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
-/**
- * Class Notification
- *
- * @package Opencart\Admin\Controller\Startup
- */
-class Notification extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Notification extends Controller {
 	public function index(): void {
 		if (empty($this->request->cookie['notification'])) {
 			$curl = curl_init();

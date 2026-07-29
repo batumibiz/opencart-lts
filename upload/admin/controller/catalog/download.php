@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Catalog;
-/**
- * Class Download
- *
- * Can be loaded using $this->load->controller('catalog/download');
- *
- * @package Opencart\Admin\Controller\Catalog
- */
-class Download extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Download extends Controller {
 	public function index(): void {
 		$this->load->language('catalog/download');
 
@@ -58,22 +50,12 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/download', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('catalog/download');
 
 		$this->response->setOutput($this->load->controller('catalog/download.getList'));
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -168,11 +150,6 @@ class Download extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/download_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('catalog/download');
 
@@ -263,11 +240,6 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/download_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('catalog/download');
 
@@ -334,11 +306,6 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('catalog/download');
 
@@ -379,22 +346,12 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Report
-	 *
-	 * @return void
-	 */
 	public function report(): void {
 		$this->load->language('catalog/download');
 
 		$this->response->setOutput($this->getReport());
 	}
 
-	/**
-	 * Get Report
-	 *
-	 * @return string
-	 */
 	private function getReport(): string {
 		if (isset($this->request->get['download_id'])) {
 			$download_id = (int)$this->request->get['download_id'];
@@ -458,11 +415,6 @@ class Download extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/download_report', $data);
 	}
 
-	/**
-	 * Upload
-	 *
-	 * @return void
-	 */
 	public function upload(): void {
 		$this->load->language('catalog/download');
 
@@ -537,11 +489,6 @@ class Download extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Download
-	 *
-	 * @return void
-	 */
 	public function download(): void {
 		$this->load->language('catalog/download');
 
@@ -594,11 +541,6 @@ class Download extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Autocomplete
-	 *
-	 * @return void
-	 */
 	public function autocomplete(): void {
 		$json = [];
 

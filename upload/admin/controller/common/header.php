@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
-/**
- * Class Header
- *
- * Can be loaded using $this->load->controller('common/header');
- *
- * @package Opencart\Admin\Controller\Common
- */
-class Header extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return string
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Header extends Controller {
 	public function index(): string {
 		$data['lang'] = $this->language->get('code');
 		$data['direction'] = $this->language->get('direction');

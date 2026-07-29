@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
-/**
- * Class Security
- *
- * Can be loaded using $this->load->controller('common/security');
- *
- * @package Opencart\Admin\Controller\Common
- */
-class Security extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return string
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Security extends Controller {
 	public function index(): string {
 		$this->load->language('common/security');
 
@@ -23,22 +15,12 @@ class Security extends \Opencart\System\Engine\Controller {
 		return $this->load->view('common/security', $data);
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('common/security');
 
 		$this->response->setOutput($this->load->controller('common/security.getList'));
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		// Install directory exists
 		$path = DIR_OPENCART . 'install/';
@@ -110,11 +92,6 @@ class Security extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Install
-	 *
-	 * @return void
-	 */
 	public function install(): void {
 		$this->load->language('common/security');
 
@@ -174,11 +151,6 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Storage
-	 *
-	 * @return void
-	 */
 	public function storage(): void {
 		$this->load->language('common/security');
 
@@ -363,11 +335,6 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Admin
-	 *
-	 * @return void
-	 */
 	public function admin(): void {
 		$this->load->language('common/security');
 
@@ -528,11 +495,6 @@ class Security extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('common/security');
 

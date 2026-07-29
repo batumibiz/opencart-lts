@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Marketplace;
-/**
- * Class Modification
- *
- * @package Opencart\Admin\Controller\Marketplace
- */
-class Modification extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Modification extends Controller {
 	public function index(): void {
 		$this->load->language('marketplace/modification');
 
@@ -60,22 +54,12 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/modification', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('marketplace/modification');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -173,13 +157,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/modification_list', $data);
 	}
 
-	/**
-	 * Refresh
-	 *
-	 * @throws \Exception
-	 *
-	 * @return void
-	 */
 	public function refresh(): void {
 		$this->load->language('marketplace/modification');
 
@@ -562,20 +539,10 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Log
-	 *
-	 * @return void
-	 */
 	public function log(): void {
 		$this->response->setOutput($this->getLog());
 	}
 
-	/**
-	 * getLog
-	 *
-	 * @return string
-	 */
 	public function getLog(): string {
 		$file = DIR_LOGS . 'ocmod.log';
 
@@ -586,11 +553,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Clear
-	 *
-	 * @return void
-	 */
 	public function clear(): void {
 		$this->load->language('marketplace/modification');
 
@@ -645,11 +607,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
 	public function enable(): void {
 		$this->load->language('marketplace/modification');
 
@@ -677,11 +634,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
 	public function disable(): void {
 		$this->load->language('marketplace/modification');
 
@@ -709,11 +661,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('marketplace/modification');
 

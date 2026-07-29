@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Localisation;
-/**
- * Class Length Class
- *
- * @package Opencart\Admin\Controller\Localisation
- */
-class LengthClass extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class LengthClass extends Controller {
 	public function index(): void {
 		$this->load->language('localisation/length_class');
 
@@ -56,22 +50,12 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/length_class', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('localisation/length_class');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -167,11 +151,6 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		return $this->load->view('localisation/length_class_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('localisation/length_class');
 
@@ -244,11 +223,6 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/length_class_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('localisation/length_class');
 
@@ -292,11 +266,6 @@ class LengthClass extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('localisation/length_class');
 

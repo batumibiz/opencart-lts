@@ -1,25 +1,14 @@
 <?php
+
 namespace Opencart\Admin\Controller\Extension;
-/**
- * Class Captcha
- *
- * @package Opencart\Admin\Controller\Extension
- */
-class Captcha extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Captcha extends Controller {
 	public function index(): void {
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		// Had top load again because the method is called directly.
 		$this->load->language('extension/captcha');
@@ -75,11 +64,6 @@ class Captcha extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/captcha', $data);
 	}
 
-	/**
-	 * Install
-	 *
-	 * @return void
-	 */
 	public function install(): void {
 		$this->load->language('extension/captcha');
 
@@ -143,11 +127,6 @@ class Captcha extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Uninstall
-	 *
-	 * @return void
-	 */
 	public function uninstall(): void {
 		$this->load->language('extension/captcha');
 

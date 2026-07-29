@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\User;
-/**
- * Class Profile
- *
- * @package Opencart\Admin\Controller\User
- */
-class Profile extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Profile extends Controller {
 	public function index(): void {
 		$this->load->language('user/profile');
 
@@ -84,11 +78,6 @@ class Profile extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/profile', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('user/profile');
 

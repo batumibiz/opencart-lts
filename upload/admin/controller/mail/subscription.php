@@ -1,11 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Mail;
-/**
- * Class Subscription
- *
- * @package Opencart\Admin\Controller\Mail
- */
-class Subscription extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Subscription extends Controller {
 	/**
 	 * History
 	 *

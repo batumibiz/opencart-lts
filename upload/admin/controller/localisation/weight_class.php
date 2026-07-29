@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Localisation;
-/**
- * Class Weight Class
- *
- * @package Opencart\Admin\Controller\Localisation
- */
-class WeightClass extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class WeightClass extends Controller {
 	public function index(): void {
 		$this->load->language('localisation/weight_class');
 
@@ -54,22 +48,12 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/weight_class', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('localisation/weight_class');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -165,11 +149,6 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		return $this->load->view('localisation/weight_class_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('localisation/weight_class');
 
@@ -242,11 +221,6 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/weight_class_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('localisation/weight_class');
 
@@ -290,11 +264,6 @@ class WeightClass extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('localisation/weight_class');
 

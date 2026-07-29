@@ -1,5 +1,9 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
+
+use Opencart\System\Engine\Controller;
+
 /**
  * Class Pagination
  *
@@ -16,14 +20,7 @@ namespace Opencart\Admin\Controller\Common;
  *
  * @package Opencart\Admin\Controller\Common
  */
-class Pagination extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @param array<string, mixed> $setting array of filters
-	 *
-	 * @return string
-	 */
+class Pagination extends Controller {
 	public function index(array $setting): string {
 		if (isset($setting['total'])) {
 			$total = $setting['total'];

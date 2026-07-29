@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\User;
-/**
- * Class Api
- *
- * @package Opencart\Admin\Controller\User
- */
-class Api extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Api extends Controller {
 	public function index(): void {
 		$this->load->language('user/api');
 
@@ -56,22 +50,12 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/api', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('user/api');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -169,11 +153,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		return $this->load->view('user/api_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('user/api');
 
@@ -265,11 +244,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('user/api_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('user/api');
 
@@ -316,11 +290,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('user/api');
 
@@ -350,22 +319,12 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * History
-	 *
-	 * @return void
-	 */
 	public function history(): void {
 		$this->load->language('user/api');
 
 		$this->response->setOutput($this->getHistory());
 	}
 
-	/**
-	 * Get History
-	 *
-	 * @return string
-	 */
 	public function getHistory(): string {
 		if (isset($this->request->get['api_id'])) {
 			$api_id = (int)$this->request->get['api_id'];

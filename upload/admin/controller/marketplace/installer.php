@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Marketplace;
-/**
- * Class Installer
- *
- * @package Opencart\Admin\Controller\Marketplace
- */
-class Installer extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Installer extends Controller {
 	public function index(): void {
 		$this->load->language('marketplace/installer');
 
@@ -52,22 +46,12 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/installer', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('marketplace/installer');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		$this->load->language('marketplace/installer');
 
@@ -214,11 +198,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/installer_extension', $data);
 	}
 
-	/**
-	 * Upload
-	 *
-	 * @return void
-	 */
 	public function upload(): void {
 		$this->load->language('marketplace/installer');
 
@@ -360,11 +339,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Install
-	 *
-	 * @return void
-	 */
 	public function install(): void {
 		$this->load->language('marketplace/installer');
 
@@ -508,11 +482,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Xml
-	 *
-	 * @return void
-	 */
 	public function xml(): void {
 		$this->load->language('marketplace/installer');
 
@@ -643,11 +612,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Uninstall
-	 *
-	 * @return void
-	 */
 	public function uninstall(): void {
 		$this->load->language('marketplace/installer');
 
@@ -768,11 +732,6 @@ class Installer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('marketplace/installer');
 

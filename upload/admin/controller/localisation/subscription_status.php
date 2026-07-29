@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Localisation;
-/**
- * Class Subscription Status
- *
- * @package Opencart\Admin\Controller\Localisation
- */
-class SubscriptionStatus extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class SubscriptionStatus extends Controller {
 	public function index(): void {
 		$this->load->language('localisation/subscription_status');
 
@@ -56,22 +50,12 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/subscription_status', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('localisation/subscription_status');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -165,11 +149,6 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		return $this->load->view('localisation/subscription_status_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('localisation/subscription_status');
 
@@ -234,11 +213,6 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('localisation/subscription_status_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('localisation/subscription_status');
 
@@ -277,11 +251,6 @@ class SubscriptionStatus extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('localisation/subscription_status');
 

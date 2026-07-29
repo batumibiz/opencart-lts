@@ -1,30 +1,12 @@
 <?php
-/*
-Upgrade Process
-
-1. Check for latest version
-
-2. Download a copy of the latest version
-
-3. Add and replace the files with the ones from latest version
-
-4. Redirect to upgrade page
-*/
 
 namespace Opencart\Admin\Controller\Tool;
-/**
- * Class Upgrade
- *
- * @package Opencart\Admin\Controller\Tool
- */
-class Upgrade extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Upgrade extends Controller {
 	public const OC_VERSION_URL = 'https://raw.githubusercontent.com/oc-plus/oc-plus-update/main/version.json';
 
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
 	public function index(): void {
 		$this->load->language('tool/upgrade');
 
@@ -91,22 +73,12 @@ class Upgrade extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/upgrade', $data));
 	}
 
-	/**
-	 * Download
-	 *
-	 * @return void
-	 */
 	public function download(): void {
 		$json['error'] = $this->language->get('error_download');
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Install
-	 *
-	 * @return void
-	 */
 	public function install(): void {
 		$json['error'] = $this->language->get('error_unzip');
 		$this->response->addHeader('Content-Type: application/json');

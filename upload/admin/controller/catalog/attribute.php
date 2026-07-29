@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Catalog;
-/**
- * Class Attribute
- *
- * Can be loaded using $this->load->controller('catalog/attribute');
- *
- * @package Opencart\Admin\Controller\Catalog
- */
-class Attribute extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Attribute extends Controller {
 	public function index(): void {
 		$this->load->language('catalog/attribute');
 
@@ -58,22 +50,12 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/attribute', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('catalog/attribute');
 
 		$this->response->setOutput($this->load->controller('catalog/attribute.getList'));
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -166,11 +148,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/attribute_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('catalog/attribute');
 
@@ -258,11 +235,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/attribute_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('catalog/attribute');
 
@@ -311,11 +283,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('catalog/attribute');
 
@@ -356,11 +323,6 @@ class Attribute extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Autocomplete
-	 *
-	 * @return void
-	 */
 	public function autocomplete(): void {
 		$json = [];
 

@@ -1,21 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Error;
-/**
- * Class Exception
- *
- * @package Opencart\Admin\Controller\Error
- */
-class Exception extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @param string $message
-	 * @param string $code
-	 * @param string $file
-	 * @param string $line
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Exception extends Controller {
 	public function index(string $message, string $code, string $file, string $line): void {
 		$this->load->language('error/exception');
 

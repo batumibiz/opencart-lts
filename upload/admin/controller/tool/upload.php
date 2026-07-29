@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Tool;
-/**
- * Class Upload
- *
- * @package Opencart\Admin\Controller\Tool
- */
-class Upload extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Upload extends Controller {
 	public function index(): void {
 		$this->load->language('tool/upload');
 
@@ -56,22 +50,12 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/upload', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('tool/upload');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -232,11 +216,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 		return $this->load->view('tool/upload_list', $data);
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('tool/upload');
 
@@ -273,11 +252,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Download
-	 *
-	 * @return void
-	 */
 	public function download(): void {
 		$this->load->language('tool/upload');
 
@@ -339,11 +313,6 @@ class Upload extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Upload
-	 *
-	 * @return void
-	 */
 	public function upload(): void {
 		$this->load->language('tool/upload');
 

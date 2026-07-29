@@ -1,25 +1,14 @@
 <?php
+
 namespace Opencart\Admin\Controller\Extension;
-/**
- * Class Analytics
- *
- * @package Opencart\Admin\Controller\Extension
- */
-class Analytics extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Analytics extends Controller {
 	public function index(): void {
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		$this->load->language('extension/analytics');
 
@@ -101,11 +90,6 @@ class Analytics extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/analytics', $data);
 	}
 
-	/**
-	 * Install
-	 *
-	 * @return void
-	 */
 	public function install(): void {
 		$this->load->language('extension/analytics');
 
@@ -169,11 +153,6 @@ class Analytics extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Uninstall
-	 *
-	 * @return void
-	 */
 	public function uninstall(): void {
 		$this->load->language('extension/analytics');
 

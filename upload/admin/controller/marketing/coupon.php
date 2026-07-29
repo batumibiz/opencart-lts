@@ -1,11 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Marketing;
-/**
- * Class Coupon
- *
- * @package Opencart\Admin\Controller\Marketing
- */
-class Coupon extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Coupon extends Controller {
 	/**
 	 * Index
 	 *
@@ -56,22 +55,12 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/coupon', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('marketing/coupon');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -170,11 +159,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketing/coupon_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('marketing/coupon');
 
@@ -350,11 +334,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/coupon_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('marketing/coupon');
 
@@ -412,11 +391,6 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('marketing/coupon');
 
@@ -446,22 +420,12 @@ class Coupon extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * History
-	 *
-	 * @return void
-	 */
 	public function history(): void {
 		$this->load->language('marketing/coupon');
 
 		$this->response->setOutput($this->getHistory());
 	}
 
-	/**
-	 * Get History
-	 *
-	 * @return string
-	 */
 	public function getHistory(): string {
 		if (isset($this->request->get['coupon_id'])) {
 			$coupon_id = (int)$this->request->get['coupon_id'];

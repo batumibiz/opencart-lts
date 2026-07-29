@@ -1,22 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Mail;
-/**
- * Class Affiliate
- *
- * @package Opencart\Admin\Controller\Mail
- */
-class Affiliate extends \Opencart\System\Engine\Controller {
-	/**
-	 * Approve
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 * @param mixed             $output
-	 *
-	 * @throws \Exception
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Affiliate extends Controller {
 	public function approve(string &$route, array &$args, &$output): void {
 		// Customer
 		if (isset($args[0])) {
@@ -95,17 +83,6 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Deny
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 * @param mixed             $output
-	 *
-	 * @throws \Exception
-	 *
-	 * @return void
-	 */
 	public function deny(string &$route, array &$args, &$output): void {
 		// Customer
 		if (isset($args[0])) {

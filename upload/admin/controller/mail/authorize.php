@@ -1,11 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Mail;
-/**
- * Class Authorize
- *
- * @package Opencart\Admin\Controller\Mail
- */
-class Authorize extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Authorize extends Controller {
 	/**
 	 * Index
 	 *

@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Marketplace;
-/**
- * Class API
- *
- * @package Opencart\Admin\Controller\Marketplace
- */
-class Api extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Api extends Controller {
 	public function index(): void {
 		$this->load->language('marketplace/api');
 
@@ -19,11 +13,6 @@ class Api extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/api', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('marketplace/api');
 

@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Catalog;
-/**
- * Class Category
- *
- * Can be loaded using $this->load->controller('catalog/category');
- *
- * @package Opencart\Admin\Controller\Catalog
- */
-class Category extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Category extends Controller {
 	public function index(): void {
 		$this->load->language('catalog/category');
 
@@ -82,22 +74,12 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/category', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('catalog/category');
 
 		$this->response->setOutput($this->load->controller('catalog/category.getList'));
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -229,11 +211,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/category_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('catalog/category');
 
@@ -430,11 +407,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/category_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('catalog/category');
 
@@ -520,11 +492,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Repair
-	 *
-	 * @return void
-	 */
 	public function repair(): void {
 		$this->load->language('catalog/category');
 
@@ -546,11 +513,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('catalog/category');
 
@@ -580,11 +542,6 @@ class Category extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Autocomplete
-	 *
-	 * @return void
-	 */
 	public function autocomplete(): void {
 		$json = [];
 

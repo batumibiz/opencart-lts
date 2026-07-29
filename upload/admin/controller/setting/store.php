@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Setting;
-/**
- * Class Store
- *
- * @package Opencart\Admin\Controller\Setting
- */
-class Store extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Store extends Controller {
 	public function index(): void {
 		$this->load->language('setting/store');
 
@@ -48,22 +42,12 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('setting/store', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('setting/store');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -117,11 +101,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		return $this->load->view('setting/store_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('setting/store');
 
@@ -643,11 +622,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('setting/store_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('setting/store');
 
@@ -773,11 +747,6 @@ class Store extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('setting/store');
 

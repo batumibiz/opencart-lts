@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Startup;
-/**
- * Class Login
- *
- * @package Opencart\Admin\Controller\Startup
- */
-class Login extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return \Opencart\System\Engine\Action
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Login extends Controller {
 	public function index(): ?object {
 		if (isset($this->request->get['route'])) {
 			$route = (string)$this->request->get['route'];

@@ -1,16 +1,8 @@
 <?php
+
 namespace Opencart\Admin\Controller\Report;
-/**
- * Class Report
- *
- * @package Opencart\Admin\Controller\Report
- */
+
 class Report extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
 	public function index(): void {
 		$this->load->language('report/report');
 

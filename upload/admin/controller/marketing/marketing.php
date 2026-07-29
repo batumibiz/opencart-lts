@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Marketing;
-/**
- * Class Marketing
- *
- * @package Opencart\Admin\Controller\Marketing
- */
-class Marketing extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Marketing extends Controller {
 	public function index(): void {
 		$this->load->language('marketing/marketing');
 
@@ -101,22 +95,12 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/marketing', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('marketing/marketing');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -288,11 +272,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketing/marketing_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('marketing/marketing');
 
@@ -388,11 +367,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketing/marketing_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('marketing/marketing');
 
@@ -441,11 +415,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('marketing/marketing');
 
@@ -475,22 +444,12 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Report
-	 *
-	 * @return void
-	 */
 	public function report(): void {
 		$this->load->language('marketing/marketing');
 
 		$this->response->setOutput($this->getReport());
 	}
 
-	/**
-	 * Get Report
-	 *
-	 * @return string
-	 */
 	public function getReport(): string {
 		if (isset($this->request->get['marketing_id'])) {
 			$marketing_id = (int)$this->request->get['marketing_id'];
@@ -554,11 +513,6 @@ class Marketing extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketing/marketing_report', $data);
 	}
 
-	/**
-	 * Autocomplete
-	 *
-	 * @return void
-	 */
 	public function autocomplete(): void {
 		$json = [];
 

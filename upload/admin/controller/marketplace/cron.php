@@ -1,11 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Marketplace;
-/**
- * Class Cron
- *
- * @package Opencart\Admin\Controller\Marketplace
- */
-class Cron extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Cron extends Controller {
 	/**
 	 * Index
 	 *
@@ -58,22 +57,12 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/cron', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('marketplace/cron');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -175,11 +164,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/cron_list', $data);
 	}
 
-	/**
-	 * Run
-	 *
-	 * @return void
-	 */
 	public function run(): void {
 		$this->load->language('marketplace/cron');
 
@@ -220,11 +204,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
 	public function enable(): void {
 		$this->load->language('marketplace/cron');
 
@@ -252,11 +231,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
 	public function disable(): void {
 		$this->load->language('marketplace/cron');
 
@@ -284,11 +258,6 @@ class Cron extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('marketplace/cron');
 

@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Setting;
-/**
- * Class Setting
- *
- * @package Opencart\Admin\Controller\Setting
- */
-class Setting extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Setting extends Controller {
 	public function index(): void {
 		$this->load->language('setting/setting');
 
@@ -498,11 +492,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('setting/setting', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('setting/setting');
 
@@ -692,11 +681,6 @@ class Setting extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Theme
-	 *
-	 * @return void
-	 */
 	public function theme(): void {
 		if (isset($this->request->get['theme'])) {
 			$theme = basename($this->request->get['theme']);

@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Catalog;
-/**
- * Class Product
- *
- * Can be loaded using $this->load->controller('catalog/product');
- *
- * @package Opencart\Admin\Controller\Catalog
- */
-class Product extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Product extends Controller {
 	public function index(): void {
 		$this->load->language('catalog/product');
 
@@ -179,20 +171,12 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/product', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('catalog/product');
 
 		$this->response->setOutput($this->load->controller('catalog/product.getList'));
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
@@ -489,11 +473,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/product_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('catalog/product');
 
@@ -1183,11 +1162,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/product_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('catalog/product');
 
@@ -1338,11 +1312,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('catalog/product');
 
@@ -1373,11 +1342,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Copy
-	 *
-	 * @return void
-	 */
 	public function copy(): void {
 		$this->load->language('catalog/product');
 
@@ -1407,22 +1371,12 @@ class Product extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Report
-	 *
-	 * @return void
-	 */
 	public function report(): void {
 		$this->load->language('catalog/product');
 
 		$this->response->setOutput($this->getReport());
 	}
 
-	/**
-	 * Get Report
-	 *
-	 * @return string
-	 */
 	public function getReport(): string {
 		if (isset($this->request->get['product_id'])) {
 			$product_id = (int)$this->request->get['product_id'];
@@ -1481,11 +1435,6 @@ class Product extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/product_report', $data);
 	}
 
-	/**
-	 * Autocomplete
-	 *
-	 * @return void
-	 */
 	public function autocomplete(): void {
 		$this->load->language('catalog/product');
 

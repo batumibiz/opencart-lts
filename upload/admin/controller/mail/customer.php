@@ -1,11 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Mail;
-/**
- * Class Customer
- *
- * @package Opencart\Admin\Controller\Mail
- */
-class Customer extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Customer extends Controller {
 	/**
 	 * Approve
 	 *

@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Customer;
-/**
- * Class Customer Group
- *
- * @package Opencart\Admin\Controller\Customer
- */
-class CustomerGroup extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class CustomerGroup extends Controller {
 	public function index(): void {
 		$this->load->language('customer/customer_group');
 
@@ -56,22 +50,12 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('customer/customer_group', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('customer/customer_group');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -166,11 +150,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		return $this->load->view('customer/customer_group_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('customer/customer_group');
 
@@ -249,11 +228,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('customer/customer_group_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('customer/customer_group');
 
@@ -293,11 +267,6 @@ class CustomerGroup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('customer/customer_group');
 

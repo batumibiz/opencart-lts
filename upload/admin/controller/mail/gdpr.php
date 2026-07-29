@@ -1,11 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Mail;
-/**
- * Class Gdpr
- *
- * @package Opencart\Admin\Controller\Mail
- */
-class Gdpr extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Gdpr extends Controller {
 	/**
 	 * Index
 	 *
@@ -48,15 +47,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Export
-	 *
-	 * @param array<string, mixed> $gdpr_info
-	 *
-	 * @throws \Exception
-	 *
-	 * @return void
-	 */
 	public function export(array $gdpr_info): void {
 		// Store
 		$this->load->model('setting/store');
@@ -229,15 +219,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Approve
-	 *
-	 * @param array<string, mixed> $gdpr_info
-	 *
-	 * @throws \Exception
-	 *
-	 * @return void
-	 */
 	public function approve(array $gdpr_info): void {
 		// Store
 		$this->load->model('setting/store');
@@ -326,15 +307,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Deny
-	 *
-	 * @param array<string, mixed> $gdpr_info
-	 *
-	 * @throws \Exception
-	 *
-	 * @return void
-	 */
 	public function deny(array $gdpr_info): void {
 		// Store
 		$this->load->model('setting/store');
@@ -423,15 +395,6 @@ class Gdpr extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Remove
-	 *
-	 * @param array<string, mixed> $gdpr_info
-	 *
-	 * @throws \Exception
-	 *
-	 * @return void
-	 */
 	public function remove(array $gdpr_info): void {
 		// Store
 		$this->load->model('setting/store');

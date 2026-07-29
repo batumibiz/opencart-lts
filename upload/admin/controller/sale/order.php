@@ -1,11 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Sale;
-/**
- * Class Order
- *
- * @package Opencart\Admin\Controller\Sale
- */
-class Order extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Order extends Controller {
 	/**
 	 * Index
 	 *
@@ -197,22 +196,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('sale/order');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = (int)$this->request->get['filter_order_id'];
@@ -534,13 +523,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		return $this->load->view('sale/order_list', $data);
 	}
 
-	/**
-	 * Info
-	 *
-	 * @throws \Exception
-	 *
-	 * @return void
-	 */
 	public function info(): void {
 		$this->load->language('sale/order');
 
@@ -1284,11 +1266,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($output);
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('sale/order');
 
@@ -1319,11 +1296,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Invoice
-	 *
-	 * @return void
-	 */
 	public function invoice(): void {
 		$this->load->language('sale/order');
 
@@ -1565,11 +1537,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_invoice', $data));
 	}
 
-	/**
-	 * Shipping
-	 *
-	 * @return void
-	 */
 	public function shipping(): void {
 		$this->load->language('sale/order');
 
@@ -1755,22 +1722,12 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('sale/order_shipping', $data));
 	}
 
-	/**
-	 * History
-	 *
-	 * @return void
-	 */
 	public function history(): void {
 		$this->load->language('sale/order');
 
 		$this->response->setOutput($this->getHistory());
 	}
 
-	/**
-	 * Get History
-	 *
-	 * @return string
-	 */
 	public function getHistory(): string {
 		if (isset($this->request->get['order_id'])) {
 			$order_id = (int)$this->request->get['order_id'];
@@ -1817,11 +1774,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		return $this->load->view('sale/order_history', $data);
 	}
 
-	/**
-	 * Create Invoice No
-	 *
-	 * @return void
-	 */
 	public function createInvoiceNo(): void {
 		$this->load->language('sale/order');
 
@@ -1863,11 +1815,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Add Reward
-	 *
-	 * @return void
-	 */
 	public function addReward(): void {
 		$this->load->language('sale/order');
 
@@ -1916,11 +1863,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Remove Reward
-	 *
-	 * @return void
-	 */
 	public function removeReward(): void {
 		$this->load->language('sale/order');
 
@@ -1958,11 +1900,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Add Commission
-	 *
-	 * @return void
-	 */
 	public function addCommission(): void {
 		$this->load->language('sale/order');
 
@@ -2013,11 +1950,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Remove Commission
-	 *
-	 * @return void
-	 */
 	public function removeCommission(): void {
 		$this->load->language('sale/order');
 
@@ -2055,11 +1987,6 @@ class Order extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Autocomplete
-	 *
-	 * @return void
-	 */
 	public function autocomplete(): void {
 		$this->load->language('sale/order');
 

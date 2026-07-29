@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
-/**
- * Class Developer
- *
- * Can be loaded using $this->load->controller('common/developer');
- *
- * @package Opencart\Admin\Controller\Common
- */
-class Developer extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Developer extends Controller {
 	public function index(): void {
 		$this->load->language('common/developer');
 
@@ -23,11 +15,6 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/developer', $data));
 	}
 
-	/**
-	 * Edit
-	 *
-	 * @return void
-	 */
 	public function edit(): void {
 		$this->load->language('common/developer');
 
@@ -50,11 +37,6 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Cache
-	 *
-	 * @return void
-	 */
 	public function systemcache(): void {
 		$this->load->language('common/developer');
 
@@ -74,11 +56,6 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Clear image cache
-	 *
-	 * @return void
-	 */
 	public function imagecache(): void {
 		$this->load->language('common/developer');
 
@@ -97,11 +74,6 @@ class Developer extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Sass
-	 *
-	 * @return void
-	 */
 	public function sass(): void {
 		$this->load->language('common/developer');
 

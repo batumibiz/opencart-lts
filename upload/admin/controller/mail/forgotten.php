@@ -1,11 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Mail;
-/**
- * Class Forgotten
- *
- * @package Opencart\Admin\Controller\Mail
- */
-class Forgotten extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Forgotten extends Controller {
 	/**
 	 * Index
 	 *

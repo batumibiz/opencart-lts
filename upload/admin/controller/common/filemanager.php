@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
-/**
- * Class File Manager
- *
- * Can be loaded using $this->load->controller('common/filemanager');
- *
- * @package Opencart\Admin\Controller\Common
- */
-class FileManager extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class FileManager extends Controller {
 	public function index(): void {
 		$this->session->data['start_file_manager'] = true;
 
@@ -47,11 +39,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/filemanager', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		// Remember the last directory
 		if (!isset($this->request->get['directory'])
@@ -273,11 +260,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/filemanager_list', $data));
 	}
 
-	/**
-	 * Upload
-	 *
-	 * @return void
-	 */
 	public function upload(): void {
 		$this->load->language('common/filemanager');
 
@@ -364,11 +346,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Folder
-	 *
-	 * @return void
-	 */
 	public function folder(): void {
 		$this->load->language('common/filemanager');
 
@@ -421,11 +398,6 @@ class FileManager extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('common/filemanager');
 

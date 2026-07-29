@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Catalog;
-/**
- * Class Identifier
- *
- * @package Opencart\Admin\Controller\Catalog
- */
-class Identifier extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Identifier extends Controller {
 	public function index(): void {
 		$this->load->language('catalog/identifier');
 
@@ -48,22 +42,12 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/identifier', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('catalog/identifier');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -112,11 +96,6 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/identifier_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('catalog/identifier');
 
@@ -191,11 +170,6 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/identifier_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('catalog/identifier');
 
@@ -244,11 +218,6 @@ class Identifier extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('catalog/identifier');
 

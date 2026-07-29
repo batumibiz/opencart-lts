@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Catalog;
-/**
- * Class Information
- *
- * Can be loaded using $this->load->controller('catalog/information');
- *
- * @package Opencart\Admin\Controller\Catalog
- */
-class Information extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Information extends Controller {
 	public function index(): void {
 		$this->load->language('catalog/information');
 
@@ -58,22 +50,12 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/information', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('catalog/information');
 
 		$this->response->setOutput($this->load->controller('catalog/information.getList'));
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -165,11 +147,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/information_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('catalog/information');
 
@@ -295,11 +272,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/information_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('catalog/information');
 
@@ -374,11 +346,6 @@ class Information extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('catalog/information');
 

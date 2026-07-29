@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Marketplace;
-/**
- * Class Startup
- *
- * @package Opencart\Admin\Controller\Marketplace
- */
-class Startup extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Startup extends Controller {
 	public function index(): void {
 		$this->load->language('marketplace/startup');
 
@@ -55,22 +49,12 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('marketplace/startup', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('marketplace/startup');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -166,11 +150,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 		return $this->load->view('marketplace/startup_list', $data);
 	}
 
-	/**
-	 * Enable
-	 *
-	 * @return void
-	 */
 	public function enable(): void {
 		$this->load->language('marketplace/startup');
 
@@ -198,11 +177,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Disable
-	 *
-	 * @return void
-	 */
 	public function disable(): void {
 		$this->load->language('marketplace/startup');
 
@@ -230,11 +204,6 @@ class Startup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('marketplace/startup');
 

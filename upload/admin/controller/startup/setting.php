@@ -1,11 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Startup;
-/**
- * Class Setting
- *
- * @package Opencart\Admin\Controller\Startup
- */
-class Setting extends \Opencart\System\Engine\Controller {
+
+use Opencart\System\Engine\Controller;
+
+class Setting extends Controller {
 	/**
 	 * Index
 	 *

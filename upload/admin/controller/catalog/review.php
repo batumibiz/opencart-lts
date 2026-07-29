@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Catalog;
-/**
- * Class Review
- *
- * Can be loaded using $this->load->controller('catalog/review');
- *
- * @package Opencart\Admin\Controller\Catalog
- */
-class Review extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Review extends Controller {
 	public function index(): void {
 		$this->load->language('catalog/review');
 
@@ -114,22 +106,12 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/review', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('catalog/review');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['filter_product'])) {
 			$filter_product = $this->request->get['filter_product'];
@@ -327,11 +309,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/review_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('catalog/review');
 
@@ -453,11 +430,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/review_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('catalog/review');
 
@@ -514,11 +486,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('catalog/review');
 
@@ -548,11 +515,6 @@ class Review extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Sync
-	 *
-	 * @return void
-	 */
 	public function sync(): void {
 		$this->load->language('catalog/review');
 

@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Cms;
-/**
- * Class Topic
- *
- * @package Opencart\Admin\Controller\Cms
- */
-class Topic extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Topic extends Controller {
 	public function index(): void {
 		$this->load->language('cms/topic');
 
@@ -56,22 +50,12 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('cms/topic', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('cms/topic');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -163,11 +147,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		return $this->load->view('cms/topic_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('cms/topic');
 
@@ -305,11 +284,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('cms/topic_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('cms/topic');
 
@@ -383,11 +357,6 @@ class Topic extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('cms/topic');
 

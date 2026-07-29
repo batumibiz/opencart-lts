@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Startup;
-/**
- * Class Authorize
- *
- * @package Opencart\Admin\Controller\Startup
- */
-class Authorize extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return \Opencart\System\Engine\Action|null
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Authorize extends Controller {
 	public function index(): ?\Opencart\System\Engine\Action {
 		if (isset($this->request->get['route'])) {
 			$route = (string)$this->request->get['route'];

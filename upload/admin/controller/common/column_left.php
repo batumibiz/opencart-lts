@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
-/**
- * Class Column Left
- *
- * Can be loaded using $this->load->controller('common/column_left');
- *
- * @package Opencart\Admin\Controller\Common
- */
-class ColumnLeft extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return string
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class ColumnLeft extends Controller {
 	public function index(): string {
 		if (isset($this->request->get['user_token']) && isset($this->session->data['user_token']) && ((string)$this->request->get['user_token'] == $this->session->data['user_token'])) {
 			$this->load->language('common/column_left');

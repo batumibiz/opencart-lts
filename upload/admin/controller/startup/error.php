@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Startup;
-/**
- * Class Error
- *
- * @package Opencart\Admin\Controller\Startup
- */
-class Error extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Error extends Controller {
 	public function index(): void {
 		$this->registry->set('log', new \Opencart\System\Library\Log($this->config->get('config_error_filename') ?: $this->config->get('error_filename')));
 
@@ -18,16 +12,6 @@ class Error extends \Opencart\System\Engine\Controller {
 		set_exception_handler([$this, 'exception']);
 	}
 
-	/**
-	 * Error
-	 *
-	 * @param int    $code
-	 * @param string $message
-	 * @param string $file
-	 * @param int    $line
-	 *
-	 * @return bool
-	 */
 	public function error(int $code, string $message, string $file, int $line): bool {
 		// PHP 8 compatible check for the @ suppression operator
 		if (!(error_reporting() & $code)) {
@@ -71,13 +55,6 @@ class Error extends \Opencart\System\Engine\Controller {
 		return true;
 	}
 
-	/**
-	 * Exception
-	 *
-	 * @param \Throwable $e
-	 *
-	 * @return void
-	 */
 	public function exception(\Throwable $e): void {
 		$output  = 'Error: ' . $e->getMessage() . "\n";
 		$output .= 'File: ' . $e->getFile() . "\n";

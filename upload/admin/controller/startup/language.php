@@ -1,21 +1,12 @@
 <?php
+
 namespace Opencart\Admin\Controller\Startup;
-/**
- * Class Language
- *
- * @package Opencart\Admin\Controller\Startup
- */
-class Language extends \Opencart\System\Engine\Controller {
-	/**
-	 * @var array<string, array<string, string>>
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Language extends Controller {
 	private static array $languages = [];
 
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
 	public function index(): void {
 		// Language
 		$this->load->model('localisation/language');

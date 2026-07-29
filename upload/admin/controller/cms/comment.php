@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Cms;
-/**
- * Class Comments
- *
- * @package Opencart\Admin\Controller\Cms
- */
-class Comment extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Comment extends Controller {
 	public function index(): void {
 		$this->load->language('cms/comment');
 
@@ -43,22 +37,12 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('cms/comment', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('cms/comment');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['filter_keyword'])) {
 			$filter_keyword = (string)$this->request->get['filter_keyword'];
@@ -219,11 +203,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 		return $this->load->view('cms/comment_list', $data);
 	}
 
-	/**
-	 * Approve
-	 *
-	 * @return void
-	 */
 	public function approve(): void {
 		$this->load->language('cms/comment');
 
@@ -280,11 +259,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Spam
-	 *
-	 * @return void
-	 */
 	public function spam(): void {
 		$this->load->language('cms/comment');
 
@@ -338,11 +312,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('cms/comment');
 
@@ -377,11 +346,6 @@ class Comment extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Refresh
-	 *
-	 * @return void
-	 */
 	public function rating(): void {
 		$this->load->language('cms/comment');
 

@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Tool;
-/**
- * Class Log
- *
- * @package Opencart\Admin\Controller\Tool
- */
-class Log extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Log extends Controller {
 	public function index(): void {
 		$this->load->language('tool/log');
 
@@ -98,11 +92,6 @@ class Log extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/log', $data));
 	}
 
-	/**
-	 * Download
-	 *
-	 * @return void
-	 */
 	public function download(): void {
 		$this->load->language('tool/log');
 
@@ -136,11 +125,6 @@ class Log extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(file_get_contents($file, true, null));
 	}
 
-	/**
-	 * Clear
-	 *
-	 * @return void
-	 */
 	public function clear(): void {
 		$this->load->language('tool/log');
 

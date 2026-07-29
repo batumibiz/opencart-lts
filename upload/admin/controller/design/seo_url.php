@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Design;
-/**
- * Class SEO URL
- *
- * @package Opencart\Admin\Controller\Design
- */
-class SeoUrl extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class SeoUrl extends Controller {
 	public function index(): void {
 		$this->load->language('design/seo_url');
 
@@ -122,22 +116,12 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/seo_url', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('design/seo_url');
 
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['filter_keyword'])) {
 			$filter_keyword = (string)$this->request->get['filter_keyword'];
@@ -346,11 +330,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		return $this->load->view('design/seo_url_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('design/seo_url');
 
@@ -479,11 +458,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('design/seo_url_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('design/seo_url');
 
@@ -555,11 +529,6 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('design/seo_url');
 

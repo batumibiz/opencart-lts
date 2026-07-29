@@ -1,16 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Tool;
-/**
- * Class Backup
- *
- * @package Opencart\Admin\Controller\Tool
- */
-class Backup extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Backup extends Controller {
 	public function index(): void {
 		$this->load->language('tool/backup');
 
@@ -63,22 +57,12 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('tool/backup', $data));
 	}
 
-	/**
-	 * History
-	 *
-	 * @return void
-	 */
 	public function history(): void {
 		$this->load->language('tool/backup');
 
 		$this->response->setOutput($this->getHistory());
 	}
 
-	/**
-	 * Get History
-	 *
-	 * @return string
-	 */
 	public function getHistory(): string {
 		$this->load->language('tool/backup');
 
@@ -120,11 +104,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 		return $this->load->view('tool/backup_history', $data);
 	}
 
-	/**
-	 * Backup
-	 *
-	 * @return void
-	 */
 	public function backup(): void {
 		$this->load->language('tool/backup');
 
@@ -239,11 +218,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Restore
-	 *
-	 * @return void
-	 */
 	public function restore(): void {
 		$this->load->language('tool/backup');
 
@@ -324,11 +298,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Upload
-	 *
-	 * @return void
-	 */
 	public function upload(): void {
 		$this->load->language('tool/backup');
 
@@ -367,11 +336,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Download
-	 *
-	 * @return void
-	 */
 	public function download(): void {
 		$this->load->language('tool/backup');
 
@@ -414,11 +378,6 @@ class Backup extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('tool/backup');
 

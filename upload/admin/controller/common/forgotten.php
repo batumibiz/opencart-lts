@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Common;
-/**
- * Class Forgotten
- *
- * Can be loaded using $this->load->controller('common/forgotten');
- *
- * @package Opencart\Admin\Controller\Common
- */
-class Forgotten extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Forgotten extends Controller {
 	public function index(): void {
 		$this->load->language('common/forgotten');
 
@@ -43,11 +35,6 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/forgotten', $data));
 	}
 
-	/**
-	 * Confirm
-	 *
-	 * @return void
-	 */
 	public function confirm(): void {
 		$this->load->language('common/forgotten');
 
@@ -84,11 +71,6 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Reset
-	 *
-	 * @return void
-	 */
 	public function reset(): void {
 		$this->load->language('common/forgotten');
 
@@ -146,11 +128,6 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('common/forgotten_reset', $data));
 	}
 
-	/**
-	 * Password
-	 *
-	 * @return void
-	 */
 	public function password(): void {
 		$this->load->language('common/forgotten');
 

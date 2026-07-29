@@ -1,18 +1,10 @@
 <?php
+
 namespace Opencart\Admin\Controller\Catalog;
-/**
- * Class Attribute Group
- *
- * Can be loaded using $this->load->controller('catalog/attribute_group');
- *
- * @package Opencart\Admin\Controller\Catalog
- */
-class AttributeGroup extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class AttributeGroup extends Controller {
 	public function index(): void {
 		$this->load->language('catalog/attribute_group');
 
@@ -57,22 +49,12 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/attribute_group', $data));
 	}
 
-	/**
-	 * List
-	 *
-	 * @return void
-	 */
 	public function list(): void {
 		$this->load->language('catalog/attribute_group');
 
 		$this->response->setOutput($this->load->controller('catalog/attribute_group.getList'));
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		if (isset($this->request->get['sort'])) {
 			$sort = (string)$this->request->get['sort'];
@@ -164,11 +146,6 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		return $this->load->view('catalog/attribute_group_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('catalog/attribute_group');
 
@@ -245,11 +222,6 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('catalog/attribute_group_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('catalog/attribute_group');
 
@@ -293,11 +265,6 @@ class AttributeGroup extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('catalog/attribute_group');
 

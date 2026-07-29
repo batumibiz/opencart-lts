@@ -1,25 +1,14 @@
 <?php
+
 namespace Opencart\Admin\Controller\Extension;
-/**
- * Class Payment
- *
- * @package Opencart\Admin\Controller\Extension
- */
-class Payment extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Payment extends Controller {
 	public function index(): void {
 		$this->response->setOutput($this->getList());
 	}
 
-	/**
-	 * Get List
-	 *
-	 * @return string
-	 */
 	public function getList(): string {
 		$this->load->language('extension/payment');
 
@@ -84,11 +73,6 @@ class Payment extends \Opencart\System\Engine\Controller {
 		return $this->load->view('extension/payment', $data);
 	}
 
-	/**
-	 * Install
-	 *
-	 * @return void
-	 */
 	public function install(): void {
 		$this->load->language('extension/payment');
 
@@ -151,11 +135,6 @@ class Payment extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Uninstall
-	 *
-	 * @return void
-	 */
 	public function uninstall(): void {
 		$this->load->language('extension/payment');
 

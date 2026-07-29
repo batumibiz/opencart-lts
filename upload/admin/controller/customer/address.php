@@ -1,29 +1,16 @@
 <?php
+
 namespace Opencart\Admin\Controller\Customer;
-/**
- * Class Address
- *
- * Can be loaded using $this->load->controller('customer/address');
- *
- * @package Opencart\Admin\Controller\Customer
- */
-class Address extends \Opencart\System\Engine\Controller {
-	/**
-	 * Index
-	 *
-	 * @return void
-	 */
+
+use Opencart\System\Engine\Controller;
+
+class Address extends Controller {
 	public function index(): void {
 		$this->load->language('customer/customer');
 
 		$this->response->setOutput($this->getAddress());
 	}
 
-	/**
-	 * Get Address
-	 *
-	 * @return string
-	 */
 	public function getAddress(): string {
 		$this->load->language('customer/customer');
 
@@ -54,11 +41,6 @@ class Address extends \Opencart\System\Engine\Controller {
 		return $this->load->view('customer/address_list', $data);
 	}
 
-	/**
-	 * Form
-	 *
-	 * @return void
-	 */
 	public function form(): void {
 		$this->load->language('customer/customer');
 
@@ -188,11 +170,6 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput($this->load->view('customer/address_form', $data));
 	}
 
-	/**
-	 * Save
-	 *
-	 * @return void
-	 */
 	public function save(): void {
 		$this->load->language('customer/customer');
 
@@ -310,11 +287,6 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @return void
-	 */
 	public function delete(): void {
 		$this->load->language('customer/customer');
 
@@ -349,11 +321,6 @@ class Address extends \Opencart\System\Engine\Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	/**
-	 * Address
-	 *
-	 * @return void
-	 */
 	public function address(): void {
 		$this->load->language('customer/customer');
 

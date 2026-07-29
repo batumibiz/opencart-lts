@@ -1,5 +1,9 @@
 <?php
+
 namespace Opencart\Admin\Controller\Event;
+
+use Opencart\System\Engine\Controller;
+
 /**
  * Class Modification
  *
@@ -7,15 +11,7 @@ namespace Opencart\Admin\Controller\Event;
  *
  * @package Opencart\Admin\Controller\Event
  */
-class Modification extends \Opencart\System\Engine\Controller {
-	/**
-	 * Controller
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 *
-	 * @return void
-	 */
+class Modification extends Controller {
 	public function controller(string &$route, array &$args): void {
 		if (str_starts_with($route, 'extension/ocmod/')) {
 			return;
@@ -28,14 +24,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Model
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 *
-	 * @return void
-	 */
 	public function model(string &$route, array &$args): void {
 		if (str_starts_with($route, 'extension/ocmod/')) {
 			return;
@@ -48,14 +36,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * View
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 *
-	 * @return void
-	 */
 	public function view(string &$route, array &$args): void {
 		if (str_starts_with($route, 'extension/ocmod/')) {
 			return;
@@ -72,14 +52,6 @@ class Modification extends \Opencart\System\Engine\Controller {
 		}
 	}
 
-	/**
-	 * Library
-	 *
-	 * @param string            $route
-	 * @param array<int, mixed> $args
-	 *
-	 * @return void
-	 */
 	public function library(string &$route, array &$args): void {
 		if (str_starts_with($route, 'extension/ocmod/')) {
 			return;
