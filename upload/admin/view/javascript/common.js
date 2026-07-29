@@ -548,31 +548,52 @@ function ocFilter(options) {
 	const $submit = $form.find('button[type="submit"]');
 	const $reset = $form.find('button[type="reset"]');
 
+	function hasNonEmptyFields() {
+		let filterNotEmpty = false;
+
+		$form.find('input[name], select[name]').each(function () {
+			const value = $(this).val();
+
+			if (value !== '' && value !== null) {
+				filterNotEmpty = true;
+			}
+		});
+
+		return filterNotEmpty;
+	}
+
+	function highlightActive() {
+		$submit.removeClass('btn-outline-primary').addClass('btn-primary');
+		$reset.removeClass('btn-outline-secondary').addClass('btn-secondary');
+	}
+
+	// Highlight on page load if form already has non-empty values
+	if (hasNonEmptyFields()) {
+		highlightActive();
+	}
+
 	$form.on('submit', function (e) {
 		e.preventDefault();
 
 		// We use only non-empty fields
 		const filterData = {};
-		let filterNotEmpty = false;
 
 		$(this).find('input[name], select[name]').each(function () {
 			const value = $(this).val();
 
 			if (value !== '' && value !== null) {
 				filterData[$(this).attr('name')] = value;
-				filterNotEmpty = true;
 			}
 		});
 
-		if (filterNotEmpty) {
+		if (hasNonEmptyFields()) {
 			const urlParams = $.param(filterData);
 			const query = urlParams ? '&' + urlParams : '';
 
 			window.history.pushState({}, null, routePart + query + tokenPart);
 			$list.load(routePart + '.list' + query + tokenPart);
 
-			$submit.removeClass('btn-outline-primary').addClass('btn-primary');
-			$reset.removeClass('btn-outline-secondary').addClass('btn-secondary');
+			highlightActive();
 		}
 	});
 
