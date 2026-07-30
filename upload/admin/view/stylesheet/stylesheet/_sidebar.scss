@@ -38,8 +38,9 @@
 
         // Parent arrow icons (Font Awesome)
         &.parent::after {
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 600;
+            font-family: 'Font Awesome 7 Free';
+            font-weight: 900;
+			font-size: 12px;
             float: right;
             margin-right: 8px;
             content: "\f107";
@@ -93,10 +94,10 @@
         color: $color-menu-sub-link;
 
         &::before {
-            font-family: 'Font Awesome 6 Free';
+            font-family: 'Font Awesome 7 Free';
             content: "\f101";
             font-weight: 900;
-            font-size: 13px;
+            font-size: 10px;
             margin-left: 10px;
             margin-right: 10px;
             transition: $transition-medium;
