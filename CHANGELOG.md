@@ -13,11 +13,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 ## [Unreleased]
 
 #### Added
-- Nothing
+- `admin` Improved filter JS: added highlighting of active filters
 
 #### Changed
 - `system` Fonts Awesome updated to version 7.3.1
-- `admin` Improved filter JS
 - `admin` Deep refactoring of filter functionality
 
 #### Deprecated

@@ -548,6 +548,12 @@ function ocFilter(options) {
 	const $submit = $form.find('button[type="submit"]');
 	const $reset = $form.find('button[type="reset"]');
 
+	const highlightedFieldStyle = 'border-3 border-primary shadow-sm';
+	const highlightedSubmitStyle = 'btn-primary';
+	const highlightedResetStyle = 'btn-secondary';
+	const normalSubmitStyle = 'btn-outline-primary';
+	const normalResetStyle = 'btn-outline-secondary';
+
 	function hasNonEmptyFields() {
 		let filterNotEmpty = false;
 
@@ -563,13 +569,22 @@ function ocFilter(options) {
 	}
 
 	function highlightActive() {
-		$submit.removeClass('btn-outline-primary').addClass('btn-primary');
-		$reset.removeClass('btn-outline-secondary').addClass('btn-secondary');
+		$submit.removeClass(normalSubmitStyle).addClass(highlightedSubmitStyle);
+		$reset.removeClass(normalResetStyle).addClass(highlightedResetStyle);
+	}
+
+	function markFieldsValidity() {
+		$form.find('input[name], select[name]').each(function () {
+			const value = $(this).val();
+
+			$(this).toggleClass(highlightedFieldStyle, value !== '' && value !== null);
+		});
 	}
 
 	// Highlight on page load if form already has non-empty values
 	if (hasNonEmptyFields()) {
 		highlightActive();
+		markFieldsValidity();
 	}
 
 	$form.on('submit', function (e) {
@@ -594,12 +609,15 @@ function ocFilter(options) {
 			$list.load(routePart + '.list' + query + tokenPart);
 
 			highlightActive();
+			markFieldsValidity();
 		}
 	});
 
 	$form.on('reset', function () {
-		$submit.removeClass('btn-primary').addClass('btn-outline-primary');
-		$reset.removeClass('btn-secondary').addClass('btn-outline-secondary');
+		$submit.removeClass(highlightedSubmitStyle).addClass(normalSubmitStyle);
+		$reset.removeClass(highlightedResetStyle).addClass(normalResetStyle);
+
+		$(this).find('input[name], select[name]').removeClass(highlightedFieldStyle);
 
 		window.location = routePart + tokenPart;
 	});
