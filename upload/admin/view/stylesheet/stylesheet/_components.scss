@@ -92,7 +92,7 @@ td.required::before {
 .table {
     thead td span[data-toggle='tooltip']::after,
     & ~ label.form-label span::after {
-        font-family: 'Font Awesome 6 Free';
+        font-family: 'Font Awesome 7 Free';
         font-weight: 600;
         content: "\f059";
         color: #1E91CF;
@@ -100,20 +100,20 @@ td.required::before {
     }
 
     a.asc::after {
-        font-family: 'Font Awesome 6 Free';
+        font-family: 'Font Awesome 7 Free';
         font-weight: 600;
         content: " \f106";
     }
 
     a.desc::after {
-        font-family: 'Font Awesome 6 Free';
+        font-family: 'Font Awesome 7 Free';
         font-weight: 600;
         content: " \f107";
     }
 }
 
 label.form-label span::after {
-    font-family: 'Font Awesome 6 Free';
+    font-family: 'Font Awesome 7 Free';
     font-weight: 600;
     content: "\f059";
     color: #1E91CF;
@@ -244,7 +244,7 @@ label.form-label span::after {
     list-style: none;
 
     li::before {
-        font-family: 'Font Awesome 6 Solid';
+        font-family: 'Font Awesome 7 Solid';
         content: "\f00c";
         margin-left: -30px;
         width: 29px;
