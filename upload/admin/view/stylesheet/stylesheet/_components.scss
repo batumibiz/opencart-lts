@@ -256,3 +256,12 @@ label.form-label span::after {
         color: $color-ext-check-blue;
     }
 }
+
+// -----------------------------------------------------------------------------
+// Active filter elements
+// -----------------------------------------------------------------------------
+.active-field{
+	background-color: rgb(27 128 194 / 0.15);
+	border: 1px solid rgb(27 128 194 / 0.75);
+	font-weight: bold;
+}

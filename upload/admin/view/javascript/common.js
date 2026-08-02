@@ -548,7 +548,7 @@ function ocFilter(options) {
 	const $submit = $form.find('button[type="submit"]');
 	const $reset = $form.find('button[type="reset"]');
 
-	const highlightedFieldStyle = 'border-3 border-primary shadow-sm';
+	const highlightedFieldStyle = 'active-field shadow-sm';
 	const highlightedSubmitStyle = 'btn-primary';
 	const highlightedResetStyle = 'btn-secondary';
 	const normalSubmitStyle = 'btn-outline-primary';
