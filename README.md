@@ -1,6 +1,8 @@
 # OC+
 
 [![GitHub License](https://img.shields.io/github/license/oc-plus/oc-plus?color=green)](https://github.com/oc-plus/oc-plus/blob/main/LICENSE)
+[![GitHub Release](https://img.shields.io/github/v/release/oc-plus/oc-plus)](https://github.com/oc-plus/oc-plus/releases/)
+
 [![php cs](https://github.com/oc-plus/oc-plus/actions/workflows/php-cs.yml/badge.svg)](https://github.com/oc-plus/oc-plus/actions/workflows/php-cs.yml)
 [![twig cs](https://github.com/oc-plus/oc-plus/actions/workflows/twig-cs.yml/badge.svg)](https://github.com/oc-plus/oc-plus/actions/workflows/twig-cs.yml)
 [![static analysis](https://github.com/oc-plus/oc-plus/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/oc-plus/oc-plus/actions/workflows/static-analysis.yml)
