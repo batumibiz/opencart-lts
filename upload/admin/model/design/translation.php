@@ -180,11 +180,11 @@ class Translation extends \Opencart\System\Engine\Model {
 			$implode[] = "LCASE(`value`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_value'])) . "%'";
 		}
 
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+		if (!empty($data['filter_store_id'])) {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+		if (!empty($data['filter_language_id'])) {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
@@ -229,6 +229,11 @@ class Translation extends \Opencart\System\Engine\Model {
 		return $query->rows;
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 *
+	 * @return int
+	 */
 	public function getTotalTranslations(array $data = []): int {
 		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "translation`";
 
@@ -246,11 +251,11 @@ class Translation extends \Opencart\System\Engine\Model {
 			$implode[] = "LCASE(`value`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_value'])) . "%'";
 		}
 
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+		if (!empty($data['filter_store_id'])) {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+		if (!empty($data['filter_language_id'])) {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
@@ -263,6 +268,14 @@ class Translation extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param string $route
+	 * @param string $key
+	 * @param int    $store_id
+	 * @param int    $language_id
+	 *
+	 * @return array<array-key, array<string, mixed>>
+	 */
 	public function getTranslationByRouteKey(string $route, string $key, int $store_id = 0, int $language_id = 0): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "translation` WHERE `route` = '" . $this->db->escape($route) . "' AND `key` = '" . $this->db->escape($key) . "'";
 
@@ -279,6 +292,11 @@ class Translation extends \Opencart\System\Engine\Model {
 		return $query->row;
 	}
 
+	/**
+	 * @param array<string, string> $data
+	 *
+	 * @return array<array-key, array<string, mixed>>
+	 */
 	public function autocomplete(array $data = []): array {
 		$sql = "SELECT *, LEFT(`value`, 30) AS `value` FROM `" . DB_PREFIX . "translation`";
 

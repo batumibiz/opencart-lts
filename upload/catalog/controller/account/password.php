@@ -61,6 +61,7 @@ class Password extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/password');
 
 		$json = [];
+		$post_info = [];
 
 		if (!$this->load->controller('account/login.validate')) {
 			$this->session->data['redirect'] = $this->url->link('account/password', 'language=' . $this->config->get('config_language'));

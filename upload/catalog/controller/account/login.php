@@ -109,6 +109,7 @@ class Login extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/login');
 
 		$json = [];
+		$customer_info = [];
 
 		// Stop any undefined index messages.
 		$required = [

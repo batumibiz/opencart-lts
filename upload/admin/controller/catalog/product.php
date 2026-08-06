@@ -10,7 +10,7 @@ class Product extends Controller {
 	 * List of filter request keys,
 	 * and whether their value must be urlencoded when it is placed into a query string.
 	 *
-	 * @var array
+	 * @var array<string, bool>
 	 */
 	private array $filterKeys = [
 		'filter_name'            => true,
@@ -60,7 +60,7 @@ class Product extends Controller {
 		if (!empty($data['filter_category_id'])) {
 			$this->load->model('catalog/category');
 
-			$category_info = $this->model_catalog_category->getCategory($data['filter_category_id']);
+			$category_info = $this->model_catalog_category->getCategory((int)$data['filter_category_id']);
 
 			$data['filter_category'] = !empty($category_info['name']) ? (!empty($category_info['path']) ? implode(' > ', [$category_info['path'], $category_info['name']]) : $category_info['name']) : '';
 		}

@@ -1,10 +1,7 @@
 <?php
+
 namespace Opencart\System\Library\Cache;
-/**
- * Class Redis
- *
- * @package Opencart\System\Library\Cache
- */
+
 class Redis {
 	/**
 	 * @var \Redis
@@ -15,29 +12,32 @@ class Redis {
 	 */
 	private int $expire;
 
+	private string $prefix;
+
 	/**
 	 * Constructor
 	 *
 	 * @param int $expire
 	 */
 	public function __construct(int $expire = 3600) {
+		defined('CACHE_HOSTNAME') || define('CACHE_HOSTNAME', '127.0.0.1');
+		defined('CACHE_PORT') || define('CACHE_PORT', 6379);
+		defined('CACHE_PASSWORD') || define('CACHE_PASSWORD', '');
+		defined('CACHE_PREFIX') || define('CACHE_PREFIX', 'oc_');
+
+		$this->prefix = CACHE_PREFIX;
 		$this->expire = $expire;
+
 		$this->redis = new \Redis();
 
-		$host = defined('CACHE_HOSTNAME') ? CACHE_HOSTNAME : '127.0.0.1';
-		$port = defined('CACHE_PORT') ? (int)CACHE_PORT : 6379;
-		$password = defined('CACHE_PASSWORD') ? CACHE_PASSWORD : null;
-
-		if (str_contains($host, 'unix:')) {
-			$socketPath = preg_replace('#^unix:/*#', '/', $host);
+		if (str_contains(CACHE_HOSTNAME, 'unix:')) {
+			$socketPath = preg_replace('#^unix:/*#', '/', CACHE_HOSTNAME);
 			$this->redis->pconnect($socketPath, 0);
 		} else {
-			$this->redis->pconnect($host, $port);
+			$this->redis->pconnect(CACHE_HOSTNAME, CACHE_PORT);
 		}
 
-		if (!empty($password)) {
-			$this->redis->auth($password);
-		}
+		$this->redis->auth(CACHE_PASSWORD);
 	}
 
 	/**
@@ -48,7 +48,7 @@ class Redis {
 	 * @return mixed
 	 */
 	public function get(string $key) {
-		$data = $this->redis->get(CACHE_PREFIX . $key);
+		$data = $this->redis->get($this->prefix . $key);
 
 		if ($data === false) {
 			return [];
@@ -73,10 +73,10 @@ class Redis {
 			$expire = $this->expire;
 		}
 
-		$status = $this->redis->set(CACHE_PREFIX . $key, json_encode($value));
+		$status = $this->redis->set($this->prefix . $key, json_encode($value));
 
 		if ($status) {
-			$this->redis->expire(CACHE_PREFIX . $key, $expire);
+			$this->redis->expire($this->prefix . $key, $expire);
 		}
 	}
 
@@ -88,7 +88,7 @@ class Redis {
 	 * @return void
 	 */
 	public function delete(string $key): void {
-		$this->redis->del(CACHE_PREFIX . $key);
+		$this->redis->del($this->prefix . $key);
 	}
 
 	/**

@@ -2,6 +2,7 @@
 
 namespace Opencart\Admin\Controller\Marketing;
 
+use Opencart\System\Engine\Action;
 use Opencart\System\Engine\Controller;
 
 class Affiliate extends Controller {
@@ -714,9 +715,9 @@ class Affiliate extends Controller {
 			$json['error']['tracking'] = $this->language->get('error_tracking');
 		}
 
-		$affiliate_info = $this->model_marketing_affiliate->getAffiliateByTracking($post_info['tracking']);
+		$tracking_info = $this->model_marketing_affiliate->getAffiliateByTracking($post_info['tracking']);
 
-		if ($affiliate_info && (!$post_info['customer_id'] || ($post_info['customer_id'] != $affiliate_info['customer_id']))) {
+		if ($tracking_info && (!$post_info['customer_id'] || ($post_info['customer_id'] != $tracking_info['customer_id']))) {
 			$json['error']['tracking'] = $this->language->get('error_exists');
 		}
 
@@ -839,7 +840,7 @@ class Affiliate extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function csv() {
+	public function csv(): Action|true {
 		$this->load->language('marketing/affiliate');
 
 		if (isset($this->request->post['selected'])) {
@@ -887,8 +888,10 @@ class Affiliate extends Controller {
 				exit('Error: Headers already sent out!');
 			}
 		} else {
-			return new \Opencart\System\Engine\Action('error/permission');
+			return new Action('error/permission');
 		}
+
+		return true;
 	}
 
 	public function complete(): void {

@@ -293,6 +293,7 @@ class Returns extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/returns');
 
 		$json = [];
+		$post_info = [];
 
 		if (!isset($this->request->get['return_token']) || !isset($this->session->data['return_token']) || ($this->request->get['return_token'] != $this->session->data['return_token'])) {
 			$json['redirect'] = $this->url->link('account/returns.add', 'language=' . $this->config->get('config_language'), true);

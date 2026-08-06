@@ -428,9 +428,7 @@ class Category extends \Opencart\System\Engine\Model {
 				$implode[] = "LCASE(`name`) LIKE '%" . $this->db->escape(oc_strtolower($word)) . "%'";
 			}
 
-			if ($implode) {
-				$sql .= " HAVING ((" . implode(" AND ", $implode) . ") OR LCASE(`name`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_name'])) . "%')";
-			}
+			$sql .= " HAVING ((" . implode(" AND ", $implode) . ") OR LCASE(`name`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_name'])) . "%')";
 		}
 
 		$sort_data = [
@@ -517,9 +515,7 @@ class Category extends \Opencart\System\Engine\Model {
 				$implode[] = "LCASE(`name`) LIKE '" . $this->db->escape('%' . oc_strtolower($word) . '%') . "'";
 			}
 
-			if ($implode) {
-				$sql .= " HAVING ((" . implode(" AND ", $implode) . ") OR LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "')";
-			}
+			$sql .= " HAVING ((" . implode(" AND ", $implode) . ") OR LCASE(`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name'])) . "')";
 		}
 
 		$sql .= ") AS result_set;";

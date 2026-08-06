@@ -17,6 +17,8 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$this->load->language('api/shipping_address');
 
 		$output = [];
+		$country_info = [];
+		$post_info = [];
 
 		if ($this->cart->hasShipping()) {
 			// Add keys for missing post vars

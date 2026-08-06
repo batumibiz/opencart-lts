@@ -67,7 +67,11 @@ class Log extends Controller {
 					$i++;
 				}
 
-				$error = sprintf($this->language->get('error_size'), $filename, round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i]);
+				$error = sprintf(
+					$this->language->get('error_size'),
+					$filename,
+					round((float)substr((string)$size, 0, strpos((string)$size, '.') + 4), 2) . $suffix[$i],
+				);
 			}
 
 			$handle = fopen($file, 'r+');

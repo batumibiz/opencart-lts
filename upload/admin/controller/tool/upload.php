@@ -317,6 +317,7 @@ class Upload extends Controller {
 		$this->load->language('tool/upload');
 
 		$json = [];
+		$filename = '';
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'tool/upload')) {

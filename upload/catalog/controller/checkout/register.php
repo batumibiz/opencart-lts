@@ -239,6 +239,10 @@ class Register extends \Opencart\System\Engine\Controller {
 		];
 
 		$post_info = $this->request->post + $required;
+		$customer_group_info = [];
+		$payment_country_info = [];
+		$shipping_country_info = [];
+		$password = '';
 
 		// Force account requires subscript or is a downloadable product.
 		if ($this->cart->hasDownload() || $this->cart->hasSubscription() || !$this->config->get('config_checkout_guest')) {
@@ -476,7 +480,7 @@ class Register extends \Opencart\System\Engine\Controller {
 			// Add customer details into session
 			$customer_data = [
 				'customer_id'       => 0,
-				'customer_group_id' => $customer_group_id,
+				'customer_group_id' => $customer_group_id ?? $this->config->get('config_customer_group_id'),
 				'firstname'         => $post_info['firstname'],
 				'lastname'          => $post_info['lastname'],
 				'email'             => $post_info['email'],

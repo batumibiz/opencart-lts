@@ -688,7 +688,7 @@ class Returns extends Controller {
 			$json['error']['action'] = $this->language->get('error_action');
 		}
 
-		if (isset($json['error']) && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !empty($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 

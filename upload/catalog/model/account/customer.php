@@ -151,38 +151,31 @@ class Customer extends \Opencart\System\Engine\Model {
 
 		// Activities
 		$this->load->model('account/activity');
-
 		$this->model_account_activity->deleteActivities($customer_id);
 
 		// Addresses
 		$this->load->model('account/address');
-
-		$this->model_account_address->deleteAddresses($customer_id);
+		$this->model_account_address->deleteAddress($customer_id);
 
 		// Affiliate
 		$this->load->model('account/affiliate');
-
 		$this->model_account_affiliate->deleteAffiliate($customer_id);
 
 		// Customer Approvals
 		$this->load->model('account/approval');
-
 		$this->model_account_approval->deleteApprovals($customer_id);
 
 		// Rewards
 		$this->load->model('account/reward');
-
 		$this->model_account_reward->deleteRewards($customer_id);
 
 		// Transactions
 		$this->load->model('account/transaction');
-
 		$this->model_account_transaction->deleteTransactions($customer_id);
 
 		// Wishlists
 		$this->load->model('account/wishlist');
-
-		$this->model_account_wishlist->deleteWishlists($customer_id);
+		$this->model_account_wishlist->deleteWishlist($customer_id);
 
 		$this->deleteHistories($customer_id);
 		$this->deleteIps($customer_id);

@@ -6,21 +6,16 @@ namespace Opencart\System\Library\Cache;
  * @package Opencart\System\Library\Cache
  */
 class Apcu {
-	/**
-	 * @var int
-	 */
 	private int $expire;
-	/**
-	 * @var bool
-	 */
+
 	private bool $active;
 
-	/**
-	 * Constructor
-	 *
-	 * @param int $expire
-	 */
+	private string $prefix;
+
 	public function __construct(int $expire = 3600) {
+		defined('CACHE_PREFIX') || define('CACHE_PREFIX', 'oc_');
+
+		$this->prefix = CACHE_PREFIX;
 		$this->expire = $expire;
 		$this->active = function_exists('apcu_cache_info') && ini_get('apc.enabled');
 	}
@@ -33,7 +28,7 @@ class Apcu {
 	 * @return mixed
 	 */
 	public function get(string $key) {
-		return $this->active ? apcu_fetch(CACHE_PREFIX . $key) : [];
+		return $this->active ? apcu_fetch($this->prefix . $key) : [];
 	}
 
 	/**
@@ -51,7 +46,7 @@ class Apcu {
 		}
 
 		if ($this->active) {
-			apcu_store(CACHE_PREFIX . $key, $value, $expire);
+			apcu_store($this->prefix . $key, $value, $expire);
 		}
 	}
 
@@ -69,7 +64,7 @@ class Apcu {
 			$cache_list = $cache_info['cache_list'];
 
 			foreach ($cache_list as $entry) {
-				if (str_starts_with($entry['info'], CACHE_PREFIX . $key)) {
+				if (str_starts_with($entry['info'], $this->prefix . $key)) {
 					apcu_delete($entry['info']);
 				}
 			}

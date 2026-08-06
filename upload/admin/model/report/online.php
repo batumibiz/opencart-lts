@@ -106,6 +106,11 @@ class Online extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param array<string> $data
+	 *
+	 * @return array<string>
+	 */
 	public function getIp(array $data = []): array {
 		$sql = "SELECT `ip` FROM `" . DB_PREFIX . "customer_online`";
 

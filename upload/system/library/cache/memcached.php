@@ -1,80 +1,42 @@
 <?php
+
 namespace Opencart\System\Library\Cache;
-/**
- * Class Memcached
- *
- * @package Opencart\System\Library\Cache
- */
+
 class Memcached {
-	/**
-	 * @var \Memcached
-	 */
 	private \Memcached $memcached;
-	/**
-	 * @var int
-	 */
+
 	private int $expire;
 
-	public const CACHEDUMP_LIMIT = 9999;
+	private string $prefix;
 
-	/**
-	 * Constructor
-	 *
-	 * @param int $expire
-	 */
 	public function __construct(int $expire = 3600) {
-		$this->expire = $expire;
+		defined('CACHE_HOSTNAME') || define('CACHE_HOSTNAME', '127.0.0.1');
+		defined('CACHE_PORT') || define('CACHE_PORT', 11211);
+		defined('CACHE_PREFIX') || define('CACHE_PREFIX', 'oc_');
 
+		$this->prefix = CACHE_PREFIX;
+
+		$this->expire = $expire;
 		$this->memcached = new \Memcached();
 		$this->memcached->addServer(CACHE_HOSTNAME, CACHE_PORT);
 	}
 
-	/**
-	 * Get
-	 *
-	 * @param string $key
-	 *
-	 * @return mixed
-	 */
-	public function get(string $key) {
-		return $this->memcached->get(CACHE_PREFIX . $key);
+	public function get(string $key): mixed {
+		return $this->memcached->get($this->prefix . $key);
 	}
 
-	/**
-	 * Set
-	 *
-	 * @param string $key
-	 * @param mixed  $value
-	 * @param int    $expire
-	 *
-	 * @return void
-	 */
-	public function set(string $key, $value, int $expire = 0): void {
+	public function set(string $key, mixed $value, int $expire = 0): void {
 		if (!$expire) {
 			$expire = $this->expire;
 		}
 
-		$this->memcached->set(CACHE_PREFIX . $key, $value, $expire);
+		$this->memcached->set($this->prefix . $key, $value, $expire);
 	}
 
-	/**
-	 * Delete
-	 *
-	 * @param string $key
-	 *
-	 * @return void
-	 */
 	public function delete(string $key): void {
-		$this->memcached->delete(CACHE_PREFIX . $key);
+		$this->memcached->delete($this->prefix . $key);
 	}
 
-	/**
-	 * Clear
-	 *
-	 * Clear all cache
-	 *
-	 * @return void
-	 */
 	public function clear(): void {
 		$this->memcached->flush();
 	}

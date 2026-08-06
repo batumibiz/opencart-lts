@@ -244,11 +244,11 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 			$implode[] = "LCASE(`value`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_value'])) . "%'";
 		}
 
-		if (isset($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+		if (!empty($data['filter_store_id'])) {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+		if (!empty($data['filter_language_id'])) {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
@@ -388,11 +388,11 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 			$implode[] = "LCASE(`value`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_value'])) . "%'";
 		}
 
-		if (!empty($data['filter_store_id']) && $data['filter_store_id'] !== '') {
+		if (!empty($data['filter_store_id'])) {
 			$implode[] = "`store_id` = '" . (int)$data['filter_store_id'] . "'";
 		}
 
-		if (!empty($data['filter_language_id']) && $data['filter_language_id'] !== '') {
+		if (!empty($data['filter_language_id'])) {
 			$implode[] = "`language_id` = '" . (int)$data['filter_language_id'] . "'";
 		}
 
@@ -405,6 +405,11 @@ class SeoUrl extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array<array-key, array<string, mixed>>
+	 */
 	public function autocomplete(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "seo_url`";
 

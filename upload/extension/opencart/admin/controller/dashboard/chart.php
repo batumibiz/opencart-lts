@@ -198,7 +198,7 @@ class Chart extends \Opencart\System\Engine\Controller {
 				}
 
 				for ($i = 1; $i <= 12; $i++) {
-					$json['xaxis'][] = [$i, date('M', mktime(0, 0, 0, $i, 1, date('Y')))];
+					$json['xaxis'][] = [$i, date('M', mktime(0, 0, 0, $i, 1, (int)date('Y')))];
 				}
 				break;
 		}

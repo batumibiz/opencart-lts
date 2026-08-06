@@ -24,6 +24,8 @@ class Coupon extends \Opencart\System\Engine\Model {
 	public function getCoupon(string $code): array {
 		$status = true;
 
+		$product_data = [];
+
 		$coupon_info = $this->model_marketing_coupon->getCouponByCode($code);
 
 		if ($coupon_info && ($coupon_info['date_start'] == '0000-00-00' || strtotime($coupon_info['date_start']) < strtotime(date('Y-m-d H:i:s'))) && ($coupon_info['date_end'] == '0000-00-00' || strtotime($coupon_info['date_end']) > strtotime(date('Y-m-d H:i:s')))) {
@@ -54,8 +56,6 @@ class Coupon extends \Opencart\System\Engine\Model {
 
 			// Categories
 			$coupon_category_data = $this->getCategories($coupon_info['coupon_id']);
-
-			$product_data = [];
 
 			if ($coupon_product_data || $coupon_category_data) {
 				$this->load->model('catalog/product');

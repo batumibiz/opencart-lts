@@ -39,6 +39,7 @@ class Forgotten extends Controller {
 		$this->load->language('common/forgotten');
 
 		$json = [];
+		$user_info = [];
 
 		// Stop any undefined index messages.
 		if ($this->user->isLogged() || !$this->config->get('config_mail_engine')) {
@@ -132,6 +133,7 @@ class Forgotten extends Controller {
 		$this->load->language('common/forgotten');
 
 		$json = [];
+		$post_info = [];
 
 		if (isset($this->request->get['email'])) {
 			$email = urldecode((string)$this->request->get['email']);

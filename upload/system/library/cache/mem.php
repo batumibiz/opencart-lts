@@ -1,28 +1,20 @@
 <?php
+
 namespace Opencart\System\Library\Cache;
-/**
- * Class Mem
- *
- * @package Opencart\System\Library\Cache
- */
+
 class Mem {
-	/**
-	 * @var \Memcache
-	 */
 	private \Memcache $memcache;
-	/**
-	 * @var int
-	 */
+
 	private int $expire;
 
-	public const CACHEDUMP_LIMIT = 9999;
+	private string $prefix;
 
-	/**
-	 * Constructor
-	 *
-	 * @param int $expire
-	 */
 	public function __construct(int $expire = 3600) {
+		defined('CACHE_HOSTNAME') || define('CACHE_HOSTNAME', '127.0.0.1');
+		defined('CACHE_PORT') || define('CACHE_PORT', 11211);
+		defined('CACHE_PREFIX') || define('CACHE_PREFIX', 'oc_');
+
+		$this->prefix = CACHE_PREFIX;
 		$this->expire = $expire;
 
 		$this->memcache = new \Memcache();
@@ -37,7 +29,7 @@ class Mem {
 	 * @return mixed
 	 */
 	public function get(string $key) {
-		return $this->memcache->get(CACHE_PREFIX . $key);
+		return $this->memcache->get($this->prefix . $key);
 	}
 
 	/**
@@ -54,7 +46,7 @@ class Mem {
 			$expire = $this->expire;
 		}
 
-		$this->memcache->set(CACHE_PREFIX . $key, $value, MEMCACHE_COMPRESSED, $expire);
+		$this->memcache->set($this->prefix . $key, $value, MEMCACHE_COMPRESSED, $expire);
 	}
 
 	/**
@@ -65,7 +57,7 @@ class Mem {
 	 * @return void
 	 */
 	public function delete(string $key): void {
-		$this->memcache->delete(CACHE_PREFIX . $key);
+		$this->memcache->delete($this->prefix . $key);
 	}
 
 	/**

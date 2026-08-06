@@ -418,6 +418,7 @@ class Download extends Controller {
 		$this->load->language('catalog/download');
 
 		$json = [];
+		$filename = '';
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'catalog/download')) {

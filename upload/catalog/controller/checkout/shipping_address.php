@@ -207,6 +207,7 @@ class ShippingAddress extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/shipping_address');
 
 		$json = [];
+		$address_info = '';
 
 		if (isset($this->request->get['address_id'])) {
 			$address_id = (int)$this->request->get['address_id'];

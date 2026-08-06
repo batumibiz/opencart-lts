@@ -62,7 +62,7 @@ class Image {
 		$this->width = (int)$info[0];
 		$this->height = (int)$info[1];
 		$this->bits = isset($info['bits']) ? (string)$info['bits'] : '';
-		$this->mime = $info['mime'] ?? '';
+		$this->mime = $info['mime'];
 
 		if ($this->mime == 'image/gif') {
 			$this->image = imagecreatefromgif($file);
@@ -334,6 +334,8 @@ class Image {
 	 * Filter
 	 *
 	 * @return void
+	 *
+	 * @phpstan-ignore-next-line
 	 */
 	private function filter(): void {
 		$args = func_get_args();
@@ -351,6 +353,8 @@ class Image {
 	 * @param string $color
 	 *
 	 * @return void
+	 *
+	 * @phpstan-ignore-next-line
 	 */
 	private function text(string $text, int $x = 0, int $y = 0, int $size = 5, string $color = '000000'): void {
 		$rgb = $this->html2rgb($color);
@@ -367,6 +371,8 @@ class Image {
 	 * @param int  $opacity
 	 *
 	 * @return void
+	 *
+	 * @phpstan-ignore-next-line
 	 */
 	private function merge(self $merge, int $x = 0, int $y = 0, int $opacity = 100): void {
 		imagecopymerge($this->image, $merge->getImage(), $x, $y, 0, 0, $merge->getWidth(), $merge->getHeight(), $opacity);

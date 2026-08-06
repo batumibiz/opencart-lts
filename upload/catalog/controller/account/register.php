@@ -127,6 +127,7 @@ class Register extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/register');
 
 		$json = [];
+		$customer_group_info = [];
 
 		$required = [
 			'customer_group_id' => 0,
@@ -260,7 +261,7 @@ class Register extends \Opencart\System\Engine\Controller {
 				// Add customer details into session
 				$this->session->data['customer'] = [
 					'customer_id'       => $customer_id,
-					'customer_group_id' => $customer_group_id,
+					'customer_group_id' => $customer_group_id ?? $this->config->get('config_customer_group_id'),
 					'firstname'         => $post_info['firstname'],
 					'lastname'          => $post_info['lastname'],
 					'email'             => $post_info['email'],

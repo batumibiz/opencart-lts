@@ -172,6 +172,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
 			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
 
+			// @phpstan-ignore-next-line
 			foreach ($totals as $result) {
 				$data['totals'][] = ['text' => $price_status ? $this->currency->format($result['value'], $this->session->data['currency']) : ''] + $result;
 			}

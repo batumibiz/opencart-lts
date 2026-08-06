@@ -4,13 +4,24 @@ namespace Opencart\System\Library;
 
 class Filter {
 	private Request $request;
+
+	/**
+	 * @var array<string, bool>
+	 */
 	private array $filterKeys;
 
+	/**
+	 * @param Request             $request
+	 * @param array<string, bool> $filterKeys
+	 */
 	public function __construct(Request $request, array $filterKeys = []) {
 		$this->request = $request;
 		$this->filterKeys = $filterKeys;
 	}
 
+	/**
+	 * @return array<string, string>
+	 */
 	public function getFilterData(): array {
 		$filterData = [];
 

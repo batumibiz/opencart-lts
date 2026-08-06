@@ -202,6 +202,8 @@ class Installer extends Controller {
 		$this->load->language('marketplace/installer');
 
 		$json = [];
+		$install_info = [];
+		$file = '';
 
 		if (!$this->user->hasPermission('modify', 'marketplace/installer')) {
 			$json['error'] = $this->language->get('error_permission');
@@ -322,7 +324,7 @@ class Installer extends Controller {
 				'extension_download_id' => 0,
 				'name'                  => $install_info['name'],
 				'description'           => $install_info['description'],
-				'code'                  => $code,
+				'code'                  => $code ?? '',
 				'version'               => $install_info['version'],
 				'author'                => $install_info['author'],
 				'link'                  => $install_info['link']
@@ -343,6 +345,10 @@ class Installer extends Controller {
 		$this->load->language('marketplace/installer');
 
 		$json = [];
+		$file = '';
+		$start = 0;
+		$end = 0;
+		$total = 0;
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = (int)$this->request->get['extension_install_id'];
@@ -486,6 +492,7 @@ class Installer extends Controller {
 		$this->load->language('marketplace/installer');
 
 		$json = [];
+		$file = '';
 
 		if (isset($this->request->get['extension_install_id'])) {
 			$extension_install_id = $this->request->get['extension_install_id'];

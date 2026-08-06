@@ -51,7 +51,7 @@ class Article extends \Opencart\System\Engine\Model {
 
 		foreach ($data['article_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
-				$this->model_design_seo_url->addSeoUrl('article_id', $article_id, $keyword, $store_id, $language_id);
+				$this->model_design_seo_url->addSeoUrl('article_id', (string)$article_id, (string)$keyword, $store_id, $language_id);
 			}
 		}
 
@@ -113,11 +113,11 @@ class Article extends \Opencart\System\Engine\Model {
 		// SEO
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('article_id', $article_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('article_id', (string)$article_id);
 
 		foreach ($data['article_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
-				$this->model_design_seo_url->addSeoUrl('article_id', $article_id, $keyword, $store_id, $language_id);
+				$this->model_design_seo_url->addSeoUrl('article_id', (string)$article_id, (string)$keyword, $store_id, $language_id);
 			}
 		}
 
@@ -180,7 +180,7 @@ class Article extends \Opencart\System\Engine\Model {
 		// SEO
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('article_id', $article_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('article_id', (string)$article_id);
 
 		$this->model_cms_article->deleteLayouts($article_id);
 

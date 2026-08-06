@@ -9,7 +9,7 @@ class Subscription extends \Opencart\System\Engine\Controller {
 	 * List of filter request keys,
 	 * and whether their value must be urlencoded when it is placed into a query string.
 	 *
-	 * @var array
+	 * @var array<string, bool>
 	 */
 	private array $filterKeys = [
 		'filter_subscription_id'        => false,

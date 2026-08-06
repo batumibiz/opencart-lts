@@ -530,10 +530,6 @@ class Product extends \Opencart\System\Engine\Controller {
 			} else {
 				$has_stock = true;
 			}
-
-			if (!$has_stock) {
-				return true;
-			}
 		}
 
 		return false;

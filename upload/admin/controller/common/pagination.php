@@ -21,6 +21,9 @@ use Opencart\System\Engine\Controller;
  * @package Opencart\Admin\Controller\Common
  */
 class Pagination extends Controller {
+	/**
+	 * @param array<string, mixed> $setting array of filters
+	 */
 	public function index(array $setting): string {
 		if (isset($setting['total'])) {
 			$total = $setting['total'];
@@ -46,7 +49,7 @@ class Pagination extends Controller {
 			$url = '';
 		}
 
-		$num_links = 5;
+		$num_links = 8;
 		$num_pages = ceil($total / $limit);
 
 		if ($url && $page > 1 && $num_pages < $page) {
@@ -63,7 +66,7 @@ class Pagination extends Controller {
 			if ($page - 1 === 1) {
 				$data['prev'] = str_replace(['&amp;page={page}', '?page={page}', '&page={page}'], '', $url);
 			} else {
-				$data['prev'] = str_replace('{page}', $page - 1, $url);
+				$data['prev'] = str_replace('{page}', (string)($page - 1), $url);
 			}
 		} else {
 			$data['first'] = '';
@@ -94,14 +97,14 @@ class Pagination extends Controller {
 			for ($i = $start; $i <= $end; $i++) {
 				$data['links'][] = [
 					'page' => $i,
-					'href' => str_replace('{page}', $i, $url)
+					'href' => str_replace('{page}', (string)$i, $url)
 				];
 			}
 		}
 
 		if ($num_pages > $page) {
-			$data['next'] = str_replace('{page}', $page + 1, $url);
-			$data['last'] = str_replace('{page}', $num_pages, $url);
+			$data['next'] = str_replace('{page}', (string)($page + 1), $url);
+			$data['last'] = str_replace('{page}', (string)$num_pages, $url);
 		} else {
 			$data['next'] = '';
 			$data['last'] = '';

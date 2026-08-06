@@ -59,6 +59,7 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/forgotten');
 
 		$json = [];
+		$customer_info = [];
 
 		if ($this->customer->isLogged()) {
 			$json['redirect'] = $this->url->link('account/account', 'language=' . $this->config->get('config_language') . '&customer_token=' . $this->session->data['customer_token'], true);
@@ -169,6 +170,8 @@ class Forgotten extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/forgotten');
 
 		$json = [];
+		$customer_info = [];
+		$post_info = [];
 
 		if (isset($this->request->get['email'])) {
 			$email = urldecode((string)$this->request->get['email']);

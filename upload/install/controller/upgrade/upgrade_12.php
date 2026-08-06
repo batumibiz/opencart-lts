@@ -275,10 +275,12 @@ class Upgrade12 extends \Opencart\System\Engine\Controller {
 		$current_dir_storage = '';
 		if (is_file(DIR_OPENCART . 'config.php') && filesize(DIR_OPENCART . 'config.php') > 0) {
 			$lines = file(DIR_OPENCART . 'config.php');
+
 			foreach ($lines as $line) {
 				if (str_contains($line, "'DIR_STORAGE'")) {
 					$line = str_replace("'DIR_STORAGE'", "'CURRENT_DIR_STORAGE'", $line);
 					eval($line);
+					/** @phpstan-ignore-next-line */
 					$current_dir_storage = CURRENT_DIR_STORAGE;
 					break;
 				}

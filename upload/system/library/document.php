@@ -153,8 +153,8 @@ class Document {
 	/**
 	 * Add Script
 	 *
-	 * @param array|string $href
-	 * @param string       $position
+	 * @param array<string>|string $href
+	 * @param string               $position
 	 *
 	 * @return void
 	 */

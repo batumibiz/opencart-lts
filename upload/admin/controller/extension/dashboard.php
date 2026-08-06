@@ -5,6 +5,9 @@ namespace Opencart\Admin\Controller\Extension;
 use Opencart\System\Engine\Controller;
 
 class Dashboard extends Controller {
+	/**
+	 * @var array<string, string>
+	 */
 	private array $error = [];
 
 	public function index(): void {

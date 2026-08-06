@@ -46,7 +46,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 
 		foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
 			foreach ($language as $language_id => $keyword) {
-				$this->model_design_seo_url->addSeoUrl('manufacturer_id', $manufacturer_id, $keyword, $store_id, $language_id);
+				$this->model_design_seo_url->addSeoUrl('manufacturer_id', (string)$manufacturer_id, (string)$keyword, $store_id, $language_id);
 			}
 		}
 
@@ -101,12 +101,12 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		// SEO
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('manufacturer_id', $manufacturer_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('manufacturer_id', (string)$manufacturer_id);
 
 		if (isset($data['manufacturer_seo_url'])) {
 			foreach ($data['manufacturer_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->model_design_seo_url->addSeoUrl('manufacturer_id', $manufacturer_id, $keyword, $store_id, $language_id);
+					$this->model_design_seo_url->addSeoUrl('manufacturer_id', (string)$manufacturer_id, (string)$keyword, $store_id, $language_id);
 				}
 			}
 		}
@@ -149,7 +149,7 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 		// SEO
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('manufacturer_id', $manufacturer_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('manufacturer_id', (string)$manufacturer_id);
 
 		$this->cache->delete('manufacturer');
 	}

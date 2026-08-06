@@ -10,7 +10,7 @@ class Translation extends Controller {
 	 * List of filter request keys,
 	 * and whether their value must be urlencoded when it is placed into a query string.
 	 *
-	 * @var array
+	 * @var array<string, bool>
 	 */
 	private array $filterKeys = [
 		'filter_route'       => true,
@@ -262,7 +262,7 @@ class Translation extends Controller {
 		// Check if there is already a route - key pair on the same store using the same language
 		$translation_info = $this->model_design_translation->getTranslationByRouteKey($post_info['route'], $post_info['key'], $post_info['store_id'], $post_info['language_id']);
 
-		if ($translation_info && (!$post_info['translation_id'] || ($translation_info['translation_id'] != (int)$post_info['translation_id']))) {
+		if ($translation_info && (!$post_info['translation_id'] || ((int)$translation_info['translation_id'] !== (int)$post_info['translation_id']))) {
 			$json['error']['key'] = $this->language->get('error_key_exists');
 		}
 
@@ -416,15 +416,17 @@ class Translation extends Controller {
 		}
 
 		if ($language_info && is_file($directory . $language_info['code'] . '/' . $route . '.php') && substr(str_replace('\\', '/', realpath($directory . $language_info['code'] . '/' . $route . '.php')), 0, strlen($directory)) == str_replace('\\', '/', $directory)) {
-			$_ = [];
+			$json = [];
 
 			include($directory . $language_info['code'] . '/' . $route . '.php');
 
-			foreach ($_ as $key => $value) {
-				$json[] = [
-					'key'   => $key,
-					'value' => $value
-				];
+			if (!empty($_) && is_array($_)) {
+				foreach ($_ as $key => $value) {
+					$json[] = [
+						'key'   => $key,
+						'value' => $value
+					];
+				}
 			}
 		}
 

@@ -428,6 +428,11 @@ class Zone extends \Opencart\System\Engine\Model {
 		return (int)$query->row['total'];
 	}
 
+	/**
+	 * @param array<string, string> $data
+	 *
+	 * @return array<array-key, array<string, string>>
+	 */
 	public function autocompleteZoneName(array $data = []): array {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "zone_description` WHERE `language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 

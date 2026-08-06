@@ -10,7 +10,7 @@ class Review extends Controller {
 	 * List of filter request keys,
 	 * and whether their value must be urlencoded when it is placed into a query string.
 	 *
-	 * @var array
+	 * @var array<string, bool>
 	 */
 	private array $filterKeys = [
 		'filter_product'   => true,
@@ -247,7 +247,7 @@ class Review extends Controller {
 			$json['error']['rating'] = $this->language->get('error_rating');
 		}
 
-		if (isset($json['error']) && !isset($json['error']['warning'])) {
+		if (isset($json['error']) && !empty($json['error']['warning'])) {
 			$json['error']['warning'] = $this->language->get('error_warning');
 		}
 

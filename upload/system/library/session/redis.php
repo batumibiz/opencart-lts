@@ -27,6 +27,10 @@ class Redis {
 	public function __construct(\Opencart\System\Engine\Registry $registry) {
 		$this->config = $registry->get('config');
 
+		defined('CACHE_HOSTNAME') || define('CACHE_HOSTNAME', '127.0.0.1');
+		defined('CACHE_PORT') || define('CACHE_PORT', 6379);
+		defined('CACHE_PREFIX') || define('CACHE_PREFIX', 'oc');
+
 		try {
 			$this->redis = new \Redis();
 			$this->redis->pconnect(CACHE_HOSTNAME, CACHE_PORT);

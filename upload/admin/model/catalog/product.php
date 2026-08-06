@@ -175,7 +175,7 @@ class Product extends \Opencart\System\Engine\Model {
 
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, $language_id);
+					$this->model_design_seo_url->addSeoUrl('product_id', (string)$product_id, (string)$keyword, $store_id, $language_id);
 				}
 			}
 		}
@@ -375,12 +375,12 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		// SEO
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', $product_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', (string)$product_id);
 
 		if (isset($data['product_seo_url'])) {
 			foreach ($data['product_seo_url'] as $store_id => $language) {
 				foreach ($language as $language_id => $keyword) {
-					$this->model_design_seo_url->addSeoUrl('product_id', $product_id, $keyword, $store_id, $language_id);
+					$this->model_design_seo_url->addSeoUrl('product_id', (string)$product_id, (string)$keyword, $store_id, $language_id);
 				}
 			}
 		}
@@ -498,7 +498,7 @@ class Product extends \Opencart\System\Engine\Model {
 		// SEO
 		$this->load->model('design/seo_url');
 
-		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', $product_id);
+		$this->model_design_seo_url->deleteSeoUrlsByKeyValue('product_id', (string)$product_id);
 
 		// Coupon
 		$this->load->model('marketing/coupon');

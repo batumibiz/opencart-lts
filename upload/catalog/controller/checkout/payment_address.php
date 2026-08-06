@@ -198,6 +198,7 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/payment_address');
 
 		$json = [];
+		$address_info = '';
 
 		if (isset($this->request->get['address_id'])) {
 			$address_id = (int)$this->request->get['address_id'];

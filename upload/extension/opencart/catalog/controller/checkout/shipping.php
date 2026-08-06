@@ -154,12 +154,13 @@ class Shipping extends \Opencart\System\Engine\Controller {
 	public function save(): void {
 		$this->load->language('extension/opencart/checkout/shipping');
 
+		$shipping = [];
 		$json = [];
 
 		if (!empty($this->request->post['shipping_method'])) {
 			$shipping = explode('.', $this->request->post['shipping_method']);
 
-			if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+			if (!isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
 				$json['error'] = $this->language->get('error_shipping');
 			}
 		} else {

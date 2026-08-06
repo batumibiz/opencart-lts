@@ -47,6 +47,11 @@ class Gdpr extends Controller {
 		}
 	}
 
+	/**
+	 * @param array<string, mixed> $gdpr_info
+	 *
+	 * @throws \Exception
+	 */
 	public function export(array $gdpr_info): void {
 		// Store
 		$this->load->model('setting/store');
@@ -219,6 +224,11 @@ class Gdpr extends Controller {
 		}
 	}
 
+	/**
+	 * @param array<string, mixed> $gdpr_info
+	 *
+	 * @throws \Exception
+	 */
 	public function approve(array $gdpr_info): void {
 		// Store
 		$this->load->model('setting/store');
@@ -307,6 +317,11 @@ class Gdpr extends Controller {
 		}
 	}
 
+	/**
+	 * @param array<string, mixed> $gdpr_info
+	 *
+	 * @throws \Exception
+	 */
 	public function deny(array $gdpr_info): void {
 		// Store
 		$this->load->model('setting/store');
@@ -395,6 +410,11 @@ class Gdpr extends Controller {
 		}
 	}
 
+	/**
+	 * @param array<string, mixed> $gdpr_info
+	 *
+	 * @throws \Exception
+	 */
 	public function remove(array $gdpr_info): void {
 		// Store
 		$this->load->model('setting/store');

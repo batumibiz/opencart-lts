@@ -16,7 +16,11 @@ namespace Opencart\Install\Model\Upgrade;
  * $install_model = $this->model_upgrade_upgrade($table, $data);
  */
 class Upgrade extends \Opencart\System\Engine\Model {
-	public function addRecord($table, $data): void {
+	/**
+	 * @param string               $table
+	 * @param array<string, mixed> $data
+	 */
+	public function addRecord(string $table, array $data): int {
 		$implode = [];
 
 		foreach ($data as $key => $value) {
@@ -36,30 +40,37 @@ class Upgrade extends \Opencart\System\Engine\Model {
 					$implode[] = "`" . $key . "` = '" . $this->db->escape((string)$value) . "'";
 					break;
 				case 'array':
-					$implode[] = "`" . $key . "` = '" . $this->db->escape((array)json_encode($value)) . "'";
+					$implode[] = "`" . $key . "` = '" . $this->db->escape(json_encode($value)) . "'";
 					break;
 				case 'object':
-					$implode[] = "`" . $key . "` = '" . $this->db->escape((array)json_encode($value)) . "'";
+					$implode[] = "`" . $key . "` = '" . $this->db->escape(json_encode($value)) . "'";
 					break;
 			}
 		}
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . $table . "` SET " . implode(", ", $implode));
+
+		return $this->db->getLastId();
 	}
 
+	/**
+	 * @param string $table
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
 	public function getRecords(string $table): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . $table . "`");
 
 		return $query->rows;
 	}
 
-	public function hasTable(string $table): bool {
+	public function hasTable(string $table): int {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "'");
 
 		return $query->num_rows;
 	}
 
-	public function hasField(string $table, string $field): bool {
+	public function hasField(string $table, string $field): int {
 		$query = $this->db->query("SELECT * FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . DB_DATABASE . "' AND TABLE_NAME = '" . DB_PREFIX . $table . "' AND COLUMN_NAME = '" . $field . "'");
 
 		return $query->num_rows;

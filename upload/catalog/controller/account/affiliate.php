@@ -121,6 +121,8 @@ class Affiliate extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/affiliate');
 
 		$json = [];
+		$post_info = [];
+		$affiliate_info = 0;
 
 		if (!$this->load->controller('account/login.validate')) {
 			$this->session->data['redirect'] = $this->url->link('account/affiliate', 'language=' . $this->config->get('config_language'));

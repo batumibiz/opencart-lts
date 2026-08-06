@@ -146,6 +146,7 @@ class Authorize extends \Opencart\System\Engine\Controller {
 		$this->load->language('account/authorize');
 
 		$json = [];
+		$token_info = [];
 
 		$required = [
 			'code'     => '',

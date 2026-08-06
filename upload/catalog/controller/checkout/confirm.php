@@ -326,6 +326,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 
 		$data['totals'] = [];
 
+		// @phpstan-ignore-next-line
 		foreach ($totals as $total) {
 			$data['totals'][] = ['text' => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
 		}

@@ -45,7 +45,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_attribute->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $attribute) {
-			$this->model_catalog_attribute->addDescription($attribute['attribute_id'], $language_id, $attribute);
+			$this->model_catalog_attribute->addDescription((int)$attribute['attribute_id'], $language_id, $attribute);
 		}
 
 		// Attribute Group
@@ -54,7 +54,7 @@ class Language extends \Opencart\System\Engine\Model {
 		$results = $this->model_catalog_attribute_group->getDescriptionsByLanguageId($this->config->get('config_language_id'));
 
 		foreach ($results as $attribute_group) {
-			$this->model_catalog_attribute_group->addDescription($attribute_group['attribute_group_id'], $language_id, $attribute_group);
+			$this->model_catalog_attribute_group->addDescription((int)$attribute_group['attribute_group_id'], $language_id, $attribute_group);
 		}
 
 		// Banner

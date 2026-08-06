@@ -12,6 +12,9 @@ class Api extends \Opencart\System\Engine\Controller {
 	 * @return \Opencart\System\Engine\Action|null
 	 */
 	public function index(): ?\Opencart\System\Engine\Action {
+		$api_info = [];
+		$time = 0;
+
 		if (isset($this->request->get['route'])) {
 			$route = strtolower((string)$this->request->get['route']);
 		} else {

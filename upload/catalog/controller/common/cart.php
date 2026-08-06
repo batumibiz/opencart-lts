@@ -86,6 +86,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 		// Totals
 		$data['totals'] = [];
 
+		// @phpstan-ignore-next-line
 		foreach ($totals as $total) {
 			$data['totals'][] = ['text' => $this->currency->format($total['value'], $this->session->data['currency'])] + $total;
 		}

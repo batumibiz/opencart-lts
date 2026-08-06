@@ -123,6 +123,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 		$this->load->language('checkout/payment_method');
 
 		$json = [];
+		$payment = [];
 
 		// Validate cart has products and has stock.
 		if (!$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout')) || !$this->cart->hasMinimum()) {
@@ -152,7 +153,7 @@ class PaymentMethod extends \Opencart\System\Engine\Controller {
 			if (isset($this->request->post['payment_method']) && isset($this->session->data['payment_methods'])) {
 				$payment = explode('.', $this->request->post['payment_method']);
 
-				if (!isset($payment[0]) || !isset($payment[1]) || !isset($this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]])) {
+				if (!empty($payment[0]) || !isset($payment[1]) || !isset($this->session->data['payment_methods'][$payment[0]]['option'][$payment[1]])) {
 					$json['error'] = $this->language->get('error_payment_method');
 				}
 			} else {

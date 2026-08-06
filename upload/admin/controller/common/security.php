@@ -155,6 +155,8 @@ class Security extends Controller {
 		$this->load->language('common/security');
 
 		$json = [];
+		$base_old = '';
+		$base_new = '';
 
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -339,6 +341,8 @@ class Security extends Controller {
 		$this->load->language('common/security');
 
 		$json = [];
+		$base_old = '';
+		$base_new = '';
 
 		if (isset($this->request->get['page'])) {
 			$page = (int)$this->request->get['page'];
@@ -499,6 +503,7 @@ class Security extends Controller {
 		$this->load->language('common/security');
 
 		$json = [];
+		$path = '';
 
 		if (isset($this->request->get['remove'])) {
 			$remove = (string)$this->request->get['remove'];

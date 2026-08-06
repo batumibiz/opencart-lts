@@ -15,6 +15,7 @@ class Upload extends \Opencart\System\Engine\Controller {
 		$this->load->language('tool/upload');
 
 		$json = [];
+		$filename = '';
 
 		// Validate the filename length
 		if (!isset($this->request->get['upload_token']) || !isset($this->session->data['upload_token']) || ($this->session->data['upload_token'] != $this->request->get['upload_token'])) {

@@ -161,6 +161,7 @@ class Modification extends Controller {
 		$this->load->language('marketplace/modification');
 
 		$json = [];
+		$key = '';
 
 		if (!$this->user->hasPermission('modify', 'marketplace/modification')) {
 			$json['error'] = $this->language->get('error_permission');

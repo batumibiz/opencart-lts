@@ -95,7 +95,7 @@ class Backup extends Controller {
 
 			$data['histories'][] = [
 				'filename'   => basename($file),
-				'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
+				'size'       => round((float)substr((string)$size, 0, strpos((string)$size, '.') + 4), 2) . $suffix[$i],
 				'date_added' => date($this->language->get('datetime_format'), filemtime($file)),
 				'download'   => $this->url->link('tool/backup.download', 'user_token=' . $this->session->data['user_token'] . '&filename=' . urlencode(basename($file))),
 			];
@@ -302,6 +302,7 @@ class Backup extends Controller {
 		$this->load->language('tool/backup');
 
 		$json = [];
+		$filename = '';
 
 		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'tool/backup')) {

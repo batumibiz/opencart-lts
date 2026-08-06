@@ -181,6 +181,7 @@ class Loader {
 		// Trigger the pre events
 		$this->event->trigger('view/' . $trigger . '/before', [&$route, &$data, &$code, &$output]);
 
+		// @phpstan-ignore-next-line
 		if (!$output) {
 			// Make sure it's only the last event that returns an output if required.
 			$output = $this->template->render($route, $data, $code);

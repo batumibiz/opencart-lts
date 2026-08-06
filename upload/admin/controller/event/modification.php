@@ -12,6 +12,10 @@ use Opencart\System\Engine\Controller;
  * @package Opencart\Admin\Controller\Event
  */
 class Modification extends Controller {
+	/**
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 */
 	public function controller(string &$route, array &$args): void {
 		if (str_starts_with($route, 'extension/ocmod/')) {
 			return;
@@ -24,6 +28,10 @@ class Modification extends Controller {
 		}
 	}
 
+	/**
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 */
 	public function model(string &$route, array &$args): void {
 		if (str_starts_with($route, 'extension/ocmod/')) {
 			return;
@@ -36,6 +44,10 @@ class Modification extends Controller {
 		}
 	}
 
+	/**
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 */
 	public function view(string &$route, array &$args): void {
 		if (str_starts_with($route, 'extension/ocmod/')) {
 			return;
@@ -52,6 +64,10 @@ class Modification extends Controller {
 		}
 	}
 
+	/**
+	 * @param string            $route
+	 * @param array<int, mixed> $args
+	 */
 	public function library(string &$route, array &$args): void {
 		if (str_starts_with($route, 'extension/ocmod/')) {
 			return;

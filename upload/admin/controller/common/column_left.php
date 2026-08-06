@@ -757,15 +757,13 @@ class ColumnLeft extends Controller {
 				];
 			}
 
-			if ($system) {
-				$data['menus'][] = [
-					'id'       => 'menu-system',
-					'icon'     => 'fas fa-cog',
-					'name'     => $this->language->get('text_system'),
-					'href'     => '',
-					'children' => $system
-				];
-			}
+			$data['menus'][] = [
+				'id'       => 'menu-system',
+				'icon'     => 'fas fa-cog',
+				'name'     => $this->language->get('text_system'),
+				'href'     => '',
+				'children' => $system
+			];
 
 			$report = [];
 

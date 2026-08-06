@@ -103,9 +103,7 @@ class SeoUrl extends \Opencart\System\Engine\Controller {
 		foreach ($parts as $part) {
 			$pair = explode('=', $part);
 
-			if (isset($pair[0])) {
-				$key = (string)$pair[0];
-			}
+			$key = (string)$pair[0];
 
 			if (isset($pair[1])) {
 				$value = (string)$pair[1];

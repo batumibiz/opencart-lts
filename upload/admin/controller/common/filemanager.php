@@ -264,6 +264,7 @@ class FileManager extends Controller {
 		$this->load->language('common/filemanager');
 
 		$json = [];
+		$filename = '';
 
 		$base = DIR_IMAGE . 'catalog/';
 
