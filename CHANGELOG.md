@@ -26,7 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - `admin` Removed a large amount of legacy and duplicate code.
 
 #### Fixed
-- Nothing
+- Various static analyzer warnings
 
 #### Security
 - Nothing
