@@ -26,8 +26,12 @@ class FreeCheckout extends \Opencart\System\Engine\Model {
 		// Cart
 		$this->load->model('checkout/cart');
 
-		($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
-		/** @phpstan-ignore-next-line */
+		/**
+		 * @var non-empty-array<array-key, mixed> $totals
+		 * @var int|negative-int                  $total
+		 */
+		($this->{'model_checkout_cart'}->getTotals)($totals, $taxes, $total);
+
 		$status = ($total <= 0.00) && !$this->cart->hasSubscription();
 
 		$method_data = [];

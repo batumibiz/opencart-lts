@@ -12,5 +12,3 @@ parameters:
         - ../upload/system/storage/vendor/
         - ../upload/system/storage/cache/
     tmpDir: ../.cache/phpstan/
-    ignoreErrors:
-        - '#^Access to an undefined property Opencart\\System\\Engine\\Proxy<Opencart\\Catalog\\Model\\Checkout\\Cart>::\$getTotals\.$#'

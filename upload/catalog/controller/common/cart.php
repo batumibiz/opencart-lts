@@ -31,7 +31,7 @@ class Cart extends \Opencart\System\Engine\Controller {
 
 		// Display prices
 		if ($this->customer->isLogged() || !$this->config->get('config_customer_price')) {
-			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+			($this->{"model_checkout_cart"}->getTotals)($totals, $taxes, $total);
 
 			$price_status = true;
 		} else {

@@ -145,7 +145,7 @@ return $config
 		'phpdoc_single_line_var_spacing' => true,
 		'phpdoc_tag_casing' => true,
 		'phpdoc_tag_type' => true,
-		'phpdoc_to_comment' => true,
+//		'phpdoc_to_comment' => true,
 		'phpdoc_trim' => true,
 		'phpdoc_trim_consecutive_blank_line_separation' => true,
 		'phpdoc_types' => true,

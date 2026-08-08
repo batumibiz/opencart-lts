@@ -565,7 +565,7 @@ class Order extends \Opencart\System\Engine\Controller {
 			// Cart
 			$this->load->model('checkout/cart');
 
-			($this->model_checkout_cart->getTotals)($totals, $taxes, $total);
+			($this->{"model_checkout_cart"}->getTotals)($totals, $taxes, $total);
 
 			$total_data = [
 				'totals' => $totals,
