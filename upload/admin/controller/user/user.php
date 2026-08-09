@@ -3,86 +3,34 @@
 namespace Opencart\Admin\Controller\User;
 
 use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Filter;
 
 class User extends Controller {
+	/**
+	 * List of filter request keys,
+	 * and whether their value must be urlencoded when it is placed into a query string.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $filterKeys = [
+		'filter_username'      => true,
+		'filter_name'          => true,
+		'filter_email'         => true,
+		'filter_user_group_id' => false,
+		'filter_ip'            => false,
+		'filter_status'        => false,
+	];
+
 	public function index(): void {
+		$filter = new Filter($this->request, $this->filterKeys);
+
+		$data = $filter->getFilterData();
+
 		$this->load->language('user/user');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (isset($this->request->get['filter_username'])) {
-			$filter_username = (string)$this->request->get['filter_username'];
-		} else {
-			$filter_username = '';
-		}
-
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = (string)$this->request->get['filter_name'];
-		} else {
-			$filter_name = '';
-		}
-
-		if (isset($this->request->get['filter_email'])) {
-			$filter_email = (string)$this->request->get['filter_email'];
-		} else {
-			$filter_email = '';
-		}
-
-		if (isset($this->request->get['filter_user_group_id'])) {
-			$filter_user_group_id = (int)$this->request->get['filter_user_group_id'];
-		} else {
-			$filter_user_group_id = '';
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = (bool)$this->request->get['filter_status'];
-		} else {
-			$filter_status = '';
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$filter_ip = (string)$this->request->get['filter_ip'];
-		} else {
-			$filter_ip = '';
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_email'])) {
-			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_user_group_id'])) {
-			$url .= '&filter_user_group_id=' . $this->request->get['filter_user_group_id'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -106,13 +54,6 @@ class User extends Controller {
 
 		$data['user_groups'] = $this->model_user_user_group->getUserGroups();
 
-		$data['filter_username'] = $filter_username;
-		$data['filter_name'] = $filter_name;
-		$data['filter_email'] = $filter_email;
-		$data['filter_user_group_id'] = $filter_user_group_id;
-		$data['filter_status'] = $filter_status;
-		$data['filter_ip'] = $filter_ip;
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -128,115 +69,25 @@ class User extends Controller {
 	}
 
 	public function getList(): string {
-		if (isset($this->request->get['filter_username'])) {
-			$filter_username = $this->request->get['filter_username'];
-		} else {
-			$filter_username = '';
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
 
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
-		} else {
-			$filter_name = '';
-		}
+		$filter_data = $filter->getFilterData();
 
-		if (isset($this->request->get['filter_email'])) {
-			$filter_email = $this->request->get['filter_email'];
-		} else {
-			$filter_email = '';
-		}
+		$sort = (string)($this->request->get['sort'] ?? 'username');
+		$order = (string)($this->request->get['order'] ?? 'ASC');
+		$page = (int)($this->request->get['page'] ?? 1);
 
-		if (isset($this->request->get['filter_user_group_id'])) {
-			$filter_user_group_id = (int)$this->request->get['filter_user_group_id'];
-		} else {
-			$filter_user_group_id = '';
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = (bool)$this->request->get['filter_status'];
-		} else {
-			$filter_status = '';
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$filter_ip = (string)$this->request->get['filter_ip'];
-		} else {
-			$filter_ip = '';
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'username';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_email'])) {
-			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_user_group_id'])) {
-			$url .= '&filter_user_group_id=' . $this->request->get['filter_user_group_id'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(false, false, true);
 
 		$data['action'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// User
 		$data['users'] = [];
 
-		$filter_data = [
-			'filter_username'      => $filter_username,
-			'filter_name'          => $filter_name,
-			'filter_email'         => $filter_email,
-			'filter_user_group_id' => $filter_user_group_id,
-			'filter_status'        => $filter_status,
-			'filter_ip'            => $filter_ip,
-			'sort'                 => $sort,
-			'order'                => $order,
-			'start'                => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'                => $this->config->get('config_pagination_admin')
-		];
+		$filter_data['sort'] = $sort;
+		$filter_data['order'] = $order;
+		$filter_data['start'] = ($page - 1) * $this->config->get('config_pagination_admin');
+		$filter_data['limit'] = $this->config->get('config_pagination_admin');
 
 		$this->load->model('user/user');
 
@@ -249,37 +100,8 @@ class User extends Controller {
 			] + $result;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_email'])) {
-			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_user_group_id'])) {
-			$url .= '&filter_user_group_id=' . $this->request->get['filter_user_group_id'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
+		$url = $filter->getQueryString();
+		$url .= ($order == 'ASC') ? '&order=DESC' : '&order=ASC';
 
 		$data['sort_username'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=username' . $url);
 		$data['sort_name'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
@@ -288,39 +110,7 @@ class User extends Controller {
 		$data['sort_status'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=u.status' . $url);
 		$data['sort_date_added'] = $this->url->link('user/user.list', 'user_token=' . $this->session->data['user_token'] . '&sort=u.date_added' . $url);
 
-		$url = '';
-
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_email'])) {
-			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_user_group_id'])) {
-			$url .= '&filter_user_group_id=' . $this->request->get['filter_user_group_id'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = $filter->getQueryString(true, true);
 
 		$user_total = $this->model_user_user->getTotalUsers();
 
@@ -346,43 +136,8 @@ class User extends Controller {
 
 		$data['text_form'] = !isset($this->request->get['user_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$url = '';
-
-		if (isset($this->request->get['filter_username'])) {
-			$url .= '&filter_username=' . urlencode(html_entity_decode($this->request->get['filter_username'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_email'])) {
-			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_user_group_id'])) {
-			$url .= '&filter_user_group_id=' . $this->request->get['filter_user_group_id'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 

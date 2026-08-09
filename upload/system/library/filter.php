@@ -26,13 +26,22 @@ class Filter {
 		$filterData = [];
 
 		foreach ($this->filterKeys as $key => $encode) {
-			$filterData[$key] = $this->request->get[$key] ?? '';
+			if (isset($this->request->get[$key])) {
+				$filterData[$key] = $encode ? html_entity_decode($this->request->get[$key]) : $this->request->get[$key];
+			} else {
+				$filterData[$key] = '';
+			}
 		}
 
 		return $filterData;
 	}
 
-	public function getQueryString(bool $sort = false, bool $order = false, bool $page = false, bool $master_id = false): string {
+	public function getQueryString(
+		bool $sort = false,
+		bool $order = false,
+		bool $page = false,
+		bool $master_id = false
+	): string {
 		$url = '';
 
 		foreach ($this->filterKeys as $key => $encode) {

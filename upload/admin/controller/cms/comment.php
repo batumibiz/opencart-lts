@@ -3,8 +3,25 @@
 namespace Opencart\Admin\Controller\Cms;
 
 use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Filter;
 
 class Comment extends Controller {
+	/**
+	 * List of filter request keys,
+	 * and whether their value must be urlencoded when it is placed into a query string.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $filterKeys = [
+		'filter_keyword'   => true,
+		'filter_article'   => true,
+		'filter_customer'  => true,
+		'filter_email'     => false,
+		'filter_date_from' => false,
+		'filter_date_to'   => false,
+		'filter_status'    => false,
+	];
+
 	public function index(): void {
 		$this->load->language('cms/comment');
 
@@ -43,93 +60,24 @@ class Comment extends Controller {
 	}
 
 	public function getList(): string {
-		if (isset($this->request->get['filter_keyword'])) {
-			$filter_keyword = (string)$this->request->get['filter_keyword'];
-		} else {
-			$filter_keyword = '';
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
 
-		if (isset($this->request->get['filter_article'])) {
-			$filter_article = (string)$this->request->get['filter_article'];
-		} else {
-			$filter_article = '';
-		}
+		$filter_data = $filter->getFilterData();
 
-		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = (string)$this->request->get['filter_customer'];
-		} else {
-			$filter_customer = '';
-		}
+		$sort = (string)($this->request->get['sort'] ?? 'pd.name');
+		$order = (string)($this->request->get['order'] ?? 'ASC');
+		$page = (int)($this->request->get['page'] ?? 1);
 
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = (int)$this->request->get['filter_status'];
-		} else {
-			$filter_status = '';
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$filter_date_from = (string)$this->request->get['filter_date_from'];
-		} else {
-			$filter_date_from = '';
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$filter_date_to = (string)$this->request->get['filter_date_to'];
-		} else {
-			$filter_date_to = '';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['filter_keyword'])) {
-			$url .= '&filter_keyword=' . urlencode(html_entity_decode((string)$this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_article'])) {
-			$url .= '&filter_article=' . urlencode(html_entity_decode((string)$this->request->get['filter_article'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . (int)$this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . (int)$this->request->get['page'];
-		}
+		$url = $filter->getQueryString(false, false, true);
 
 		$data['action'] = $this->url->link('cms/comment.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['comments'] = [];
 
-		// Article
-		$filter_data = [
-			'filter_keyword'   => $filter_keyword,
-			'filter_article'   => $filter_article,
-			'filter_customer'  => $filter_customer,
-			'filter_status'    => $filter_status,
-			'filter_date_from' => $filter_date_from,
-			'filter_date_to'   => $filter_date_to,
-			'start'            => ($page - 1) * 10,
-			'limit'            => 10
-		];
+		$filter_data['sort'] = $sort;
+		$filter_data['order'] = $order;
+		$filter_data['start'] = ($page - 1) * $this->config->get('config_pagination_admin');
+		$filter_data['limit'] = $this->config->get('config_pagination_admin');
 
 		$this->load->model('cms/article');
 
@@ -162,31 +110,7 @@ class Comment extends Controller {
 			] + $result;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_keyword'])) {
-			$url .= '&filter_keyword=' . urlencode(html_entity_decode($this->request->get['filter_keyword'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_article'])) {
-			$url .= '&filter_article=' . urlencode(html_entity_decode($this->request->get['filter_article'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
+		$url = $filter->getQueryString(true, true);
 
 		$comment_total = $this->model_cms_article->getTotalComments($filter_data);
 

@@ -3,44 +3,31 @@
 namespace Opencart\Admin\Controller\Localisation;
 
 use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Filter;
 
 class Country extends Controller {
+	/**
+	 * List of filter request keys,
+	 * and whether their value must be urlencoded when it is placed into a query string.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $filterKeys = [
+		'filter_name'       => true,
+		'filter_iso_code_2' => true,
+		'filter_iso_code_3' => true,
+	];
+
 	public function index(): void {
+		$filter = new Filter($this->request, $this->filterKeys);
+
+		$data = $filter->getFilterData();
+
 		$this->load->language('localisation/country');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = (string)$this->request->get['filter_name'];
-		} else {
-			$filter_name = '';
-		}
-
-		if (isset($this->request->get['filter_iso_code_2'])) {
-			$filter_iso_code_2 = (string)$this->request->get['filter_iso_code_2'];
-		} else {
-			$filter_iso_code_2 = '';
-		}
-
-		if (isset($this->request->get['filter_iso_code_3'])) {
-			$filter_iso_code_3 = (string)$this->request->get['filter_iso_code_3'];
-		} else {
-			$filter_iso_code_3 = '';
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -59,10 +46,6 @@ class Country extends Controller {
 
 		$data['list'] = $this->getList();
 
-		$data['filter_name'] = $filter_name;
-		$data['filter_iso_code_2'] = $filter_iso_code_2;
-		$data['filter_iso_code_3'] = $filter_iso_code_3;
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -78,82 +61,25 @@ class Country extends Controller {
 	}
 
 	public function getList(): string {
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = (string)$this->request->get['filter_name'];
-		} else {
-			$filter_name = '';
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
 
-		if (isset($this->request->get['filter_iso_code_2'])) {
-			$filter_iso_code_2 = (string)$this->request->get['filter_iso_code_2'];
-		} else {
-			$filter_iso_code_2 = '';
-		}
+		$filter_data = $filter->getFilterData();
 
-		if (isset($this->request->get['filter_iso_code_3'])) {
-			$filter_iso_code_3 = (string)$this->request->get['filter_iso_code_3'];
-		} else {
-			$filter_iso_code_3 = '';
-		}
+		$sort = (string)($this->request->get['sort'] ?? 'name');
+		$order = (string)($this->request->get['order'] ?? 'ASC');
+		$page = (int)($this->request->get['page'] ?? 1);
 
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_iso_code_2'])) {
-			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_iso_code_3'])) {
-			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(false, false, true);
 
 		$data['action'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Country
 		$data['countries'] = [];
 
-		$filter_data = [
-			'filter_name'       => $filter_name,
-			'filter_iso_code_2' => $filter_iso_code_2,
-			'filter_iso_code_3' => $filter_iso_code_3,
-			'sort'              => $sort,
-			'order'             => $order,
-			'start'             => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'             => $this->config->get('config_pagination_admin')
-		];
+		$filter_data['sort'] = $sort;
+		$filter_data['order'] = $order;
+		$filter_data['start'] = ($page - 1) * $this->config->get('config_pagination_admin');
+		$filter_data['limit'] = $this->config->get('config_pagination_admin');
 
 		$this->load->model('localisation/country');
 
@@ -166,51 +92,14 @@ class Country extends Controller {
 			] + $result;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_iso_code_2'])) {
-			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_iso_code_3'])) {
-			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
+		$url = $filter->getQueryString();
+		$url .= ($order == 'ASC') ? '&order=DESC' : '&order=ASC';
 
 		$data['sort_name'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_iso_code_2'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_2' . $url);
 		$data['sort_iso_code_3'] = $this->url->link('localisation/country.list', 'user_token=' . $this->session->data['user_token'] . '&sort=iso_code_3' . $url);
 
-		$url = '';
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_iso_code_2'])) {
-			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_iso_code_3'])) {
-			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = $filter->getQueryString(true, true);
 
 		$country_total = $this->model_localisation_country->getTotalCountries($filter_data);
 
@@ -236,31 +125,8 @@ class Country extends Controller {
 
 		$data['text_form'] = !isset($this->request->get['country_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$url = '';
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_iso_code_2'])) {
-			$url .= '&filter_iso_code_2=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_2'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_iso_code_3'])) {
-			$url .= '&filter_iso_code_3=' . urlencode(html_entity_decode($this->request->get['filter_iso_code_3'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 

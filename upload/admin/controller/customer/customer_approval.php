@@ -3,8 +3,24 @@
 namespace Opencart\Admin\Controller\Customer;
 
 use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Filter;
 
 class CustomerApproval extends Controller {
+	/**
+	 * List of filter request keys,
+	 * and whether their value must be urlencoded when it is placed into a query string.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $filterKeys = [
+		'filter_customer'          => true,
+		'filter_email'             => true,
+		'filter_customer_group_id' => false,
+		'filter_type'              => false,
+		'filter_date_from'         => false,
+		'filter_date_to'           => false,
+	];
+
 	public function index(): void {
 		$this->load->language('customer/customer_approval');
 
@@ -47,93 +63,25 @@ class CustomerApproval extends Controller {
 	}
 
 	public function getList(): string {
-		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = $this->request->get['filter_customer'];
-		} else {
-			$filter_customer = '';
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
 
-		if (isset($this->request->get['filter_email'])) {
-			$filter_email = $this->request->get['filter_email'];
-		} else {
-			$filter_email = '';
-		}
+		$filter_data = $filter->getFilterData();
 
-		if (isset($this->request->get['filter_customer_group_id'])) {
-			$filter_customer_group_id = (int)$this->request->get['filter_customer_group_id'];
-		} else {
-			$filter_customer_group_id = '';
-		}
+		$sort = (string)($this->request->get['sort'] ?? 'pd.name');
+		$order = (string)($this->request->get['order'] ?? 'ASC');
+		$page = (int)($this->request->get['page'] ?? 1);
 
-		if (isset($this->request->get['filter_type'])) {
-			$filter_type = $this->request->get['filter_type'];
-		} else {
-			$filter_type = '';
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$filter_date_from = $this->request->get['filter_date_from'];
-		} else {
-			$filter_date_from = '';
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$filter_date_to = $this->request->get['filter_date_to'];
-		} else {
-			$filter_date_to = '';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_email'])) {
-			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_customer_group_id'])) {
-			$url .= '&filter_customer_group_id=' . $this->request->get['filter_customer_group_id'];
-		}
-
-		if (isset($this->request->get['filter_type'])) {
-			$url .= '&filter_type=' . $this->request->get['filter_type'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(false, false, true);
 
 		$data['action'] = $this->url->link('customer/customer_approval.list', 'user_token=' . $this->session->data['user_token'] . $url, true);
 
 		// Customer Approval
 		$data['customer_approvals'] = [];
 
-		$filter_data = [
-			'filter_customer'          => $filter_customer,
-			'filter_email'             => $filter_email,
-			'filter_customer_group_id' => $filter_customer_group_id,
-			'filter_type'              => $filter_type,
-			'filter_date_from'         => $filter_date_from,
-			'filter_date_to'           => $filter_date_to,
-			'start'                    => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'                    => $this->config->get('config_pagination_admin')
-		];
+		$filter_data['sort'] = $sort;
+		$filter_data['order'] = $order;
+		$filter_data['start'] = ($page - 1) * $this->config->get('config_pagination_admin');
+		$filter_data['limit'] = $this->config->get('config_pagination_admin');
 
 		$this->load->model('customer/customer_approval');
 
@@ -149,31 +97,7 @@ class CustomerApproval extends Controller {
 			] + $result;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_email'])) {
-			$url .= '&filter_email=' . urlencode(html_entity_decode($this->request->get['filter_email'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_customer_group_id'])) {
-			$url .= '&filter_customer_group_id=' . $this->request->get['filter_customer_group_id'];
-		}
-
-		if (isset($this->request->get['filter_type'])) {
-			$url .= '&filter_type=' . $this->request->get['filter_type'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
+		$url = $filter->getQueryString(true, true);
 
 		$customer_approval_total = $this->model_customer_customer_approval->getTotalCustomerApprovals($filter_data);
 

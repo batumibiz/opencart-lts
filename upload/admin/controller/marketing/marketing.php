@@ -3,66 +3,32 @@
 namespace Opencart\Admin\Controller\Marketing;
 
 use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Filter;
 
 class Marketing extends Controller {
+	/**
+	 * List of filter request keys,
+	 * and whether their value must be urlencoded when it is placed into a query string.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $filterKeys = [
+		'filter_name'      => true,
+		'filter_code'      => false,
+		'filter_date_from' => false,
+		'filter_date_to'   => false,
+	];
+
 	public function index(): void {
+		$filter = new Filter($this->request, $this->filterKeys);
+
+		$data = $filter->getFilterData();
+
 		$this->load->language('marketing/marketing');
-
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
-		} else {
-			$filter_name = '';
-		}
-
-		if (isset($this->request->get['filter_code'])) {
-			$filter_code = $this->request->get['filter_code'];
-		} else {
-			$filter_code = '';
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$filter_date_from = $this->request->get['filter_date_from'];
-		} else {
-			$filter_date_from = '';
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$filter_date_to = $this->request->get['filter_date_to'];
-		} else {
-			$filter_date_to = '';
-		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$url = '';
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -81,11 +47,6 @@ class Marketing extends Controller {
 
 		$data['list'] = $this->getList();
 
-		$data['filter_name'] = $filter_name;
-		$data['filter_code'] = $filter_code;
-		$data['filter_date_from'] = $filter_date_from;
-		$data['filter_date_to'] = $filter_date_to;
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -101,93 +62,24 @@ class Marketing extends Controller {
 	}
 
 	public function getList(): string {
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
-		} else {
-			$filter_name = '';
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
 
-		if (isset($this->request->get['filter_code'])) {
-			$filter_code = $this->request->get['filter_code'];
-		} else {
-			$filter_code = '';
-		}
+		$filter_data = $filter->getFilterData();
 
-		if (isset($this->request->get['filter_date_from'])) {
-			$filter_date_from = (string)$this->request->get['filter_date_from'];
-		} else {
-			$filter_date_from = '';
-		}
+		$sort = (string)($this->request->get['sort'] ?? 'm.name');
+		$order = (string)($this->request->get['order'] ?? 'ASC');
+		$page = (int)($this->request->get['page'] ?? 1);
 
-		if (isset($this->request->get['filter_date_to'])) {
-			$filter_date_to = (string)$this->request->get['filter_date_to'];
-		} else {
-			$filter_date_to = '';
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'm.name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(false, false, true);
 
 		$data['action'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		$data['marketings'] = [];
 
-		// Marketing
-		$filter_data = [
-			'filter_name'      => $filter_name,
-			'filter_code'      => $filter_code,
-			'filter_date_from' => $filter_date_from,
-			'filter_date_to'   => $filter_date_to,
-			'sort'             => $sort,
-			'order'            => $order,
-			'start'            => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'            => $this->config->get('config_pagination_admin')
-		];
+		$filter_data['sort'] = $sort;
+		$filter_data['order'] = $order;
+		$filter_data['start'] = ($page - 1) * $this->config->get('config_pagination_admin');
+		$filter_data['limit'] = $this->config->get('config_pagination_admin');
 
 		$this->load->model('marketing/marketing');
 
@@ -200,59 +92,14 @@ class Marketing extends Controller {
 			] + $result;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
+		$url = $filter->getQueryString();
+		$url .= ($order == 'ASC') ? '&order=DESC' : '&order=ASC';
 
 		$data['sort_name'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.name' . $url);
 		$data['sort_code'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.code' . $url);
 		$data['sort_date_added'] = $this->url->link('marketing/marketing.list', 'user_token=' . $this->session->data['user_token'] . '&sort=m.date_added' . $url);
 
-		$url = '';
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
+		$url = $filter->getQueryString(true, true);
 
 		$marketing_total = $this->model_marketing_marketing->getTotalMarketings($filter_data);
 
@@ -278,35 +125,8 @@ class Marketing extends Controller {
 
 		$data['text_form'] = !isset($this->request->get['marketing_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$url = '';
-
-		if (isset($this->request->get['filter_name'])) {
-			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_code'])) {
-			$url .= '&filter_code=' . $this->request->get['filter_code'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 

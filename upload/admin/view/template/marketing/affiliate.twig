@@ -58,13 +58,6 @@
                   <option value="0"{% if filter_status == '0' %} selected{% endif %}>{{ text_disabled }}</option>
                 </select>
               </div>
-              <div class="mb-3">
-                <label for="input-limit" class="form-label">{{ entry_limit }}</label> <select name="limit" id="input-limit" class="form-select">
-                  {% for limits in limits %}
-                    <option value="{{ limits.value }}"{% if limits.value == limit %} selected{% endif %}>{{ limits.text }}</option>
-                  {% endfor %}
-                </select>
-              </div>
               <div class="text-center mt-4">
                 <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-filter me-2"></i>{{ button_filter }}</button>
                 <button type="reset" class="btn btn-outline-secondary"><i class="fa-solid fa-rotate-left me-2"></i>{{ button_reset }}</button>

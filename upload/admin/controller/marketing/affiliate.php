@@ -4,106 +4,35 @@ namespace Opencart\Admin\Controller\Marketing;
 
 use Opencart\System\Engine\Action;
 use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Filter;
 
 class Affiliate extends Controller {
+	/**
+	 * List of filter request keys,
+	 * and whether their value must be urlencoded when it is placed into a query string.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $filterKeys = [
+		'filter_customer'       => true,
+		'filter_tracking'       => false,
+		'filter_payment_method' => false,
+		'filter_commission'     => false,
+		'filter_date_from'      => false,
+		'filter_date_to'        => false,
+		'filter_status'         => false,
+	];
+
 	public function index(): void {
+		$filter = new Filter($this->request, $this->filterKeys);
+
+		$data = $filter->getFilterData();
+
 		$this->load->language('marketing/affiliate');
-
-		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = $this->request->get['filter_customer'];
-		} else {
-			$filter_customer = '';
-		}
-
-		if (isset($this->request->get['filter_tracking'])) {
-			$filter_tracking = $this->request->get['filter_tracking'];
-		} else {
-			$filter_tracking = '';
-		}
-
-		if (isset($this->request->get['filter_payment_method'])) {
-			$filter_payment_method = (string)$this->request->get['filter_payment_method'];
-		} else {
-			$filter_payment_method = '';
-		}
-
-		if (isset($this->request->get['filter_commission'])) {
-			$filter_commission = $this->request->get['filter_commission'];
-		} else {
-			$filter_commission = '';
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$filter_date_from = $this->request->get['filter_date_from'];
-		} else {
-			$filter_date_from = '';
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$filter_date_to = $this->request->get['filter_date_to'];
-		} else {
-			$filter_date_to = '';
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = $this->request->get['filter_status'];
-		} else {
-			$filter_status = '';
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$limit = (int)$this->request->get['limit'];
-		} else {
-			$limit = $this->config->get('config_pagination');
-		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
-		}
-
-		if (isset($this->request->get['filter_payment_method'])) {
-			$url .= '&filter_payment_method=' . $this->request->get['filter_payment_method'];
-		}
-
-		if (isset($this->request->get['filter_commission'])) {
-			$url .= '&filter_commission=' . $this->request->get['filter_commission'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -141,43 +70,6 @@ class Affiliate extends Controller {
 			'value' => 'bank'
 		];
 
-		$data['limits'] = [];
-
-		$data['limits'][] = [
-			'text'  => $this->config->get('config_pagination'),
-			'value' => $this->config->get('config_pagination')
-		];
-
-		$data['limits'][] = [
-			'text'  => 100,
-			'value' => 100
-		];
-
-		$data['limits'][] = [
-			'text'  => 200,
-			'value' => 200
-		];
-
-		$data['limits'][] = [
-			'text'  => 400,
-			'value' => 400
-		];
-
-		$data['limits'][] = [
-			'text'  => 800,
-			'value' => 800
-		];
-
-		$data['filter_customer'] = $filter_customer;
-		$data['filter_tracking'] = $filter_tracking;
-		$data['filter_payment_method'] = $filter_payment_method;
-		$data['filter_commission'] = $filter_commission;
-		$data['filter_date_from'] = $filter_date_from;
-		$data['filter_date_to'] = $filter_date_to;
-		$data['filter_status'] = $filter_status;
-
-		$data['limit'] = $limit;
-
 		$data['user_token'] = $this->session->data['user_token'];
 
 		$data['header'] = $this->load->controller('common/header');
@@ -193,136 +85,25 @@ class Affiliate extends Controller {
 	}
 
 	public function getList(): string {
-		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = (string)$this->request->get['filter_customer'];
-		} else {
-			$filter_customer = '';
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
 
-		if (isset($this->request->get['filter_tracking'])) {
-			$filter_tracking = (string)$this->request->get['filter_tracking'];
-		} else {
-			$filter_tracking = '';
-		}
+		$filter_data = $filter->getFilterData();
 
-		if (isset($this->request->get['filter_payment_method'])) {
-			$filter_payment_method = (string)$this->request->get['filter_payment_method'];
-		} else {
-			$filter_payment_method = '';
-		}
+		$sort = (string)($this->request->get['sort'] ?? 'name');
+		$order = (string)($this->request->get['order'] ?? 'ASC');
+		$page = (int)($this->request->get['page'] ?? 1);
 
-		if (isset($this->request->get['filter_commission'])) {
-			$filter_commission = $this->request->get['filter_commission'];
-		} else {
-			$filter_commission = '';
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$filter_date_from = (string)$this->request->get['filter_date_from'];
-		} else {
-			$filter_date_from = '';
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$filter_date_to = (string)$this->request->get['filter_date_to'];
-		} else {
-			$filter_date_to = '';
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$filter_status = $this->request->get['filter_status'];
-		} else {
-			$filter_status = '';
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'name';
-		}
-
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
-
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$limit = (int)$this->request->get['limit'];
-		} else {
-			$limit = $this->config->get('config_pagination');
-		}
-
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
-		}
-
-		if (isset($this->request->get['filter_payment_method'])) {
-			$url .= '&filter_payment_method=' . $this->request->get['filter_payment_method'];
-		}
-
-		if (isset($this->request->get['filter_commission'])) {
-			$url .= '&filter_commission=' . $this->request->get['filter_commission'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = $filter->getQueryString(false, false, true);
 
 		$data['action'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Affiliate
 		$data['affiliates'] = [];
 
-		$filter_data = [
-			'filter_name'           => $filter_customer,
-			'filter_tracking'       => $filter_tracking,
-			'filter_payment_method' => $filter_payment_method,
-			'filter_commission'     => $filter_commission,
-			'filter_date_from'      => $filter_date_from,
-			'filter_date_to'        => $filter_date_to,
-			'filter_status'         => $filter_status,
-			'sort'                  => $sort,
-			'order'                 => $order,
-			'start'                 => ($page - 1) * $limit,
-			'limit'                 => $limit
-		];
+		$filter_data['sort'] = $sort;
+		$filter_data['order'] = $order;
+		$filter_data['start'] = ($page - 1) * $this->config->get('config_pagination_admin');
+		$filter_data['limit'] = $this->config->get('config_pagination_admin');
 
 		$this->load->model('marketing/affiliate');
 
@@ -337,45 +118,8 @@ class Affiliate extends Controller {
 			] + $result;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
-		}
-
-		if (isset($this->request->get['filter_payment_method'])) {
-			$url .= '&filter_payment_method=' . $this->request->get['filter_payment_method'];
-		}
-
-		if (isset($this->request->get['filter_commission'])) {
-			$url .= '&filter_commission=' . $this->request->get['filter_commission'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = $filter->getQueryString();
+		$url .= ($order == 'ASC') ? '&order=DESC' : '&order=ASC';
 
 		$data['sort_name'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=name' . $url);
 		$data['sort_tracking'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ca.tracking' . $url);
@@ -383,47 +127,7 @@ class Affiliate extends Controller {
 		$data['sort_balance'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ca.balance' . $url);
 		$data['sort_date_added'] = $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ca.date_added' . $url);
 
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
-		}
-
-		if (isset($this->request->get['filter_payment_method'])) {
-			$url .= '&filter_payment_method=' . $this->request->get['filter_payment_method'];
-		}
-
-		if (isset($this->request->get['filter_commission'])) {
-			$url .= '&filter_commission=' . $this->request->get['filter_commission'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$url = $filter->getQueryString(true, true);
 
 		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
 
@@ -434,11 +138,10 @@ class Affiliate extends Controller {
 			'url'   => $this->url->link('marketing/affiliate.list', 'user_token=' . $this->session->data['user_token'] . $url . '&page={page}')
 		]);
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($affiliate_total - $limit)) ? $affiliate_total : ((($page - 1) * $limit) + $limit), $affiliate_total, ceil($affiliate_total / $limit));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $this->config->get('config_pagination_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_pagination_admin')) > ($affiliate_total - $this->config->get('config_pagination_admin'))) ? $affiliate_total : ((($page - 1) * $this->config->get('config_pagination_admin')) + $this->config->get('config_pagination_admin')), $affiliate_total, ceil($affiliate_total / $this->config->get('config_pagination_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		$data['limit'] = $limit;
 
 		return $this->load->view('marketing/affiliate_list', $data);
 	}
@@ -454,51 +157,8 @@ class Affiliate extends Controller {
 
 		$data['config_file_max_size'] = ((int)$this->config->get('config_file_max_size') * 1024 * 1024);
 
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_tracking'])) {
-			$url .= '&filter_tracking=' . $this->request->get['filter_tracking'];
-		}
-
-		if (isset($this->request->get['filter_payment_method'])) {
-			$url .= '&filter_payment_method=' . $this->request->get['filter_payment_method'];
-		}
-
-		if (isset($this->request->get['filter_commission'])) {
-			$url .= '&filter_commission=' . $this->request->get['filter_commission'];
-		}
-
-		if (isset($this->request->get['filter_date_from'])) {
-			$url .= '&filter_date_from=' . $this->request->get['filter_date_from'];
-		}
-
-		if (isset($this->request->get['filter_date_to'])) {
-			$url .= '&filter_date_to=' . $this->request->get['filter_date_to'];
-		}
-
-		if (isset($this->request->get['filter_status'])) {
-			$url .= '&filter_status=' . $this->request->get['filter_status'];
-		}
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$url .= '&limit=' . $this->request->get['limit'];
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
