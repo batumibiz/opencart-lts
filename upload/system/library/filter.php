@@ -26,11 +26,7 @@ class Filter {
 		$filterData = [];
 
 		foreach ($this->filterKeys as $key => $encode) {
-			if (isset($this->request->get[$key])) {
-				$filterData[$key] = $encode ? html_entity_decode($this->request->get[$key]) : $this->request->get[$key];
-			} else {
-				$filterData[$key] = '';
-			}
+			$filterData[$key] = $this->request->get[$key] ?? '';
 		}
 
 		return $filterData;
