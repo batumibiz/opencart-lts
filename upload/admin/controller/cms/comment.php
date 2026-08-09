@@ -23,9 +23,15 @@ class Comment extends Controller {
 	];
 
 	public function index(): void {
+		$filter = new Filter($this->request, $this->filterKeys);
+
+		$data = $filter->getFilterData();
+
 		$this->load->language('cms/comment');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -36,7 +42,7 @@ class Comment extends Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('cms/comment', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('cms/comment', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
 		$data['approve'] = $this->url->link('cms/comment.approve', 'user_token=' . $this->session->data['user_token']);
