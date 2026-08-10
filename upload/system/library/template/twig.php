@@ -1,31 +1,27 @@
 <?php
+
 namespace Opencart\System\Library\Template;
-/**
- * Class Twig
- *
- * @package Opencart\System\Library\Template
- */
+
+use Twig\Environment;
+use Twig\Error\SyntaxError;
+use Twig\Extension\DebugExtension;
+use Twig\Loader\ArrayLoader;
+use Twig\Loader\FilesystemLoader;
+
 class Twig {
-	/**
-	 * @var string
-	 */
 	protected string $root;
-	/**
-	 * @var \Twig\Loader\FilesystemLoader
-	 */
-	protected \Twig\Loader\FilesystemLoader $loader;
-	/**
-	 * @var string
-	 */
+
+	protected FilesystemLoader $loader;
+
 	protected string $directory;
+
 	/**
 	 * @var array<string, string>
 	 */
 	protected array $path = [];
 
-	/**
-	 * Constructor
-	 */
+	private bool $debug = false;
+
 	public function __construct() {
 		// Unfortunately, we have to set the web root directory as the base since Twig confuses which template cache to use.
 		$this->root = substr(DIR_OPENCART, 0, -1);
@@ -33,17 +29,13 @@ class Twig {
 		// We have to add the C directory as the base directory because twig can only accept the first namespace/,
 		// rather than a multiple namespace system, which took me less than a minute to write. If symphony is like
 		// this, then I have no idea why people use the framework.
-		$this->loader = new \Twig\Loader\FilesystemLoader('./', $this->root);
+		$this->loader = new FilesystemLoader('./', $this->root);
+
+		if (defined('DEBUG')) {
+			$this->debug = DEBUG;
+		}
 	}
 
-	/**
-	 * Add Path
-	 *
-	 * @param string $namespace
-	 * @param string $directory
-	 *
-	 * @return void
-	 */
 	public function addPath(string $namespace, string $directory = ''): void {
 		if (!$directory) {
 			$this->directory = $namespace;
@@ -53,11 +45,12 @@ class Twig {
 	}
 
 	/**
-	 * Render
-	 *
 	 * @param string               $filename
 	 * @param array<string, mixed> $data
 	 * @param string               $code
+	 *
+	 * @throws \Twig\Error\LoaderError
+	 * @throws \Twig\Error\RuntimeError
 	 *
 	 * @return string
 	 */
@@ -95,7 +88,7 @@ class Twig {
 
 		if ($code) {
 			// render from modified template code
-			$loader = new \Twig\Loader\ArrayLoader([$file => $code]);
+			$loader = new ArrayLoader([$file => $code]);
 		} else {
 			$loader = $this->loader;
 		}
@@ -105,17 +98,19 @@ class Twig {
 			$config = [
 				'charset'     => 'utf-8',
 				'autoescape'  => false,
-				'debug'       => true,
+				'debug'       => $this->debug,
 				'auto_reload' => true,
 				'cache'       => DIR_CACHE . 'template/'
 			];
 
-			$twig = new \Twig\Environment($loader, $config);
+			$twig = new Environment($loader, $config);
 
-			$twig->addExtension(new \Twig\Extension\DebugExtension());
+			if ($this->debug) {
+				$twig->addExtension(new DebugExtension());
+			}
 
 			return $twig->render($file, $data);
-		} catch (\Twig\Error\SyntaxError $e) {
+		} catch (SyntaxError $e) {
 			throw new \Exception('Error: Could not load template ' . $filename . '!');
 		}
 	}
