@@ -27,7 +27,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - `admin` Removed a large amount of legacy and duplicate code.
 
 #### Fixed
-- Various static analyzer warnings
+- `system` Various static analyzer warnings
+- `admin` Product model filter autocomplete
 
 #### Security
 - Nothing

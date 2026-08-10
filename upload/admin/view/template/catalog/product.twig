@@ -114,7 +114,7 @@
     inputSelector: '#input-model',
     route: 'catalog/product.autocomplete',
     userToken: '{{ user_token }}',
-    valueKey: 'product_id',
+    valueKey: 'model',
     labelKey: 'model',
     onSelect: function (item) {
       $('#input-model').val(decodeHTMLEntities(item.label));
