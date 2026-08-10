@@ -15,13 +15,67 @@
     </div>
   </div>
   <div class="container-fluid">
-    <div class="card">
-      <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-      <div id="list" class="card-body">{{ list }}</div>
+    <div class="row">
+      <div id="filter-product" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <form id="form-filter">
+              <div class="mb-3">
+                <label for="input-name" class="form-label">{{ entry_name }}</label>
+                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-name" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-group" class="form-label">{{ entry_attribute_group }}</label>
+                <input type="text" name="filter_group" value="{{ filter_group }}" placeholder="{{ entry_attribute_group }}" id="input-group" data-oc-target="autocomplete-group" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-group" class="dropdown-menu"></ul>
+              </div>
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-filter me-2"></i>{{ button_filter }}</button>
+                <button type="reset" class="btn btn-outline-secondary"><i class="fa-solid fa-rotate-left me-2"></i>{{ button_reset }}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-9 col-md-12">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 <script type="text/javascript">
+  ocFilter({
+    route: 'catalog/attribute',
+    userToken: '{{ user_token }}'
+  });
+
+  ocAutocomplete({
+    inputSelector: '#input-name',
+    route: 'catalog/attribute.autocomplete',
+    userToken: '{{ user_token }}',
+    valueKey: 'attribute_id',
+    labelKey: 'name',
+    onSelect: function (item) {
+      $('#input-name').val(decodeHTMLEntities(item.label));
+    }
+  });
+
+  ocAutocomplete({
+    inputSelector: '#input-group',
+    route: 'catalog/attribute.autocomplete',
+    userToken: '{{ user_token }}',
+    valueKey: 'attribute_group_id',
+    labelKey: 'attribute_group',
+    onSelect: function (item) {
+      $('#input-group').val(decodeHTMLEntities(item.label));
+    }
+  });
+
   $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
     $('#list').load(this.href);

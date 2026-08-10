@@ -3,26 +3,30 @@
 namespace Opencart\Admin\Controller\Catalog;
 
 use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Filter;
 
 class Attribute extends Controller {
+	/**
+	 * List of filter request keys,
+	 * and whether their value must be urlencoded when it is placed into a query string.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $filterKeys = [
+		'filter_name'  => true,
+		'filter_group' => true
+	];
+
 	public function index(): void {
+		$filter = new Filter($this->request, $this->filterKeys);
+
+		$data = $filter->getFilterData();
+
 		$this->load->language('catalog/attribute');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . (string)$this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . (string)$this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . (int)$this->request->get['page'];
-		}
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -56,49 +60,25 @@ class Attribute extends Controller {
 	}
 
 	public function getList(): string {
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'ad.name';
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
 
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
+		$filter_data = $filter->getFilterData();
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
+		$sort = (string)($this->request->get['sort'] ?? 'd.name');
+		$order = (string)($this->request->get['order'] ?? 'ASC');
+		$page = (int)($this->request->get['page'] ?? 1);
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(false, false, true);
 
 		$data['action'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Attribute
 		$data['attributes'] = [];
 
-		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
-		];
+		$filter_data['sort'] = $sort;
+		$filter_data['order'] = $order;
+		$filter_data['start'] = ($page - 1) * $this->config->get('config_pagination_admin');
+		$filter_data['limit'] = $this->config->get('config_pagination_admin');
 
 		$this->load->model('catalog/attribute');
 
@@ -108,29 +88,16 @@ class Attribute extends Controller {
 			$data['attributes'][] = ['edit' => $this->url->link('catalog/attribute.form', 'user_token=' . $this->session->data['user_token'] . '&attribute_id=' . $result['attribute_id'] . $url)] + $result;
 		}
 
-		$url = '';
+		$url = $filter->getQueryString();
+		$url .= ($order == 'ASC') ? '&order=DESC' : '&order=ASC';
 
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
-
-		$data['sort_name'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=ad.name' . $url);
+		$data['sort_name'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=d.name' . $url);
 		$data['sort_attribute_group'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=attribute_group' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/attribute.list', 'user_token=' . $this->session->data['user_token'] . '&sort=a.sort_order' . $url);
 
-		$url = '';
+		$url = $filter->getQueryString(true, true);
 
-		if ($sort) {
-			$url .= '&sort=' . $sort;
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		$attribute_total = $this->model_catalog_attribute->getTotalAttributes();
+		$attribute_total = $this->model_catalog_attribute->getTotalAttributes($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $attribute_total,
@@ -154,19 +121,8 @@ class Attribute extends Controller {
 
 		$data['text_form'] = !isset($this->request->get['attribute_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -323,35 +279,15 @@ class Attribute extends Controller {
 	}
 
 	public function autocomplete(): void {
-		$json = [];
+		$this->load->model('catalog/attribute');
 
 		if (isset($this->request->get['filter_name'])) {
-			$this->load->model('catalog/attribute');
-
-			$filter_data = [
-				'filter_name' => $this->request->get['filter_name'],
-				'start'       => 0,
-				'limit'       => $this->config->get('config_autocomplete_limit')
-			];
-
-			$results = $this->model_catalog_attribute->getAttributes($filter_data);
-
-			foreach ($results as $result) {
-				$json[] = [
-					'attribute_id'    => $result['attribute_id'],
-					'name'            => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
-					'attribute_group' => $result['attribute_group']
-				];
-			}
+			$json = $this->model_catalog_attribute->autocompleteName($this->request->get);
+		} elseif (isset($this->request->get['filter_attribute_group'])) {
+			$json = $this->model_catalog_attribute->autocompleteGroup($this->request->get);
+		} else {
+			$json = [];
 		}
-
-		$sort_order = [];
-
-		foreach ($json as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $json);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
