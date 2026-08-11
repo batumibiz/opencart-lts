@@ -14,7 +14,7 @@
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Upgrade](#upgrade)
-- [Uninstallation: How to Revert to OpenCart 4.1.0.3](#uninstallation-how-to-revert-to-opencart-4103)
+- [Uninstallation: How to Revert to OpenCart 4.1.0.3 - 4.1.0.4](#uninstallation-how-to-revert-to-opencart-4103)
 - [Local Development with Docker](#local-development-with-docker)
   - [Using Make](#using-make)
   - [Using Docker CLI](#or-using-docker-cli)
@@ -28,12 +28,13 @@
 
 
 ## About
-This project is a collection of improvements and fixes, based on [OpenCart 4.1.0.3].  
-The [CHANGELOG] file contains a comprehensive list of all modifications, including direct links to original sources, pull requests, and issue reports.
+This project is a collection of improvements and fixes, based on [OpenCart 4.1.0.3]
+and includes all important fixes and improvements from version [OpenCart 4.1.0.4]. The [CHANGELOG] file contains a comprehensive list of all modifications,
+including direct links to original sources, pull requests, and issue reports.
 
 ### Why this repository exists
 To provide a stable, production-ready environment by backporting essential fixes while strictly avoiding the breaking changes found in the official development branches.
-This ensures a robust, production-ready core that remains a drop-in replacement for any 4.1.0.3-compatible environment.
+This ensures a robust, production-ready core that remains a drop-in replacement for any 4.1.0.3 - 4.1.0.4-compatible environment.
 
 ## Compatibility Guarantee
 This project are strictly developed to maintain **full backward compatibility with [OpenCart 4.1.0.3]**.
@@ -42,7 +43,7 @@ They are fully compatible with major frameworks and heavy-duty extensions,
 including **[Journal 3.2.10](https://themeforest.net/item/journal-advanced-opencart-theme/4260361)**
 and **[MazaEngine 1.13.10](https://themeforest.net/item/poco-advanced-opencart-theme/29855890)** (Poco Theme).  
 
-**If your extension worked on clean OpenCart 4.1.0.3, it should work on OC+.** However, since several libraries (including jQuery) have been updated, some legacy extensions might require updates or replacements.
+**If your extension worked on clean OpenCart 4.1.0.3, or 4.1.0.4, it should work on OC+.** However, since several libraries (including jQuery) have been updated, some legacy extensions might require updates or replacements.
 
 Most importantly, the `error.log` on these production environments has remained clean for a long period, confirming the stability and reliability of this build.
 
@@ -57,8 +58,7 @@ For a real-world example in action, you can visit small multilanguage website: h
 ## System Requirements
 - **Web Server**: Apache 2.x.x.  
   While operation on Nginx + PHP-FPM is theoretically possible, it has not been tested yet.
-- **Database Server**: Current versions of MariaDB or MySQL.  
-  OC+ has not been tested with PostgreSQL, and compatibility is not guaranteed.
+- **Database Server**: Current versions of MariaDB or MySQL.
 - **PHP**: 8.2 – 8.5 _(PHP 8.4 is recommended)_.
 - **PHP Settings**:
   - `max_execution_time` = 150 
@@ -86,9 +86,9 @@ For a real-world example in action, you can visit small multilanguage website: h
 >
 > ### ATTENTION! Please read carefully before proceeding with the upgrade!
 
-1. **Version Compatibility**: This upgrade package is designed **strictly for OpenCart 4.1.0.3**.
-2. **Unsupported Versions**: upgrade package is incompatible with any other versions of OpenCart, including the official `master` branch or any other `4.x.x.x` releases.
-3. **Pre-requisite**: If you are running an older version of OpenCart, you must first upgrade to version 4.1.0.3 before applying this upgrade package.
+1. **Version Compatibility**: This upgrade package is designed **strictly for OpenCart 4.1.0.3** and **4.1.0.4**.
+2. **Unsupported Versions**: upgrade package is incompatible with any other versions of OpenCart, including the official `master` branch or older releases `4.x.x.x`.
+3. **Pre-requisite**: If you are running an older version of OpenCart, you must first upgrade to version 4.1.0.3 or 4.1.0.4 before applying this upgrade package.
 4. **Extension Compatibility**: this upgrade package has been tested with various extensions, including major frameworks like
    Journal and MazaEngine, and no issues were found. If it worked on clean OpenCart 4.1.0.3, it should work on this.
    However, since several libraries (including jQuery) have been updated, some legacy extensions might require updates or replacements.
@@ -103,7 +103,7 @@ For a real-world example in action, you can visit small multilanguage website: h
 ### Quick Upgrade Guide
 
 1. **Extract Core Files**: Unpack the `oc-plus.upgrade-catalog.xxx.zip` archive directly into your
-   web host's root directory, overwriting all existing OpenCart 4.1.0.3 files.
+   web host's root directory, overwriting all existing OpenCart files.
 2. **Extract Admin Files**: Unpack the `oc-plus.upgrade-admin.xxx.zip` archive in the folder where the admin panel of your store is located.
 3. **Handle Storage/Vendor Files**: Since OpenCart 4 requires moving the `/system/storage` folder after the
    initial installation, the updated vendor libraries are provided as a separate part of the package.
@@ -120,10 +120,10 @@ For a real-world example in action, you can visit small multilanguage website: h
 **Troubleshooting**: If critical issues occur (e.g., the site becomes inaccessible) and you cannot identify the cause, restore your site using the backup you created before starting the upgrade.
 
 
-## Uninstallation: How to Revert to OpenCart 4.1.0.3
+## Uninstallation: How to Revert to OpenCart 4.1.0.3 or 4.1.0.4
 **OC+ does not make any changes to the database structure**.  
-Because of this, reverting back to stock OpenCart 4.1.0.3 is entirely risk-free and straightforward:
-simply replace all the files in your website's root directory with the files from the official OpenCart 4.1.0.3
+Because of this, reverting back to stock OpenCart is entirely risk-free and straightforward:
+simply replace all the files in your website's root directory with the files from the official OpenCart
 distribution, and you are good to go.
 
 
@@ -288,5 +288,6 @@ Modifications without a specific link were developed within this repository.
 
 
 [OpenCart 4.1.0.3]: https://github.com/opencart/opencart/releases/tag/4.1.0.3
+[OpenCart 4.1.0.4]: https://github.com/opencart/opencart/releases/tag/4.1.0.4
 [CHANGELOG]: https://github.com/oc-plus/oc-plus/blob/main/CHANGELOG.md
 [GNU General Public License v.3]: https://github.com/oc-plus/oc-plus/blob/main/LICENSE
