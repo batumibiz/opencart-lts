@@ -26,11 +26,13 @@
           <div class="card-body">
             <form id="form-filter">
               <div class="mb-3">
-                <label class="form-label">{{ entry_customer }}</label> <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
+                <label class="form-label">{{ entry_customer }}</label>
+                <input type="text" name="filter_customer" value="{{ filter_customer }}" placeholder="{{ entry_customer }}" id="input-customer" data-oc-target="autocomplete-customer" class="form-control" autocomplete="off"/>
                 <ul id="autocomplete-customer" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-tracking" class="form-label">{{ entry_tracking }}</label> <input type="text" name="filter_tracking" value="{{ filter_tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
+                <label for="input-tracking" class="form-label">{{ entry_tracking }}</label>
+                <input type="text" name="filter_tracking" value="{{ filter_tracking }}" placeholder="{{ entry_tracking }}" id="input-tracking" class="form-control"/>
               </div>
               <div class="mb-3">
                 <label for="input-payment-method" class="form-label">{{ entry_payment_method }}</label> <select name="filter_payment_method" id="input-payment-method" class="form-select">

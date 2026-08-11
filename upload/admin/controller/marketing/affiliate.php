@@ -691,7 +691,7 @@ class Affiliate extends Controller {
 		foreach ($results as $result) {
 			$json[] = [
 				'customer_id' => $result['customer_id'],
-				'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+				'name'        => $result['name'],
 				'email'       => $result['email']
 			];
 		}

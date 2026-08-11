@@ -1129,7 +1129,7 @@ class Customer extends Controller {
 
 			foreach ($results as $result) {
 				$json[] = [
-					'name'    => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+					'name'    => $result['name'],
 					'address' => $this->model_customer_customer->getAddresses($result['customer_id'])
 				] + $result;
 			}

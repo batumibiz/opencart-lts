@@ -558,7 +558,7 @@ class Download extends Controller {
 			foreach ($results as $result) {
 				$json[] = [
 					'download_id' => $result['download_id'],
-					'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
+					'name'        => $result['name']
 				];
 			}
 		}

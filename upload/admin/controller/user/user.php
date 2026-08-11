@@ -546,11 +546,7 @@ class User extends Controller {
 
 			$this->load->model('user/user');
 
-			$results = $this->model_user_user->getUsers($filter_data);
-
-			foreach ($results as $result) {
-				$json[] = ['name' => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))] + $result;
-			}
+			$json = $this->model_user_user->getUsers($filter_data);
 		}
 
 		$sort_order = [];
