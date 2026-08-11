@@ -1606,4 +1606,135 @@ class Order extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function autocompleteProduct(): void {
+		$this->load->language('catalog/product');
+
+		$json = [];
+
+		if (isset($this->request->get['filter_name'])) {
+			$filter_name = $this->request->get['filter_name'];
+		} else {
+			$filter_name = '';
+		}
+
+		if (isset($this->request->get['filter_model'])) {
+			$filter_model = $this->request->get['filter_model'];
+		} else {
+			$filter_model = '';
+		}
+
+		if (isset($this->request->get['limit'])) {
+			$limit = (int)$this->request->get['limit'];
+		} else {
+			$limit = $this->config->get('config_autocomplete_limit');
+		}
+
+		$filter_data = [
+			'filter_name'  => $filter_name,
+			'filter_model' => $filter_model,
+			'start'        => 0,
+			'limit'        => $limit
+		];
+
+		// Product
+		$this->load->model('catalog/product');
+
+		// Option
+		$this->load->model('catalog/option');
+
+		// Subscription Plan
+		$this->load->model('catalog/subscription_plan');
+
+		$results = $this->model_catalog_product->getProducts($filter_data);
+
+		foreach ($results as $result) {
+			$option_data = [];
+
+			// Check if product is variant
+			if ($result['master_id']) {
+				$master_id = (int)$result['master_id'];
+			} else {
+				$master_id = (int)$result['product_id'];
+			}
+
+			$product_options = $this->model_catalog_product->getOptions($master_id);
+
+			foreach ($product_options as $product_option) {
+				$override = isset($result['override']['variant'][$product_option['product_option_id']]);
+
+				$option_info = $this->model_catalog_option->getOption($product_option['option_id']);
+
+				if ($option_info) {
+					$product_option_value_data = [];
+
+					foreach ($product_option['product_option_value'] as $product_option_value) {
+						$option_value_info = $this->model_catalog_option->getValue($product_option_value['option_value_id']);
+
+						if ($option_value_info) {
+							$product_option_value_data[] = [
+								'product_option_value_id' => $product_option_value['product_option_value_id'],
+								'option_value_id'         => $product_option_value['option_value_id'],
+								'name'                    => $option_value_info['name'],
+								'price'                   => (float)$product_option_value['price'] ? $this->currency->format($product_option_value['price'], $this->config->get('config_currency')) : false,
+								'price_prefix'            => $product_option_value['price_prefix']
+							];
+						}
+					}
+
+					$option_data[] = [
+						'product_option_id'    => $product_option['product_option_id'],
+						'product_option_value' => $product_option_value_data,
+						'option_id'            => $product_option['option_id'],
+						'name'                 => $option_info['name'],
+						'type'                 => $option_info['type'],
+						'value'                => $override ? $result['variant'][$product_option['product_option_id']] : $product_option['value'],
+						'required'             => $override ? false : $product_option['required'],
+						'disabled'             => $override
+					];
+
+				}
+			}
+
+			$subscription_plan_data = [];
+
+			$product_subscriptions = $this->model_catalog_product->getSubscriptions($result['product_id']);
+
+			foreach ($product_subscriptions as $product_subscription) {
+				$subscription_plan_info = $this->model_catalog_subscription_plan->getSubscriptionPlan($product_subscription['subscription_plan_id']);
+
+				if ($subscription_plan_info) {
+					$price = $this->currency->format($product_subscription['price'], $this->config->get('config_currency'));
+					$cycle = $subscription_plan_info['cycle'];
+					$frequency = $this->language->get('text_' . $subscription_plan_info['frequency']);
+					$duration = $subscription_plan_info['duration'];
+
+					if ($subscription_plan_info['duration']) {
+						$description = sprintf($this->language->get('text_subscription_duration'), $price, $cycle, $frequency, $duration);
+					} else {
+						$description = sprintf($this->language->get('text_subscription_cancel'), $price, $cycle, $frequency);
+					}
+
+					$subscription_plan_data[] = [
+						'subscription_plan_id' => $subscription_plan_info['subscription_plan_id'],
+						'customer_group_id'    => $product_subscription['customer_group_id'],
+						'name'                 => $subscription_plan_info['name'],
+						'description'          => $description
+					];
+				}
+			}
+
+			$json[] = [
+				'product_id'   => $result['product_id'],
+				'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+				'model'        => $result['model'],
+				'option'       => $option_data,
+				'subscription' => $subscription_plan_data,
+				'price'        => $result['price']
+			];
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }

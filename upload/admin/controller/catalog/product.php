@@ -1048,8 +1048,6 @@ class Product extends Controller {
 	}
 
 	public function autocomplete(): void {
-		$this->load->language('catalog/product');
-
 		if (isset($this->request->get['filter_name'])) {
 			$filter_name = $this->request->get['filter_name'];
 		} else {
