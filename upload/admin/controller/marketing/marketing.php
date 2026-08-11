@@ -335,14 +335,14 @@ class Marketing extends Controller {
 	public function autocomplete(): void {
 		$json = [];
 
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
+		if (isset($this->request->get['autocomplete_name'])) {
+			$filter_name = $this->request->get['autocomplete_name'];
 		} else {
 			$filter_name = '';
 		}
 
-		if (isset($this->request->get['filter_code'])) {
-			$filter_code = $this->request->get['filter_code'];
+		if (isset($this->request->get['autocomplete_code'])) {
+			$filter_code = $this->request->get['autocomplete_code'];
 		} else {
 			$filter_code = '';
 		}
@@ -362,7 +362,7 @@ class Marketing extends Controller {
 		foreach ($results as $result) {
 			$json[] = [
 				'marketing_id' => $result['marketing_id'],
-				'name'         => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8')),
+				'name'         => $result['name'],
 				'code'         => $result['code']
 			];
 		}
