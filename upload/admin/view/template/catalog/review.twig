@@ -29,7 +29,9 @@
                 <ul id="autocomplete-product" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
-                <label for="input-author" class="form-label">{{ entry_author }}</label> <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" class="form-control"/>
+                <label for="input-author" class="form-label">{{ entry_author }}</label>
+                <input type="text" name="filter_author" value="{{ filter_author }}" placeholder="{{ entry_author }}" id="input-author" data-oc-target="autocomplete-author" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-author" class="dropdown-menu"></ul>
               </div>
               <div class="mb-3">
                 <label for="input-date-from" class="form-label">{{ entry_date_from }}</label>
@@ -77,6 +79,17 @@
     labelKey: 'name',
     onSelect: function (item) {
       $('#input-product').val(decodeHTMLEntities(item.label));
+    }
+  });
+
+  ocAutocomplete({
+    inputSelector: '#input-author',
+    route: 'customer/customer.autocomplete',
+    userToken: '{{ user_token }}',
+    valueKey: 'customer_id',
+    labelKey: 'name',
+    onSelect: function (item) {
+      $('#input-author').val(decodeHTMLEntities(item.label));
     }
   });
 

@@ -691,7 +691,7 @@ function ocAutocomplete(options) {
 	$(inputSelector).autocomplete({
 		'source': function (request, response) {
 			$.ajax({
-				url: url + '&filter_' + labelKey + '=' + encodeURIComponent(request),
+				url: url + '&autocomplete_' + labelKey + '=' + encodeURIComponent(request),
 				dataType: 'json',
 				success: function (json) {
 					if (prependNone !== false) {

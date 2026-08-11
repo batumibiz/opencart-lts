@@ -435,24 +435,22 @@ class Translation extends Controller {
 	}
 
 	public function autocomplete(): void {
-		$json = [];
-		$filter_data = [];
-
-		if (isset($this->request->get['filter_route'])) {
-			$filter_data['filter_route'] = $this->request->get['filter_route'];
-		} elseif (isset($this->request->get['filter_key'])) {
-			$filter_data['filter_key'] = $this->request->get['filter_key'];
-		} elseif (isset($this->request->get['filter_value'])) {
-			$filter_data['filter_value'] = $this->request->get['filter_value'];
+		if (isset($this->request->get['autocomplete_route'])) {
+			$filter_data['filter_route'] = $this->request->get['autocomplete_route'];
+		} elseif (isset($this->request->get['autocomplete_key'])) {
+			$filter_data['filter_key'] = $this->request->get['autocomplete_key'];
+		} elseif (isset($this->request->get['autocomplete_value'])) {
+			$filter_data['filter_value'] = $this->request->get['autocomplete_value'];
+		} else {
+			$filter_data = [];
 		}
 
 		if (!empty($filter_data)) {
-			$filter_data['limit'] = $this->config->get('config_autocomplete_limit');
 			$this->load->model('design/translation');
 			$json = $this->model_design_translation->autocomplete($filter_data);
-		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+		}
 	}
 }

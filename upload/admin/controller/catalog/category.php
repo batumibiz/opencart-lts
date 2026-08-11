@@ -436,37 +436,12 @@ class Category extends Controller {
 	}
 
 	public function autocomplete(): void {
-		$json = [];
+		$this->load->model('catalog/category');
 
-		if (isset($this->request->get['filter_name'])) {
-			$this->load->model('catalog/category');
-
-			$filter_data = [
-				'filter_name' => $this->request->get['filter_name'],
-				'sort'        => 'name',
-				'order'       => 'ASC',
-				'start'       => 0,
-				'limit'       => $this->config->get('config_autocomplete_limit')
-			];
-
-			$results = $this->model_catalog_category->getCategories($filter_data);
-
-			foreach ($results as $result) {
-				$json[] = [
-					'category_id' => $result['category_id'],
-					'name'        => $result['name'],
-					'status'      => $result['status']
-				];
-			}
-		}
-
-		$sort_order = [];
-
-		foreach ($json as $key => $value) {
-			$sort_order[$key] = $value['name'];
-		}
-
-		array_multisort($sort_order, SORT_ASC, $json);
+		$json = $this->model_catalog_category->getCategories([
+			'filter_name' => $this->request->get['autocomplete_name'] ?? '',
+			'limit'       => $this->config->get('config_autocomplete_limit')
+		]);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

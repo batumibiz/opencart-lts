@@ -439,7 +439,7 @@ class Category extends \Opencart\System\Engine\Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY `sort_order`";
+			$sql .= " ORDER BY `name`";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -448,17 +448,9 @@ class Category extends \Opencart\System\Engine\Model {
 			$sql .= " ASC";
 		}
 
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
+		$start = (isset($data['start']) && (int)$data['start'] > 0) ? (int)$data['start'] : 0;
+		$limit = (isset($data['limit']) && (int)$data['limit'] > 0) ? (int)$data['limit'] : 20;
+		$sql .= " LIMIT " . $start . "," . $limit;
 
 		$query = $this->db->query($sql);
 

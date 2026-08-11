@@ -320,7 +320,8 @@ class Translation extends \Opencart\System\Engine\Model {
 			$sql .= " GROUP BY `value` ORDER BY `value`";
 		}
 
-		$sql .= " LIMIT " . (int)$data['limit'];
+		$sql .= " LIMIT " . (int)$this->config->get('config_autocomplete_limit');
+
 		$query = $this->db->query($sql);
 
 		return $query->rows;

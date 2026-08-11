@@ -281,10 +281,10 @@ class Attribute extends Controller {
 	public function autocomplete(): void {
 		$this->load->model('catalog/attribute');
 
-		if (isset($this->request->get['filter_name'])) {
-			$json = $this->model_catalog_attribute->autocompleteName($this->request->get);
-		} elseif (isset($this->request->get['filter_attribute_group'])) {
-			$json = $this->model_catalog_attribute->autocompleteGroup($this->request->get);
+		if (isset($this->request->get['autocomplete_name'])) {
+			$json = $this->model_catalog_attribute->autocompleteName(['filter_name' => $this->request->get['autocomplete_name']]);
+		} elseif (isset($this->request->get['autocomplete_attribute_group'])) {
+			$json = $this->model_catalog_attribute->autocompleteGroup(['filter_attribute_group' => $this->request->get['autocomplete_attribute_group']]);
 		} else {
 			$json = [];
 		}

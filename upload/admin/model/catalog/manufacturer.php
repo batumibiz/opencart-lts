@@ -221,17 +221,9 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 			$sql .= " ASC";
 		}
 
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
+		$start = (isset($data['start']) && (int)$data['start'] > 0) ? (int)$data['start'] : 0;
+		$limit = (isset($data['limit']) && (int)$data['limit'] > 0) ? (int)$data['limit'] : 20;
+		$sql .= " LIMIT " . $start . "," . $limit;
 
 		$query = $this->db->query($sql);
 
@@ -239,20 +231,18 @@ class Manufacturer extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Manufacturers
+	 * @param array<string, mixed> $data $data
 	 *
-	 * Get the total number of manufacturer records in the database.
-	 *
-	 * @return int total number of manufacturer records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/manufacturer');
-	 *
-	 * $manufacturer_total = $this->model_catalog_manufacturer->getTotalManufacturers();
+	 * @return int
 	 */
-	public function getTotalManufacturers(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer`");
+	public function getTotalManufacturers(array $data = []): int {
+		$sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "manufacturer`";
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " WHERE LCASE(`name`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_name'])) . "%'";
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}

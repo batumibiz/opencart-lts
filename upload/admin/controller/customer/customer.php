@@ -1102,15 +1102,15 @@ class Customer extends Controller {
 	public function autocomplete(): void {
 		$json = [];
 
-		if (isset($this->request->get['filter_name']) || isset($this->request->get['filter_email'])) {
-			if (isset($this->request->get['filter_name'])) {
-				$filter_name = $this->request->get['filter_name'];
+		if (isset($this->request->get['autocomplete_name']) || isset($this->request->get['autocomplete_email'])) {
+			if (isset($this->request->get['autocomplete_name'])) {
+				$filter_name = $this->request->get['autocomplete_name'];
 			} else {
 				$filter_name = '';
 			}
 
-			if (isset($this->request->get['filter_email'])) {
-				$filter_email = $this->request->get['filter_email'];
+			if (isset($this->request->get['autocomplete_email'])) {
+				$filter_email = $this->request->get['autocomplete_email'];
 			} else {
 				$filter_email = '';
 			}

@@ -355,12 +355,11 @@ class Country extends Controller {
 	public function autocomplete(): void {
 		$json = [];
 
-		// Manufacturers
-		if (isset($this->request->get['filter_name'])) {
+		if (isset($this->request->get['autocomplete_name'])) {
 			$this->load->model('localisation/country');
 
 			$filter_data = [
-				'filter_name' => $this->request->get['filter_name'],
+				'filter_name' => $this->request->get['autocomplete_name'],
 				'start'       => 0,
 				'limit'       => $this->config->get('config_autocomplete_limit')
 			];

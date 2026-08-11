@@ -107,17 +107,9 @@ class Attribute extends Model {
 			$sql .= " ASC";
 		}
 
-		if (isset($data['start']) || isset($data['limit'])) {
-			if ($data['start'] < 0) {
-				$data['start'] = 0;
-			}
-
-			if ($data['limit'] < 1) {
-				$data['limit'] = 20;
-			}
-
-			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}
+		$start = (isset($data['start']) && (int)$data['start'] > 0) ? (int)$data['start'] : 0;
+		$limit = (isset($data['limit']) && (int)$data['limit'] > 0) ? (int)$data['limit'] : 20;
+		$sql .= " LIMIT " . $start . "," . $limit;
 
 		$query = $this->db->query($sql);
 
@@ -249,7 +241,7 @@ class Attribute extends Model {
 			$sql .= " AND LCASE(`name`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_name'])) . "%'";
 		}
 
-		$sql .= " ORDER BY `name` LIMIT 0," . (int)$this->config->get('config_autocomplete_limit');
+		$sql .= " GROUP BY `name` ORDER BY `name` LIMIT 0," . (int)$this->config->get('config_autocomplete_limit');
 
 		$query = $this->db->query($sql);
 

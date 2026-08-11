@@ -309,9 +309,9 @@ class Zone extends Controller {
 	public function autocomplete(): void {
 		$json = [];
 
-		if (isset($this->request->get['filter_name'])) {
+		if (isset($this->request->get['autocomplete_name'])) {
 			$filter_data = [
-				'filter_name' => $this->request->get['filter_name'],
+				'filter_name' => $this->request->get['autocomplete_name'],
 				'limit'       => $this->config->get('config_autocomplete_limit')
 			];
 

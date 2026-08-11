@@ -1048,29 +1048,13 @@ class Product extends Controller {
 	}
 
 	public function autocomplete(): void {
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
-		} else {
-			$filter_name = '';
-		}
-
-		if (isset($this->request->get['filter_model'])) {
-			$filter_model = $this->request->get['filter_model'];
-		} else {
-			$filter_model = '';
-		}
-
-		$filter_data = [
-			'filter_name'  => $filter_name,
-			'filter_model' => $filter_model,
-			'start'        => 0,
-			'limit'        => $this->config->get('config_autocomplete_limit')
-		];
-
-		// Product
 		$this->load->model('catalog/product');
 
-		$json = $this->model_catalog_product->getProducts($filter_data);
+		$json = $this->model_catalog_product->getProducts([
+			'filter_name'  => $this->request->get['autocomplete_name'] ?? '',
+			'filter_model' => $this->request->get['autocomplete_model'] ?? '',
+			'limit'        => $this->config->get('config_autocomplete_limit')
+		]);
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

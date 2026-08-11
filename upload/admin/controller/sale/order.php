@@ -1612,29 +1612,23 @@ class Order extends Controller {
 
 		$json = [];
 
-		if (isset($this->request->get['filter_name'])) {
-			$filter_name = $this->request->get['filter_name'];
+		if (isset($this->request->get['autocomplete_name'])) {
+			$filter_name = $this->request->get['autocomplete_name'];
 		} else {
 			$filter_name = '';
 		}
 
-		if (isset($this->request->get['filter_model'])) {
-			$filter_model = $this->request->get['filter_model'];
+		if (isset($this->request->get['autocomplete_model'])) {
+			$filter_model = $this->request->get['autocomplete_model'];
 		} else {
 			$filter_model = '';
-		}
-
-		if (isset($this->request->get['limit'])) {
-			$limit = (int)$this->request->get['limit'];
-		} else {
-			$limit = $this->config->get('config_autocomplete_limit');
 		}
 
 		$filter_data = [
 			'filter_name'  => $filter_name,
 			'filter_model' => $filter_model,
 			'start'        => 0,
-			'limit'        => $limit
+			'limit'        => $this->config->get('config_autocomplete_limit')
 		];
 
 		// Product

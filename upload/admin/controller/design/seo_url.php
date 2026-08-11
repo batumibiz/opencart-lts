@@ -346,24 +346,22 @@ class SeoUrl extends Controller {
 	}
 
 	public function autocomplete(): void {
-		$json = [];
-		$filter_data = [];
-
-		if (isset($this->request->get['filter_keyword'])) {
-			$filter_data['filter_keyword'] = $this->request->get['filter_keyword'];
-		} elseif (isset($this->request->get['filter_key'])) {
-			$filter_data['filter_key'] = $this->request->get['filter_key'];
-		} elseif (isset($this->request->get['filter_value'])) {
-			$filter_data['filter_value'] = $this->request->get['filter_value'];
+		if (isset($this->request->get['autocomplete_keyword'])) {
+			$filter_data['filter_keyword'] = $this->request->get['autocomplete_keyword'];
+		} elseif (isset($this->request->get['autocomplete_key'])) {
+			$filter_data['filter_key'] = $this->request->get['autocomplete_key'];
+		} elseif (isset($this->request->get['autocomplete_value'])) {
+			$filter_data['filter_value'] = $this->request->get['autocomplete_value'];
+		} else {
+			$filter_data = [];
 		}
 
 		if (!empty($filter_data)) {
-			$filter_data['limit'] = $this->config->get('config_autocomplete_limit');
 			$this->load->model('design/seo_url');
 			$json = $this->model_design_seo_url->autocomplete($filter_data);
-		}
 
-		$this->response->addHeader('Content-Type: application/json');
-		$this->response->setOutput(json_encode($json));
+			$this->response->addHeader('Content-Type: application/json');
+			$this->response->setOutput(json_encode($json));
+		}
 	}
 }
