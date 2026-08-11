@@ -704,8 +704,8 @@ function ocAutocomplete(options) {
 
 					response($.map(json, function (item) {
 						return {
-							value: item[valueKey],
-							label: item[labelKey]
+							value: stripTags(item[valueKey]),
+							label: stripTags(item[labelKey])
 						};
 					}));
 				}
@@ -717,5 +717,25 @@ function ocAutocomplete(options) {
 				onSelect(item);
 			}
 		}
+	});
+}
+
+function stripTags(str) {
+	if (!str) return '';
+
+	const regex = /(&lt;[^&]*&gt;)|(<[^>]*>?)/gm;
+
+	return str.replace(regex, (match, alreadyEscaped, unescapedTag) => {
+		if (alreadyEscaped) {
+			return alreadyEscaped;
+		}
+
+		if (unescapedTag) {
+			return unescapedTag
+				.replace(/</g, '&lt;')
+				.replace(/>/g, '&gt;');
+		}
+
+		return match;
 	});
 }
