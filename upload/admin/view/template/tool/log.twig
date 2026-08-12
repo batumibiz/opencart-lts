@@ -31,6 +31,7 @@
               {% if log.error %}
                 <div class="alert alert-danger">{{ log.error }}</div>
               {% endif %}
+              <div class="d-lg-none p-1">Scroll <i class="fa-solid fa-arrow-right-long"></i></div>
               <textarea name="log" wrap="off" rows="15" id="input-log-{{ i }}" class="form-control" readonly>{{ log.output }}</textarea>
               <br/>
               <div class="row row-cols-2">

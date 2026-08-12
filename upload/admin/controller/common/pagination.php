@@ -49,7 +49,7 @@ class Pagination extends Controller {
 			$url = '';
 		}
 
-		$num_links = 8;
+		$num_links = 6;
 		$num_pages = ceil($total / $limit);
 
 		if ($url && $page > 1 && $num_pages < $page) {
