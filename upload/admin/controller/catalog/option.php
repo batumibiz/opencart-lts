@@ -3,26 +3,30 @@
 namespace Opencart\Admin\Controller\Catalog;
 
 use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Filter;
 
 class Option extends Controller {
+	/**
+	 * List of filter request keys,
+	 * and whether their value must be urlencoded when it is placed into a query string.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $filterKeys = [
+		'filter_name'              => true,
+		'filter_option_value_name' => true
+	];
+
 	public function index(): void {
+		$filter = new Filter($this->request, $this->filterKeys);
+
+		$data = $filter->getFilterData();
+
 		$this->load->language('catalog/option');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -56,49 +60,25 @@ class Option extends Controller {
 	}
 
 	public function getList(): string {
-		if (isset($this->request->get['sort'])) {
-			$sort = (string)$this->request->get['sort'];
-		} else {
-			$sort = 'od.name';
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
 
-		if (isset($this->request->get['order'])) {
-			$order = (string)$this->request->get['order'];
-		} else {
-			$order = 'ASC';
-		}
+		$filter_data = $filter->getFilterData();
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
+		$sort = (string)($this->request->get['sort'] ?? 'od.name');
+		$order = (string)($this->request->get['order'] ?? 'ASC');
+		$page = (int)($this->request->get['page'] ?? 1);
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(false, false, true);
 
 		$data['action'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . $url);
 
 		// Option
 		$data['options'] = [];
 
-		$filter_data = [
-			'sort'  => $sort,
-			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit' => $this->config->get('config_pagination_admin')
-		];
+		$filter_data['sort'] = $sort;
+		$filter_data['order'] = $order;
+		$filter_data['start'] = ($page - 1) * $this->config->get('config_pagination_admin');
+		$filter_data['limit'] = $this->config->get('config_pagination_admin');
 
 		$this->load->model('catalog/option');
 
@@ -108,28 +88,15 @@ class Option extends Controller {
 			$data['options'][] = ['edit' => $this->url->link('catalog/option.form', 'user_token=' . $this->session->data['user_token'] . '&option_id=' . $result['option_id'] . $url)] + $result;
 		}
 
-		$url = '';
-
-		if ($order == 'ASC') {
-			$url .= '&order=DESC';
-		} else {
-			$url .= '&order=ASC';
-		}
+		$url = $filter->getQueryString();
+		$url .= ($order == 'ASC') ? '&order=DESC' : '&order=ASC';
 
 		$data['sort_name'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=od.name' . $url);
 		$data['sort_sort_order'] = $this->url->link('catalog/option.list', 'user_token=' . $this->session->data['user_token'] . '&sort=o.sort_order' . $url);
 
-		$url = '';
+		$url = $filter->getQueryString(true, true);
 
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		$option_total = $this->model_catalog_option->getTotalOptions();
+		$option_total = $this->model_catalog_option->getTotalOptions($filter_data);
 
 		$data['pagination'] = $this->load->controller('common/pagination', [
 			'total' => $option_total,
@@ -153,19 +120,8 @@ class Option extends Controller {
 
 		$data['text_form'] = !isset($this->request->get['option_id']) ? $this->language->get('text_add') : $this->language->get('text_edit');
 
-		$url = '';
-
-		if (isset($this->request->get['sort'])) {
-			$url .= '&sort=' . $this->request->get['sort'];
-		}
-
-		if (isset($this->request->get['order'])) {
-			$url .= '&order=' . $this->request->get['order'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -471,6 +427,36 @@ class Option extends Controller {
 		}
 
 		array_multisort($sort_order, SORT_ASC, $json);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function autocompleteOptionName(): void {
+		$this->load->model('catalog/option');
+
+		if (isset($this->request->get['autocomplete_name'])) {
+			$json = $this->model_catalog_option->getOptions([
+				'filter_name' => $this->request->get['autocomplete_name'],
+				'start'       => 0,
+				'limit'       => $this->config->get('config_autocomplete_limit'),
+			]);
+		} else {
+			$json = [];
+		}
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
+
+	public function autocompleteOptionValueName(): void {
+		$this->load->model('catalog/option');
+
+		if (isset($this->request->get['autocomplete_name'])) {
+			$json = $this->model_catalog_option->autocompleteOptionValueName(['filter_name' => $this->request->get['autocomplete_name']]);
+		} else {
+			$json = [];
+		}
 
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));

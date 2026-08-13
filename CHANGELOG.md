@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - `admin` Improved filter JS: added highlighting of active filters
 - `admin` Filter with autocomplete for product attributes
 - `admin` Filter with autocomplete for downloads
+- `admin` Filter with autocomplete for options
 - `admin` Autocomplete for Rewiews / Author
 - `admin` Autocomplete for Marketing / Marketing
 

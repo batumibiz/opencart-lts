@@ -3623,7 +3623,8 @@ CREATE TABLE `oc_option_value_description` (
   `language_id` int(11) NOT NULL,
   `option_id` int(11) DEFAULT NULL,
   `name` varchar(128) DEFAULT NULL,
-  PRIMARY KEY (`option_value_id`,`language_id`)
+  PRIMARY KEY (`option_value_id`,`language_id`),
+  KEY `option_id` (`option_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -5759,7 +5760,7 @@ CREATE TABLE `oc_user_login` (
   `user_agent` varchar(255) DEFAULT NULL,
   `date_added` datetime DEFAULT NULL,
   PRIMARY KEY (`user_login_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci ROW_FORMAT=DYNAMIC;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -5769,7 +5770,8 @@ CREATE TABLE `oc_user_login` (
 INSERT INTO `oc_user_login` VALUES
 (1,1,'172.18.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.0.0','2026-07-24 01:34:25'),
 (2,1,'172.18.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.0.0','2026-07-24 11:16:47'),
-(3,1,'172.18.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.0.0','2026-07-24 21:30:21');
+(3,1,'172.18.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36 Edg/150.0.0.0','2026-07-24 21:30:21'),
+(4,1,'172.18.0.1','Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/151.0.0.0 Safari/537.36 Edg/151.0.0.0','2026-08-13 13:23:06');
 
 --
 -- Table structure for table `oc_user_token`
@@ -14158,4 +14160,4 @@ INSERT INTO `oc_zone_to_geo_zone` VALUES
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-07-25  1:31:39
+-- Dump completed on 2026-08-13 17:30:40

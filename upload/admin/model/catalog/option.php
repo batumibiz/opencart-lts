@@ -133,32 +133,29 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Options
+	 * @param array<string, mixed> $data
 	 *
-	 * Get the record of the option records in the database.
-	 *
-	 * @param array<string, mixed> $data array of filters
-	 *
-	 * @return array<int, array<string, mixed>> option records
-	 *
-	 * @example
-	 *
-	 * $filter_data = [
-	 *     'sort'  => 'od.name',
-	 *     'order' => 'DESC',
-	 *     'start' => 0,
-	 *     'limit' => 10
-	 * ];
-	 *
-	 * $this->load->model('catalog/option');
-	 *
-	 * $results = $this->model_catalog_option->getOptions($filter_data);
+	 * @return array<int, array<string, mixed>>
 	 */
 	public function getOptions(array $data = []): array {
-		$sql = "SELECT * FROM `" . DB_PREFIX . "option` `o` LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`o`.`option_id` = `od`.`option_id`) WHERE `od`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+		$sql = "
+			SELECT `o`.*, `od`.`name`
+			FROM `" . DB_PREFIX . "option` `o`
+			LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`o`.`option_id` = `od`.`option_id`)";
+
+		if (!empty($data['filter_option_value_name'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "option_value_description` `ov` ON (`o`.`option_id` = `ov`.`option_id`)";
+		}
+
+		$sql .= " WHERE `od`.`language_id` = " . (int)$this->config->get('config_language_id');
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND LCASE(`od`.`name`) LIKE '" . $this->db->escape(oc_strtolower($data['filter_name']) . '%') . "'";
+			$sql .= " AND LCASE(`od`.`name`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_name'])) . "%'";
+		}
+
+		if (!empty($data['filter_option_value_name'])) {
+			$sql .= " AND LCASE(`ov`.`name`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_option_value_name'])) . "%'";
+			$sql .= " AND `ov`.`language_id` = " . (int)$this->config->get('config_language_id');
 		}
 
 		$sort_data = [
@@ -197,20 +194,30 @@ class Option extends \Opencart\System\Engine\Model {
 	}
 
 	/**
-	 * Get Total Options
-	 *
-	 * Get the total number of option records in the database.
-	 *
-	 * @return int total number of option records
-	 *
-	 * @example
-	 *
-	 * $this->load->model('catalog/option');
-	 *
-	 * $option_total = $this->model_catalog_option->getTotalOptions();
+	 * @param array<string, mixed> $data
 	 */
-	public function getTotalOptions(): int {
-		$query = $this->db->query("SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "option`");
+	public function getTotalOptions(array $data = []): int {
+		$sql = "
+			SELECT COUNT(*) AS `total`
+			FROM `" . DB_PREFIX . "option` `o`
+			LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`o`.`option_id` = `od`.`option_id`)";
+
+		if (!empty($data['filter_option_value_name'])) {
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "option_value_description` `ov` ON (`o`.`option_id` = `ov`.`option_id`)";
+		}
+
+		$sql .= " WHERE `od`.`language_id` = " . (int)$this->config->get('config_language_id');
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`od`.`name`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_name'])) . "%'";
+		}
+
+		if (!empty($data['filter_option_value_name'])) {
+			$sql .= " AND LCASE(`ov`.`name`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_option_value_name'])) . "%'";
+			$sql .= " AND `ov`.`language_id` = " . (int)$this->config->get('config_language_id');
+		}
+
+		$query = $this->db->query($sql);
 
 		return (int)$query->row['total'];
 	}
@@ -549,6 +556,29 @@ class Option extends \Opencart\System\Engine\Model {
 	 */
 	public function getValueDescriptionsByLanguageId(int $language_id): array {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option_value_description` WHERE `language_id` = '" . (int)$language_id . "'");
+
+		return $query->rows;
+	}
+
+	/**
+	 * @param array<string, mixed> $data
+	 *
+	 * @return array<int, array<string, mixed>>
+	 */
+	public function autocompleteOptionValueName(array $data = []): array {
+		$sql = "
+			SELECT *
+			FROM `" . DB_PREFIX . "option_value_description`
+			WHERE `language_id` = " . (int)$this->config->get('config_language_id');
+
+		if (!empty($data['filter_name'])) {
+			$sql .= " AND LCASE(`name`) LIKE '%" . $this->db->escape(oc_strtolower($data['filter_name'])) . "%'";
+		}
+
+		$sql .= " GROUP BY `name` ORDER BY `name` ASC";
+		$sql .= " LIMIT 0," . (int)$this->config->get('config_autocomplete_limit');
+
+		$query = $this->db->query($sql);
 
 		return $query->rows;
 	}

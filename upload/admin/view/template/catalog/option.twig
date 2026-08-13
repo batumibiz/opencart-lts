@@ -1,26 +1,82 @@
 {{ header }}{{ column_left }}
 <div id="content">
-    <div class="page-header">
-        <div class="container-fluid">
-            <div class="float-end"><a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
-                <button type="submit" form="form-option" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
-            </div>
-            <h1>{{ heading_title }}</h1>
-            <ol class="breadcrumb">
-                {% for breadcrumb in breadcrumbs %}
-                    <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
-                {% endfor %}
-            </ol>
-        </div>
-    </div>
+  <div class="page-header">
     <div class="container-fluid">
-        <div class="card">
-            <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
-            <div id="list" class="card-body">{{ list }}</div>
-        </div>
+      <div class="float-end">
+        <button id="filter-button" type="button" data-bs-toggle="tooltip" title="{{ button_filter }}" onclick="$('#filter-option').toggleClass('d-none');" class="btn btn-light d-lg-none"><i class="fa-solid fa-filter"></i></button>
+        <a href="{{ add }}" data-bs-toggle="tooltip" title="{{ button_add }}" class="btn btn-primary"><i class="fa-solid fa-plus"></i></a>
+        <button type="submit" form="form-option" formaction="{{ delete }}" data-bs-toggle="tooltip" title="{{ button_delete }}" onclick="return confirm('{{ text_confirm }}');" class="btn btn-danger"><i class="fa-regular fa-trash-can"></i></button>
+      </div>
+      <h1>{{ heading_title }}</h1>
+      <ol class="breadcrumb">
+        {% for breadcrumb in breadcrumbs %}
+          <li class="breadcrumb-item"><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+        {% endfor %}
+      </ol>
     </div>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div id="filter-option" class="col-lg-3 col-md-12 order-lg-last d-none d-lg-block mb-3">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-filter"></i> {{ text_filter }}</div>
+          <div class="card-body">
+            <form id="form-filter">
+              <div class="mb-3">
+                <label for="input-name" class="form-label">{{ entry_name }}</label>
+                <input type="text" name="filter_name" value="{{ filter_name }}" placeholder="{{ entry_name }}" id="input-name" data-oc-target="autocomplete-name" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-name" class="dropdown-menu"></ul>
+              </div>
+              <div class="mb-3">
+                <label for="input-option-value-name" class="form-label">{{ entry_option_value }}</label>
+                <input type="text" name="filter_option_value_name" value="{{ filter_option_value_name }}" placeholder="{{ entry_option_value }}" id="input-option-value-name" data-oc-target="autocomplete-option-value-name" class="form-control" autocomplete="off"/>
+                <ul id="autocomplete-option-value-name" class="dropdown-menu"></ul>
+              </div>
+              <div class="text-center mt-4">
+                <button type="submit" class="btn btn-outline-primary"><i class="fa-solid fa-filter me-2"></i>{{ button_filter }}</button>
+                <button type="reset" class="btn btn-outline-secondary"><i class="fa-solid fa-rotate-left me-2"></i>{{ button_reset }}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div class="col col-lg-9 col-md-12">
+        <div class="card">
+          <div class="card-header"><i class="fa-solid fa-list"></i> {{ text_list }}</div>
+          <div id="list" class="card-body">{{ list }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <script type="text/javascript">
+  ocFilter({
+    route: 'catalog/option',
+    userToken: '{{ user_token }}'
+  });
+
+  ocAutocomplete({
+    inputSelector: '#input-name',
+    route: 'catalog/option.autocompleteOptionName',
+    userToken: '{{ user_token }}',
+    valueKey: 'option_id',
+    labelKey: 'name',
+    onSelect: function (item) {
+      $('#input-name').val(decodeHTMLEntities(item.label));
+    }
+  });
+
+  ocAutocomplete({
+    inputSelector: '#input-option-value-name',
+    route: 'catalog/option.autocompleteOptionValueName',
+    userToken: '{{ user_token }}',
+    valueKey: 'option_value_id',
+    labelKey: 'name',
+    onSelect: function (item) {
+      $('#input-option-value-name').val(decodeHTMLEntities(item.label));
+    }
+  });
+
   $('#list').on('click', 'thead a, .pagination a', function (e) {
     e.preventDefault();
     $('#list').load(this.href);

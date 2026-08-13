@@ -4298,6 +4298,14 @@ function oc_db_schema() {
 				'field' => 'option_id'
 			]
 		],
+		'index' => [
+			[
+				'name' => 'option_id',
+				'key'  => [
+					'option_id'
+				]
+			]
+		],
 		'engine'  => 'InnoDB',
 		'charset' => 'utf8mb4',
 		'collate' => 'utf8mb4_unicode_ci'
