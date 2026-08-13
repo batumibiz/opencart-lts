@@ -3,26 +3,30 @@
 namespace Opencart\Admin\Controller\Report;
 
 use Opencart\System\Engine\Controller;
+use Opencart\System\Library\Filter;
 
 class Online extends Controller {
+	/**
+	 * List of filter request keys,
+	 * and whether their value must be urlencoded when it is placed into a query string.
+	 *
+	 * @var array<string, bool>
+	 */
+	private array $filterKeys = [
+		'filter_customer' => true,
+		'filter_ip'       => false
+	];
+
 	public function index(): void {
+		$filter = new Filter($this->request, $this->filterKeys);
+
+		$data = $filter->getFilterData();
+
 		$this->load->language('report/online');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode(html_entity_decode((string)$this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
-
-		if (isset($this->request->get['page'])) {
-			$url .= '&page=' . $this->request->get['page'];
-		}
+		$url = $filter->getQueryString(true, true, true);
 
 		$data['breadcrumbs'] = [];
 
@@ -33,7 +37,7 @@ class Online extends Controller {
 
 		$data['breadcrumbs'][] = [
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'])
+			'href' => $this->url->link('report/online', 'user_token=' . $this->session->data['user_token'] . $url)
 		];
 
 		$data['list'] = $this->getList();
@@ -53,33 +57,23 @@ class Online extends Controller {
 	}
 
 	public function getList(): string {
-		if (isset($this->request->get['filter_customer'])) {
-			$filter_customer = $this->request->get['filter_customer'];
-		} else {
-			$filter_customer = '';
-		}
+		$filter = new Filter($this->request, $this->filterKeys);
 
-		if (isset($this->request->get['filter_ip'])) {
-			$filter_ip = $this->request->get['filter_ip'];
-		} else {
-			$filter_ip = '';
-		}
+		$filter_data = $filter->getFilterData();
 
-		if (isset($this->request->get['page'])) {
-			$page = (int)$this->request->get['page'];
-		} else {
-			$page = 1;
-		}
+		$sort = (string)($this->request->get['sort'] ?? 'd.name');
+		$order = (string)($this->request->get['order'] ?? 'ASC');
+		$page = (int)($this->request->get['page'] ?? 1);
+
+		$url = $filter->getQueryString(false, false, true);
 
 		// Customer
 		$data['customers'] = [];
 
-		$filter_data = [
-			'filter_customer' => $filter_customer,
-			'filter_ip'       => $filter_ip,
-			'start'           => ($page - 1) * $this->config->get('config_pagination_admin'),
-			'limit'           => $this->config->get('config_pagination_admin')
-		];
+		$filter_data['sort'] = $sort;
+		$filter_data['order'] = $order;
+		$filter_data['start'] = ($page - 1) * $this->config->get('config_pagination_admin');
+		$filter_data['limit'] = $this->config->get('config_pagination_admin');
 
 		// Online
 		$this->load->model('report/online');
@@ -104,15 +98,7 @@ class Online extends Controller {
 			] + $result;
 		}
 
-		$url = '';
-
-		if (isset($this->request->get['filter_customer'])) {
-			$url .= '&filter_customer=' . urlencode($this->request->get['filter_customer']);
-		}
-
-		if (isset($this->request->get['filter_ip'])) {
-			$url .= '&filter_ip=' . $this->request->get['filter_ip'];
-		}
+		$url = $filter->getQueryString(true, true);
 
 		$customer_total = $this->model_report_online->getTotalOnline($filter_data);
 
@@ -131,9 +117,9 @@ class Online extends Controller {
 	public function autocomplete(): void {
 		$json = [];
 
-		if (isset($this->request->get['filter_ip'])) {
+		if (isset($this->request->get['autocomplete_ip'])) {
 			$filter_data = [
-				'filter_ip' => $this->request->get['filter_ip'],
+				'filter_ip' => $this->request->get['autocomplete_ip'],
 				'limit'     => $this->config->get('config_autocomplete_limit')
 			];
 
