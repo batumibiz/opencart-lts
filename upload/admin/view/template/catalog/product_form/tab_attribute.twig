@@ -46,29 +46,19 @@
   </div>
 </div>
 <script type="text/javascript">
-  var attributeautocomplete = function (attribute_row) {
-    $('#input-attribute-' + attribute_row).autocomplete({
-      'source': function (request, response) {
-        $.ajax({
-          url: 'index.php?route=catalog/attribute.autocomplete&user_token={{ user_token }}&filter_name=' + encodeURIComponent(request),
-          dataType: 'json',
-          success: function (json) {
-            response($.map(json, function (item) {
-              return {
-                category: item.attribute_group,
-                label: item.name,
-                value: item.attribute_id
-              }
-            }));
-          }
-        });
-      },
-      'select': function (item) {
-        $('#input-attribute-' + attribute_row).val(decodeHTMLEntities(item['label']));
-        $('#input-attribute-id-' + attribute_row).val(item['value']);
+  const attributeautocomplete = function (attribute_row) {
+    ocAutocomplete({
+      inputSelector: '#input-attribute-' + attribute_row,
+      route: 'catalog/attribute.autocomplete',
+      userToken: '{{ user_token }}',
+      valueKey: 'attribute_id',
+      labelKey: 'name',
+      onSelect: function (item) {
+        $('#input-attribute-' + attribute_row).val(decodeHTMLEntities(item.label));
+        $('#input-attribute-id-' + attribute_row).val(item.value);
       }
     });
-  }
+  };
 
   var attribute_row = {{ attribute_row }};
 
