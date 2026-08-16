@@ -1,25 +1,11 @@
 <?php
+
 namespace Opencart\Catalog\Model\Tool;
-/**
- * Class Image
- *
- * Can be called using $this->load->model('tool/image');
- *
- * @package Opencart\Catalog\Model\Tool
- */
-class Image extends \Opencart\System\Engine\Model {
-	/**
-	 * Resize
-	 *
-	 * @param string $filename
-	 * @param int    $width
-	 * @param int    $height
-	 * @param string $default
-	 *
-	 * @throws \Exception
-	 *
-	 * @return string
-	 */
+
+use Opencart\System\Engine\Model;
+use Opencart\System\Library\Svg;
+
+class Image extends Model {
 	public function resize(string $filename, int $width, int $height, string $default = ''): string {
 		$filename = html_entity_decode($filename, ENT_QUOTES, 'UTF-8');
 
@@ -33,6 +19,13 @@ class Image extends \Opencart\System\Engine\Model {
 		$image_new = 'cache/' . oc_substr($filename, 0, oc_strrpos($filename, '.')) . '-' . (int)$width . 'x' . (int)$height . '.' . $extension;
 
 		if (!is_file(DIR_IMAGE . $image_new) || (filemtime(DIR_IMAGE . $image_old) > filemtime(DIR_IMAGE . $image_new))) {
+			if ($extension == 'svg') {
+				$this->makeDir(DIR_IMAGE . dirname($image_new));
+				file_put_contents(DIR_IMAGE . $image_new, Svg::resize(DIR_IMAGE . $filename, $width, $height));
+
+				return $this->config->get('config_url') . 'image/' . $image_new;
+			}
+
 			$info = getimagesize(DIR_IMAGE . $image_old);
 
 			if ($info === false) {
@@ -45,21 +38,7 @@ class Image extends \Opencart\System\Engine\Model {
 				return $this->config->get('config_url') . 'image/' . $image_old;
 			}
 
-			$path = '';
-
-			$directories = explode('/', dirname($image_new));
-
-			foreach ($directories as $directory) {
-				if (!$path) {
-					$path = $directory;
-				} else {
-					$path = $path . '/' . $directory;
-				}
-
-				if (!is_dir(DIR_IMAGE . $path)) {
-					@mkdir(DIR_IMAGE . $path, 0777);
-				}
-			}
+			$this->makeDir(DIR_IMAGE . dirname($image_new));
 
 			if ($width_orig != $width || $height_orig != $height) {
 				$image = new \Opencart\System\Library\Image(DIR_IMAGE . $image_old);
@@ -73,5 +52,11 @@ class Image extends \Opencart\System\Engine\Model {
 		$image_new = str_replace(' ', '%20', $image_new);  // fix bug when attach image on email (gmail.com). it is automatically changing space from " " to +
 
 		return $this->config->get('config_url') . 'image/' . $image_new;
+	}
+
+	private function makeDir(string $path): void {
+		if (!is_dir($path)) {
+			@mkdir($path, 0777, true);
+		}
 	}
 }

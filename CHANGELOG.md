@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 ## [Unreleased]
 
 #### Added
+- `system` Support for SVG images
 - `admin` Improved filter JS: added highlighting of active filters
 - `admin` Filter with autocomplete for product attributes
 - `admin` Filter with autocomplete for downloads
