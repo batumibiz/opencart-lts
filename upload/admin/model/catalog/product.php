@@ -1069,7 +1069,11 @@ class Product extends \Opencart\System\Engine\Model {
 		}
 
 		if (isset($data['filter_category_id']) && $data['filter_category_id'] !== '') {
-			$sql .= " AND `p`.`product_id` IN (SELECT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "')";
+			if ($data['filter_category_id'] == '-1') {
+				$sql .= " AND NOT EXISTS (SELECT 1 FROM `" . DB_PREFIX . "product_to_category` AS `p2c` WHERE `p2c`.`product_id` = `p`.`product_id`)";
+			} else {
+				$sql .= " AND `p`.`product_id` IN (SELECT `p2c`.`product_id` FROM `" . DB_PREFIX . "product_to_category` `p2c` WHERE `p2c`.`category_id` = '" . (int)$data['filter_category_id'] . "')";
+			}
 		}
 
 		if (isset($data['filter_manufacturer_id']) && $data['filter_manufacturer_id'] !== '') {

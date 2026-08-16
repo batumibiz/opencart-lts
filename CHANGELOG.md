@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - `admin` Filter with autocomplete for options
 - `admin` Autocomplete for Rewiews / Author
 - `admin` Autocomplete for Marketing / Marketing
+- `admin` Ability to filter products without categories
 
 #### Changed
 - `system` Fonts Awesome updated to version 7.3.1

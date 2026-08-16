@@ -1059,4 +1059,23 @@ class Product extends Controller {
 		$this->response->addHeader('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
+
+	public function autocompleteCategory(): void {
+		$this->load->model('catalog/category');
+
+		$none = [
+			'category_id' => '-1',
+			'name'        => $this->language->get('text_none')
+		];
+
+		$result = $this->model_catalog_category->getCategories([
+			'filter_name' => $this->request->get['autocomplete_name'] ?? '',
+			'limit'       => $this->config->get('config_autocomplete_limit')
+		]);
+
+		$json = array_merge([$none], $result);
+
+		$this->response->addHeader('Content-Type: application/json');
+		$this->response->setOutput(json_encode($json));
+	}
 }
