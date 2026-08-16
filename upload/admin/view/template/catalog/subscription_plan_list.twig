@@ -14,7 +14,7 @@
       <tbody>
         {% if subscription_plans %}
           {% for subscription_plan in subscription_plans %}
-            <tr{% if not subscription_plan.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not subscription_plan.status %} class="list-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ subscription_plan.subscription_plan_id }}" class="form-check-input"/></td>
               <td>{{ subscription_plan.name }}</td>
               <td class="text-end">{{ subscription_plan.sort_order }}</td>

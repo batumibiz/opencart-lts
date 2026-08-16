@@ -14,7 +14,7 @@
       <tbody>
         {% if themes %}
           {% for theme in themes %}
-            <tr{% if not theme.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not theme.status %} class="list-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ theme.theme_id }}" class="form-check-input"/></td>
               <td>{{ theme.route }}</td>
               <td>{{ theme.store }}</td>

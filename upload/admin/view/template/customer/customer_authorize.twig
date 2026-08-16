@@ -12,7 +12,7 @@
     <tbody>
       {% if authorizes %}
         {% for authorize in authorizes %}
-          <tr{% if not authorize.status %} class="table-active opacity-50"{% endif %}>
+          <tr{% if not authorize.status %} class="list-disabled"{% endif %}>
             <td><a href="https://whatismyipaddress.com/ip/{{ user_login.ip }}" target="_blank">{{ authorize.ip }}</a></td>
             <td>{{ authorize.user_agent }}</td>
             <td>{{ authorize.date_added }}</td>

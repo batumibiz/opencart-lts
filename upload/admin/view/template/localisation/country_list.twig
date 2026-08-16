@@ -15,7 +15,7 @@
       <tbody>
         {% if countries %}
           {% for country in countries %}
-            <tr{% if not country.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not country.status %} class="list-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ country.country_id }}" class="form-check-input"/></td>
               <td>{{ country.name }}</td>
               <td>{{ country.iso_code_2 }}</td>

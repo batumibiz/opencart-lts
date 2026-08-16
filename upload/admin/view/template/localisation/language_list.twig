@@ -15,7 +15,7 @@
       <tbody>
         {% if languages %}
           {% for language in languages %}
-            <tr{% if not language.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not language.status %} class="list-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ language.language_id }}" class="form-check-input"/></td>
               <td>{{ language.name }}</td>
               <td class="text-nowrap">{{ language.code }}</td>

@@ -16,7 +16,7 @@
       <tbody>
         {% if customers %}
           {% for customer in customers %}
-            <tr{% if not customer.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not customer.status %} class="list-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ customer.customer_id }}" class="form-check-input"/></td>
               <td>{{ customer.name }}</td>
               <td>{{ customer.email }}</td>

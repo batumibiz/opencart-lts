@@ -15,7 +15,7 @@
       <tbody>
         {% if startups %}
           {% for startup in startups %}
-            <tr{% if not startup.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not startup.status %} class="list-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ startup.startup_id }}" class="form-check-input"/></td>
               <td>{{ startup.code }}</td>
               <td>{{ startup.action }}</td>

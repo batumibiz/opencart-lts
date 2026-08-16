@@ -14,7 +14,7 @@
       <tbody>
         {% if extensions %}
           {% for extension in extensions %}
-            <tr{% if not extension.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not extension.status %} class="list-disabled"{% endif %}>
               <td>{{ extension.name }}</td>
               <td class="text-center">{{ extension.link }}</td>
               <td class="text-end">{{ extension.sort_order }}</td>

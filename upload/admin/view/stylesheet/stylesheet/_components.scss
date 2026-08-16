@@ -265,3 +265,15 @@ label.form-label span::after {
 	border: 1px solid rgb(27 128 194 / 0.75);
 	font-weight: bold;
 }
+
+// -----------------------------------------------------------------------------
+// Lists
+// -----------------------------------------------------------------------------
+.list-disabled, .list-disabled td {
+	color: #888;
+	background-color: #EBEBEB;
+	border: #CCC 1px solid;
+}
+.list-disabled :hover {
+	color: #000;
+}

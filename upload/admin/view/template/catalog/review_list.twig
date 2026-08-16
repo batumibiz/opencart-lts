@@ -15,7 +15,7 @@
       <tbody>
         {% if reviews %}
           {% for review in reviews %}
-            <tr{% if not review.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not review.status %} class="list-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ review.review_id }}" class="form-check-input"/></td>
               <td>{{ review.name }}</td>
               <td>{{ review.author }}</td>

@@ -13,7 +13,7 @@
       <tbody>
         {% if topics %}
           {% for topic in topics %}
-            <tr{% if not topic.status %} class="table-active opacity-50"{% endif %}>
+            <tr{% if not topic.status %} class="list-disabled"{% endif %}>
               <td class="text-center"><input type="checkbox" name="selected[]" value="{{ topic.topic_id }}" class="form-check-input"/></td>
               <td>{{ topic.name }}</td>
               <td class="text-end">{{ topic.sort_order }}</td>

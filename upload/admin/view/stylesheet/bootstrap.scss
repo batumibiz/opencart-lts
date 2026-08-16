@@ -44,6 +44,7 @@ $breadcrumb-item-padding:   .3rem;
 $breadcrumb-divider-color:  $gray-400;
 $breadcrumb-divider:        "\f105";
 $table-variants: ("head": $gray-100);
+$table-hover-bg-factor:     .03 !default;
 
 @import "bootstrap/bootstrap";
 
