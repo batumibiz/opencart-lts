@@ -1199,7 +1199,7 @@ VALUES ('opencart', 'currency', 'ecb'),
 --
 
 INSERT INTO `oc_extension_install` (`extension_install_id`, `extension_id`, `extension_download_id`, `name`, `description`, `code`, `version`, `author`, `link`, `status`, `date_added`)
-VALUES (1, 0, 0, 'OpenCart Default Extensions', 'This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.', 'opencart', '2.1', 'OpenCart Ltd', 'http://www.opencart.com', 1, '2026-07-18 21:27:39');
+VALUES (1, 0, 0, 'OpenCart Default Extensions', 'This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.', 'opencart', '2.1.1', 'OpenCart Ltd', 'http://www.opencart.com', 1, '2026-08-17 17:27:39');
 
 -----------------------------------------------------------
 

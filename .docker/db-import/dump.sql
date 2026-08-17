@@ -1,4 +1,4 @@
-/*M!999999\- enable the sandbox mode */ 
+/*M!999999\- enable the sandbox mode */
 -- MariaDB dump 10.19-11.8.8-MariaDB, for Linux (x86_64)
 --
 -- Host: 127.0.0.1    Database: opencart
@@ -2437,7 +2437,7 @@ CREATE TABLE `oc_extension_install` (
 --
 
 INSERT INTO `oc_extension_install` VALUES
-(1,0,0,'OpenCart Default Extensions','This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.','opencart','2.1','OpenCart Ltd','http://www.opencart.com',1,'2026-07-18 21:27:39');
+(1,0,0,'OpenCart Default Extensions','This extension contains all the default extensions for modules, currencies, payment methods, shipping methods, anti-fraud, themes, order totals and reports.','opencart','2.1.1','OpenCart Ltd','http://www.opencart.com',1,'2026-08-17 17:27:39');
 
 --
 -- Table structure for table `oc_extension_path`
