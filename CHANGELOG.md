@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - `admin` Deep refactoring of filter functionality
 - `admin` Improved online report
 - `admin` Changed style of disabled list items
+- `admin` Improved sales analytics on the map
 
 #### Deprecated
 - Nothing

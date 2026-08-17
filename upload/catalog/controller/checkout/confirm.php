@@ -108,7 +108,7 @@ class Confirm extends \Opencart\System\Engine\Controller {
 			$order_data['custom_field'] = $this->session->data['customer']['custom_field'];
 
 			// Payment Details
-			if ($this->config->get('config_checkout_payment_address')) {
+			if ($this->config->get('config_checkout_payment_address') || !$this->cart->hasShipping()) {
 				$order_data['payment_address_id'] = $this->session->data['payment_address']['address_id'];
 				$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
 				$order_data['payment_lastname'] = $this->session->data['payment_address']['lastname'];
@@ -158,6 +158,13 @@ class Confirm extends \Opencart\System\Engine\Controller {
 				$order_data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
 				$order_data['shipping_custom_field'] = $this->session->data['shipping_address']['custom_field'] ?? [];
+
+				if (empty($order_data['payment_country'])) {
+					$order_data['payment_zone'] = $order_data['shipping_zone'];
+					$order_data['payment_zone_id'] = $order_data['shipping_zone_id'];
+					$order_data['payment_country'] = $order_data['shipping_country'];
+					$order_data['payment_country_id'] = $order_data['shipping_country_id'];
+				}
 
 				$order_data['shipping_method'] = $this->session->data['shipping_method'];
 			} else {

@@ -98,9 +98,9 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if payment address is set if required, in settings
-		if (!$this->config->get('config_checkout_payment_address')) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
+		//if (!$this->config->get('config_checkout_payment_address')) {
+		//	$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		//}
 
 		if (!$json) {
 			if (!oc_validate_length($post_info['firstname'], 1, 32)) {
@@ -221,9 +221,9 @@ class PaymentAddress extends \Opencart\System\Engine\Controller {
 		}
 
 		// Validate if payment address is set if required, in settings
-		if (!$this->config->get('config_checkout_payment_address')) {
-			$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
-		}
+		//if (!$this->config->get('config_checkout_payment_address')) {
+		//	$json['redirect'] = $this->url->link('checkout/cart', 'language=' . $this->config->get('config_language'), true);
+		//}
 
 		if (!$json) {
 			// Payment Address
