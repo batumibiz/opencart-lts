@@ -11,4 +11,5 @@ parameters:
         - ./phpstan/
         - ../upload/system/storage/vendor/
         - ../upload/system/storage/cache/
+        - ../upload/install/
     tmpDir: ../.cache/phpstan/
