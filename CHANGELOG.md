@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - Entries without a reference link were developed exclusively within this repositor.
 
 
-## [Unreleased]
+## [1.1.0] 2026-08-20
 
 #### Added
 - `system` Support for SVG images
@@ -29,18 +29,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - `admin` Changed style of disabled list items
 - `admin` Improved sales analytics on the map
 
-#### Deprecated
-- Nothing
-
 #### Removed
 - `admin` Removed a large amount of legacy and duplicate code.
 
 #### Fixed
 - `system` Various static analyzer warnings
 - `admin` Product model filter autocomplete
-
-#### Security
-- Nothing
 
 
 ## [1.0.0] 2026-07-27
@@ -200,4 +194,5 @@ Based on [OpenCart 4.1.0.3](https://github.com/opencart/opencart/releases/tag/4.
 
 
 [Unreleased]: https://github.com/oc-plus/oc-plus/compare/1.0.0...HEAD
+[1.1.0]: https://github.com/oc-plus/oc-plus/releases/tag/1.1.0
 [1.0.0]: https://github.com/oc-plus/oc-plus/releases/tag/1.0.0
