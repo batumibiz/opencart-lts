@@ -43,6 +43,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['text_mbstring'] = $this->language->get('text_mbstring');
 		$data['text_file'] = $this->language->get('text_file');
 		$data['text_directory'] = $this->language->get('text_directory');
+		$data['text_simplexml'] = $this->language->get('text_simplexml');
 		$data['text_status'] = $this->language->get('text_status');
 		$data['text_missing'] = $this->language->get('text_missing');
 		$data['text_writable'] = $this->language->get('text_writable');
@@ -86,10 +87,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['file_uploads'] = ini_get('file_uploads');
 		$data['session_auto_start'] = ini_get('session_auto_start');
 
-		$db = [
-			'mysqli',
-			'pdo'
-		];
+		$db = ['mysqli'];
 
 		if (!array_filter($db, 'extension_loaded')) {
 			$data['db'] = false;
@@ -104,6 +102,7 @@ class Step2 extends \Opencart\System\Engine\Controller {
 		$data['zip'] = extension_loaded('zip');
 		$data['iconv'] = function_exists('iconv');
 		$data['mbstring'] = extension_loaded('mbstring');
+		$data['simplexml'] = extension_loaded('simplexml');
 
 		$data['catalog_config'] = DIR_OPENCART . 'config.php';
 		$data['admin_config'] = DIR_OPENCART . 'admin/config.php';

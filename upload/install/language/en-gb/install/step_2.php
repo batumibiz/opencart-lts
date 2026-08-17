@@ -27,6 +27,7 @@ $_['text_mbstring']          = 'mbstring';
 $_['text_on']                = 'On';
 $_['text_off']               = 'Off';
 $_['text_file']              = 'Files';
+$_['text_simplexml']         = 'SimpleXML';
 $_['text_status']            = 'Status';
 $_['text_writable']          = 'Writable';
 $_['text_unwritable']        = 'Unwritable';

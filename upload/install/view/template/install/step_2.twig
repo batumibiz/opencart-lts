@@ -108,6 +108,7 @@
               </tbody>
             </table>
           </fieldset>
+
           <fieldset>
             <legend>{{ text_install_extension }}</legend>
             <table class="table table-bordered">
@@ -119,6 +120,7 @@
                   <td class="w-25 text-center"><b>{{ text_status }}</b></td>
                 </tr>
               </thead>
+
               <tbody>
                 <tr{% if not db %} class="table-danger"{% endif %}>
                   <td>{{ text_db }}</td>
@@ -134,6 +136,7 @@
                       <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
                     {% endif %}</td>
                 </tr>
+
                 <tr{% if not gd %} class="table-danger"{% endif %}>
                   <td>{{ text_gd }}</td>
                   <td>{% if gd %}
@@ -148,6 +151,7 @@
                       <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
                     {% endif %}</td>
                 </tr>
+
                 <tr{% if not curl %} class="table-danger"{% endif %}>
                   <td>{{ text_curl }}</td>
                   <td>{% if curl %}
@@ -162,6 +166,7 @@
                       <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
                     {% endif %}</td>
                 </tr>
+
                 <tr{% if not openssl %} class="table-danger"{% endif %}>
                   <td>{{ text_openssl }}</td>
                   <td>{% if openssl %}
@@ -176,6 +181,22 @@
                       <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
                     {% endif %}</td>
                 </tr>
+
+                <tr{% if not simplexml %} class="table-danger"{% endif %}>
+                  <td>{{ text_simplexml }}</td>
+                  <td>{% if simplexml %}
+                      {{ text_on }}
+                    {% else %}
+                      {{ text_off }}
+                    {% endif %}</td>
+                  <td>{{ text_on }}</td>
+                  <td class="text-center">{% if simplexml %}
+                      <span class="text-success"><i class="fa-solid fa-check"></i></span>
+                    {% else %}
+                      <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
+                    {% endif %}</td>
+                </tr>
+
                 <tr{% if not zlib %} class="table-danger"{% endif %}>
                   <td>{{ text_zlib }}</td>
                   <td>{% if zlib %}
@@ -190,6 +211,7 @@
                       <span class="text-danger"><i class="fa-solid fa-circle-xmark"></i></span>
                     {% endif %}</td>
                 </tr>
+
                 <tr{% if not zip %} class="table-danger"{% endif %}>
                   <td>{{ text_zip }}</td>
                   <td>{% if zip %}
