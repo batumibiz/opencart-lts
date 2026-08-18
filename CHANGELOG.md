@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - Entries without a reference link were developed exclusively within this repositor.
 
 
-## [1.1.0] 2026-08-20
+## [1.1.0] 2026-08-19
 
 #### Added
 - `system` Support for SVG images
