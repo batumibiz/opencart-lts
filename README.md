@@ -14,7 +14,7 @@
 - [System Requirements](#system-requirements)
 - [Installation](#installation)
 - [Upgrade](#upgrade)
-- [Uninstallation: How to Revert to OpenCart 4.1.0.3 - 4.1.0.4](#uninstallation-how-to-revert-to-opencart-4103)
+- [Uninstallation: How to Revert to OpenCart 4.1.0.4](#uninstallation-how-to-revert-to-opencart-4104)
 - [Local Development with Docker](#local-development-with-docker)
   - [Using Make](#using-make)
   - [Using Docker CLI](#or-using-docker-cli)
@@ -37,7 +37,7 @@ To provide a stable, production-ready environment by backporting essential fixes
 This ensures a robust, production-ready core that remains a drop-in replacement for any 4.1.0.3 - 4.1.0.4-compatible environment.
 
 ## Compatibility Guarantee
-This project are strictly developed to maintain **full backward compatibility with [OpenCart 4.1.0.3]**.
+This project are strictly developed to maintain **full backward compatibility with OpenCart 4.1.0.3 and 4.1.0.4**.
 All included fixes and improvements have been extensively tested on live production sites.
 They are fully compatible with major frameworks and heavy-duty extensions,
 including **[Journal 3.2.10](https://themeforest.net/item/journal-advanced-opencart-theme/4260361)**
@@ -121,7 +121,7 @@ For a real-world example in action, you can visit small multilanguage website: h
 **Troubleshooting**: If critical issues occur (e.g., the site becomes inaccessible) and you cannot identify the cause, restore your site using the backup you created before starting the upgrade.
 
 
-## Uninstallation: How to Revert to OpenCart 4.1.0.3 or 4.1.0.4
+## Uninstallation: How to Revert to OpenCart 4.1.0.4
 **OC+ does not make any changes to the database structure**.  
 Because of this, reverting back to stock OpenCart is entirely risk-free and straightforward:
 simply replace all the files in your website's root directory with the files from the official OpenCart
