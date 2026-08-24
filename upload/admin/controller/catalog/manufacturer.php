@@ -384,7 +384,7 @@ class Manufacturer extends Controller {
 		$this->load->model('catalog/manufacturer');
 
 		$json = $this->model_catalog_manufacturer->getManufacturers([
-			'filter_name' => $this->request->get['autocomplete_name'] ?? '',
+			'filter_name' => $this->request->get['autocomplete_name'] ?? ($this->request->get['filter_name'] ?? ''),
 			'limit'       => $this->config->get('config_autocomplete_limit')
 		]);
 

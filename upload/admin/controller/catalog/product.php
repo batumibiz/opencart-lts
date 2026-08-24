@@ -1069,7 +1069,7 @@ class Product extends Controller {
 		];
 
 		$result = $this->model_catalog_category->getCategories([
-			'filter_name' => $this->request->get['autocomplete_name'] ?? '',
+			'filter_name' => $this->request->get['autocomplete_name'] ?? ($this->request->get['filter_name'] ?? ''),
 			'limit'       => $this->config->get('config_autocomplete_limit')
 		]);
 
