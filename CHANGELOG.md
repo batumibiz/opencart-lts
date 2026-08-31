@@ -10,6 +10,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - Entries without a reference link were developed exclusively within this repositor.
 
 
+## [Unreleased]
+
+#### Added
+- Nothing
+
+#### Changed
+- Added backward compatibility of autocomplete
+
+#### Deprecated
+- Nothing
+
+#### Removed
+- Nothing
+
+#### Fixed
+- Dropdown height in table lists
+
+#### Security
+- Nothing
+
+
 ## [1.1.0] 2026-08-19
 
 #### Added
@@ -193,6 +214,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 Based on [OpenCart 4.1.0.3](https://github.com/opencart/opencart/releases/tag/4.1.0.3) as the foundation for all subsequent development within this branch.
 
 
-[Unreleased]: https://github.com/oc-plus/oc-plus/compare/1.0.0...HEAD
-[1.1.0]: https://github.com/oc-plus/oc-plus/releases/tag/1.1.0
+[Unreleased]: https://github.com/oc-plus/oc-plus/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/oc-plus/oc-plus/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/oc-plus/oc-plus/releases/tag/1.0.0
