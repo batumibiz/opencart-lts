@@ -16,7 +16,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - Nothing
 
 #### Changed
-- Added backward compatibility of autocomplete
+- `system` [#15676](https://github.com/opencart/opencart/pull/15676) - Remove duplicate `preg_match` executions on event system
+- `admin` Added backward compatibility of autocomplete
 
 #### Deprecated
 - Nothing
@@ -25,7 +26,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0).
 - Nothing
 
 #### Fixed
-- Dropdown height in table lists
+- `admin` Dropdown height in table lists
 
 #### Security
 - Nothing
