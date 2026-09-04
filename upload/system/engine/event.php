@@ -28,7 +28,7 @@ class Event {
 	 */
 	protected $processed = [];
 	/**
-	 * @var boolean
+	 * @var bool
 	 */
 	protected $refresh = false;
 
@@ -55,7 +55,7 @@ class Event {
 			'trigger'  => $trigger,
 			'action'   => $action,
 			'priority' => $priority,
-			'wildcard' => (strpos($trigger, '*') !== false) || (strpos($trigger, '?') !== false)
+			'wildcard' => (str_contains($trigger, '*')) || (str_contains($trigger, '?'))
 		];
 		$this->refresh = true;
 	}
@@ -71,13 +71,14 @@ class Event {
 	public function trigger(string $event, array $args = []) {
 		if ($this->refresh) {
 			array_multisort(
-				array_column($this->data, 'priority'), SORT_ASC,
+				array_column($this->data, 'priority'),
+				SORT_ASC,
 				$this->data
 			);
 			$this->processed = [];
 			$this->refresh = false;
 		}
-		
+
 		if (!isset($this->processed[$event])) {
 			$this->processed[$event] = [];
 			foreach ($this->data as $value) {
@@ -91,7 +92,7 @@ class Event {
 				}
 			}
 		}
-		
+
 		foreach ($this->processed[$event] as $value) {
 			$value['action']->execute($this->registry, $args);
 		}
